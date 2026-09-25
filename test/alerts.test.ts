@@ -121,3 +121,26 @@ it("summarizeFrames extracts numeric series and per-query errors", () => {
     errors: [{ refId: "B", error: "parse error" }],
   })
 })
+
+it("replayTicks steps back from the end and widens long windows", async () => {
+  const { replayTicks } = await import("../src/Alerts.ts")
+  expect(replayTicks(0, 180_000, 60)).toEqual({ ticks: [0, 60_000, 120_000, 180_000], stepSeconds: 60, widened: false })
+  const wide = replayTicks(0, 86_400_000, 60)
+  expect(wide.stepSeconds).toBe(720)
+  expect(wide.widened).toBe(true)
+  expect(wide.ticks.length).toBeLessThanOrEqual(120)
+})
+
+it("replaySummary counts firing ticks per condition series", async () => {
+  const { replaySummary } = await import("../src/Alerts.ts")
+  const s = (refId: string, pod: string, last: number) => ({ refId, labels: { pod }, points: 1, first: last, last, min: last, max: last })
+  const summary = replaySummary([
+    { at: 1767225600000, series: [s("A", "a", 3), s("C", "a", 0), s("C", "b", 0)] },
+    { at: 1767225660000, series: [s("C", "a", 1), s("C", "b", 0)] },
+    { at: 1767225720000, series: [s("C", "a", 1), s("C", "b", 0)] },
+  ], "C")
+  expect(summary).toEqual([
+    { labels: { pod: "a" }, ticks: 3, firingTicks: 2, firstFiring: "2026-01-01T00:01:00.000Z", lastFiring: "2026-01-01T00:02:00.000Z", lastValue: 1 },
+    { labels: { pod: "b" }, ticks: 3, firingTicks: 0, firstFiring: undefined, lastFiring: undefined, lastValue: 0 },
+  ])
+})

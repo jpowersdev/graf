@@ -72,17 +72,22 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 
 **Logs**
 - \`graf logs search [filters] [--limit N]\` — lines, newest first. \`--limit\` caps lines; a note says when it's hit.
+  \`--trace-id\` alone looks the trace up and searches its services over its time window.
 - \`graf logs context --at TIME [--around N | --before N --after N] [--window DUR] [filters]\` — lines around a moment.
-- \`graf logs aggregate [--aggregation count|rate|bytes|sum|avg|min|max|p50..p99] [--aggregate-on FIELD]
-  [--parser json|logfmt] [--group-by LABEL ...] [--limit N] [--time-series --step DUR] [filters]\`
-  — one value per group over the window (largest first), or a time series.
+- \`graf logs aggregate [--aggregation count|count_distinct|rate|bytes|sum|avg|min|max|p50..p99] [--aggregate-on FIELD]
+  [--parser json|logfmt] [--group-by LABEL ...] [--order asc|desc] [--order-by value|LABEL] [--limit N]
+  [--time-series --step DUR] [filters]\` — one value per group over the window (largest first), or a time series.
+  \`logs values\`/\`values --signal logs\` come from Loki's index and can include values from outside the window; use
+  \`--group-by\` here for exact answers.
 - \`graf logs timeseries [--step DUR] [--group-by ...] [filters]\` — counts over time.
 - \`graf logs values LABEL [--selector '{...}']\`
 
 **Traces**
-- \`graf traces search [filters] [--spans] [--limit N]\` — traces (or matching spans) with IDs. Tempo search is
-  not exhaustive; a note says when results may be partial.
-- \`graf traces get TRACE_ID\` — the span waterfall (\`--output table\` indents children).
+- \`graf traces search [filters] [--spans] [--limit N] [--order-by duration|start]\` — traces (or matching spans) with
+  IDs. Tempo search is not exhaustive and doesn't sort; \`--order-by\` sorts what it returned (use \`--min-duration\` to
+  find slow traces).
+- \`graf traces get TRACE_ID [--span SPAN_ID]\` — the span waterfall (\`--output table\` indents children); \`--span\`
+  narrows to one span's subtree and lists its attributes and events.
 - \`graf traces aggregate [filters] [--aggregation count|rate|avg|sum|min|max|p50..p99] [--aggregate-on ATTR]
   [--group-by ATTR ...] [--order asc|desc] [--limit N] [--time-series --step DUR]\` — any span statistic per group;
   durations are shown in ms. Numeric attributes (e.g. \`span.http.response.status_code\`) need \`>=\`/\`<\`, not \`=~\`.
@@ -107,7 +112,8 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - \`graf alerts history UID [--state Alerting] [--limit N]\` — state transitions with the values that caused them.
 - \`graf alerts triage UID\` — get + which labels differ across firing instances + recent history, in one read.
 - \`graf alerts evaluate UID [--at TIME]\` — run the rule's own queries and expressions; the condition refId > 0
-  means firing. Only for rules over metrics/logs/traces datasources.
+  means firing. \`--from "6 hours" [--step DUR]\` replays it at every evaluation tick instead: per series, how many
+  ticks fired and when it first crossed. Only for rules over metrics/logs/traces datasources.
 
 **Metrics**
 - \`graf metrics list [--search TEXT]\` · \`graf metrics describe NAME\` (labels and sample values)

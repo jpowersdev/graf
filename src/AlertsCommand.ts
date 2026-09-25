@@ -177,22 +177,56 @@ const evaluate = Command.make(
   "evaluate",
   {
     uid: uidArgument,
-    at: Flag.string("at").pipe(Flag.withDefault("now"), Flag.withDescription("Evaluate as of this time (default now)")),
+    at: Flag.string("at").pipe(Flag.withDefault("now"), Flag.withDescription("Evaluate once, as of this time (default now)")),
+    from: Flag.string("from").pipe(
+      Flag.optional,
+      Flag.withDescription("Replay instead: evaluate at every tick from here to --to (e.g. \"6 hours\")"),
+    ),
+    to: Flags.to,
+    step: Flag.string("step").pipe(
+      Flag.optional,
+      Flag.withDescription("Replay tick size (default: the rule's evaluation interval; widened to at most 120 ticks)"),
+    ),
     output: Output.outputFlag,
   },
   (input) =>
     Effect.gen(function* () {
       const alerts = yield* Alerts
       const rule = yield* alerts.get(input.uid)
-      const result = yield* alerts.evaluate(rule, { at: input.at })
       const format = yield* Output.parseOutputFormat(input.output)
-      if (format === "json") return yield* Console.log(JSON.stringify({ uid: rule.uid, condition: rule.definition?.condition, ...result }, null, 2))
-      yield* Console.error(`# ${rule.name} evaluated at ${result.at}; condition ${rule.definition?.condition ?? "?"} > 0 means firing`)
+      const condition = rule.definition?.condition
+
+      if (Option.isSome(input.from)) {
+        const replay = yield* alerts.replay(rule, {
+          from: input.from.value,
+          to: Option.getOrUndefined(input.to),
+          step: Option.getOrUndefined(input.step),
+        })
+        if (format === "json") return yield* Console.log(JSON.stringify({ uid: rule.uid, condition, ...replay }, null, 2))
+        yield* Console.error(
+          `# ${rule.name}: condition ${condition ?? "?"} evaluated every ${replay.stepSeconds}s${replay.widened ? " (widened to cap the number of evaluations)" : ""}; > 0 means firing`,
+        )
+        yield* printRows(
+          ["labels", "firing", "firstFiring", "lastFiring", "lastValue"],
+          replay.series.map((s) => [labelText(s.labels), `${s.firingTicks}/${s.ticks}`, s.firstFiring, s.lastFiring, s.lastValue]),
+          format,
+          replay.series,
+        )
+        if (replay.series.length === 0) yield* Console.error("# the condition returned no series in this window")
+        if (rule.definition?.for !== undefined && rule.definition.for !== "0s") {
+          yield* Console.error(`# the rule also needs the condition to hold for ${rule.definition.for} before it fires`)
+        }
+        return
+      }
+
+      const result = yield* alerts.evaluate(rule, { at: input.at })
+      if (format === "json") return yield* Console.log(JSON.stringify({ uid: rule.uid, condition, ...result }, null, 2))
+      yield* Console.error(`# ${rule.name} evaluated at ${result.at}; condition ${condition ?? "?"} > 0 means firing`)
       for (const error of result.errors) yield* Console.error(`warning: ${error.refId}: ${error.error}`)
       yield* printRows(
         ["refId", "labels", "last", "min", "max", "points"],
         result.series.map((s) => [
-          s.refId === rule.definition?.condition ? `${s.refId} (condition)` : s.refId,
+          s.refId === condition ? `${s.refId} (condition)` : s.refId,
           labelText(s.labels),
           s.last,
           s.points > 1 ? s.min : undefined,
@@ -204,7 +238,7 @@ const evaluate = Command.make(
       )
       if (result.series.length === 0) yield* Console.error("# no series returned (the rule would see no data)")
     }).pipe(Effect.provide(Alerts.Live)),
-).pipe(Command.withDescription("Run a rule's own queries and expressions now (metrics/logs/traces datasources only)"))
+).pipe(Command.withDescription("Run a rule's own queries and expressions now, or replay them over a window with --from"))
 
 export const command = Command.make("alerts").pipe(
   Command.withDescription("Grafana-managed alert rules (read-only)"),

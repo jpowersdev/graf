@@ -51,7 +51,7 @@ graf metrics query 'count(up)' --instant
 
 graf logs values service_name
 graf logs search --service <service> --level error --contains timeout --from "30 minutes" --output table
-graf logs search --service <service> --trace-id <trace-id>
+graf logs search --trace-id <trace-id>             # finds the trace's services and window itself
 graf logs context --service <service> --at <time-from-search> --around 20 --output table
 graf logs aggregate --service <service> --group-by detected_level
 graf logs timeseries --service <service> --level error --step "5 minutes" --output table
@@ -61,6 +61,7 @@ graf traces values resource.service.name
 graf traces search --service <service> --operation "POST /checkout" --error --min-duration 500ms --output table
 graf traces search --service <service> --error --spans --output table     # one row per matching span
 graf traces get <trace-id> --output table                                 # span waterfall
+graf traces aggregate --service <service> --aggregation p95 --group-by span.http.route --limit 10 --output table
 graf traces errors --from "1 hour" --output table                          # error counts and rate per service
 graf traces latency --service <service> --group-by name --output table     # p50/p95/p99 per operation
 graf traces operations --service <service> --kind server --output table    # count, errors, p50, p99 per operation
@@ -83,6 +84,7 @@ graf alerts get <rule-uid> --output table
 graf alerts history <rule-uid> --from "1 day" --output table
 graf alerts triage <rule-uid> --output table      # definition, firing instances, what differs, recent history
 graf alerts evaluate <rule-uid> --output table    # run the rule's own queries and expressions now
+graf alerts evaluate <rule-uid> --from "6 hours"  # replay every evaluation tick: when would it have fired?
 ```
 
 - **`--from` / `--to`** take a duration back from now (`"30 minutes"`, `"2 days"`), `now`, an ISO-8601 timestamp, or Unix milliseconds. `--to` defaults to now.

@@ -2,7 +2,7 @@ import { Context, Data, Effect, Layer, Option, Schema } from "effect"
 import { ApiClient } from "./ApiClient.js"
 import { GrafanaConfig } from "./Config.js"
 import { roleForType } from "./Datasources.js"
-import { parseInstant, resolveRange } from "./TimeRange.js"
+import { parseDurationSeconds, parseInstant, resolveRange } from "./TimeRange.js"
 
 // Grafana-managed alert rules, read through Grafana's Prometheus-compatible rules API (which
 // Viewers can read, and which carries each rule's stored queries) and its state-history API.
@@ -356,11 +356,64 @@ export const evaluationBody = (queries: ReadonlyArray<RuleQuery>, atMs: number) 
   }
 }
 
+// Evaluation times for a replay: every `step` seconds, widened so a long window stays at most
+// `maxTicks` evaluations.
+export const replayTicks = (startMs: number, endMs: number, stepSeconds: number, maxTicks = 120) => {
+  const span = Math.max(0, endMs - startMs)
+  const minStep = Math.ceil(span / 1_000 / maxTicks)
+  const step = Math.max(1, Math.ceil(stepSeconds), minStep)
+  const ticks: Array<number> = []
+  for (let at = endMs; at >= startMs && ticks.length < maxTicks; at -= step * 1_000) ticks.unshift(at)
+  return { ticks, stepSeconds: step, widened: step > Math.ceil(stepSeconds) }
+}
+
+export interface ReplaySeries {
+  readonly labels: Readonly<Record<string, string>>
+  readonly ticks: number
+  readonly firingTicks: number
+  readonly firstFiring?: string | undefined
+  readonly lastFiring?: string | undefined
+  // The condition's value at the last evaluation that produced this series.
+  readonly lastValue?: number | undefined
+}
+
+// Per condition series: how often and since when the condition was > 0 across the replay.
+export const replaySummary = (
+  ticks: ReadonlyArray<{ readonly at: number; readonly series: ReadonlyArray<SeriesResult> }>,
+  condition: string | undefined,
+): ReadonlyArray<ReplaySeries> => {
+  const bySeries = new Map<string, { labels: Record<string, string>; ticks: number; firing: Array<number>; last?: number }>()
+  for (const tick of ticks) {
+    for (const series of tick.series) {
+      if (condition !== undefined && series.refId !== condition) continue
+      const key = JSON.stringify(Object.entries(series.labels).sort())
+      const entry = bySeries.get(key) ?? { labels: { ...series.labels }, ticks: 0, firing: [] }
+      entry.ticks++
+      entry.last = series.last
+      if ((series.last ?? 0) > 0) entry.firing.push(tick.at)
+      bySeries.set(key, entry)
+    }
+  }
+  return [...bySeries.values()].map((entry) => ({
+    labels: entry.labels,
+    ticks: entry.ticks,
+    firingTicks: entry.firing.length,
+    firstFiring: entry.firing.length === 0 ? undefined : new Date(Math.min(...entry.firing)).toISOString(),
+    lastFiring: entry.firing.length === 0 ? undefined : new Date(Math.max(...entry.firing)).toISOString(),
+    lastValue: entry.last,
+  })).sort((a, b) => b.firingTicks - a.firingTicks)
+}
+
 export class Alerts extends Context.Service<Alerts, {
   readonly list: (input: { readonly state?: string | undefined }) => Effect.Effect<ReadonlyArray<AlertRule>, unknown>
   readonly get: (uid: string) => Effect.Effect<AlertRule, unknown>
   readonly history: (uid: string, input: { readonly from: string; readonly to?: string | undefined }) => Effect.Effect<ReadonlyArray<Transition>, unknown>
   readonly evaluate: (rule: AlertRule, input: { readonly at: string }) => Effect.Effect<ReturnType<typeof summarizeFrames> & { readonly at: string }, unknown>
+  readonly replay: (rule: AlertRule, input: { readonly from: string; readonly to?: string | undefined; readonly step?: string | undefined }) => Effect.Effect<{
+    readonly stepSeconds: number
+    readonly widened: boolean
+    readonly series: ReadonlyArray<ReplaySeries>
+  }, unknown>
 }>()(
   "Alerts",
   {
@@ -408,6 +461,33 @@ export class Alerts extends Context.Service<Alerts, {
               Effect.orElseSucceed(() => query),
             ), { concurrency: 4 })
 
+      const replayable = (rule: AlertRule) =>
+        Effect.gen(function* () {
+          if (rule.definition === undefined) {
+            return yield* new UnsupportedRule({
+              message: `Couldn't read rule ${rule.uid}'s full definition (ruler API), so it can't be replayed`,
+            })
+          }
+          const queries = yield* withTypes(rule.queries)
+          const unsupported = queries.filter((query) =>
+            query.datasourceUid !== "__expr__" && query.datasourceType !== "__expr__"
+            && (query.datasourceType === undefined || roleForType(query.datasourceType) === undefined)
+          )
+          if (unsupported.length > 0 || queries.length === 0) {
+            return yield* new UnsupportedRule({
+              message: queries.length === 0
+                ? `Rule ${rule.uid} has no stored queries to evaluate`
+                : `graf only replays rules over metrics, logs and traces datasources; this rule queries ${
+                  unsupported.map((query) => `${query.refId} → ${query.datasourceUid ?? "?"} (${query.datasourceType ?? "unknown type"})`).join(", ")
+                }. See the queries with \`graf alerts get ${rule.uid}\`.`,
+            })
+          }
+          return queries
+        })
+
+      const evaluateAt = (queries: ReadonlyArray<RuleQuery>, at: number) =>
+        Effect.map(client.postJson(DsQueryResponse, "/api/ds/query", evaluationBody(queries, at)), summarizeFrames)
+
       return {
         list: (input) =>
           client.getJson(RulesResponse, rulesPath, [["state", input.state]]).pipe(
@@ -429,28 +509,20 @@ export class Alerts extends Context.Service<Alerts, {
 
         evaluate: (rule, input) =>
           Effect.gen(function* () {
-            if (rule.definition === undefined) {
-              return yield* new UnsupportedRule({
-                message: `Couldn't read rule ${rule.uid}'s full definition (ruler API), so it can't be replayed`,
-              })
-            }
-            const queries = yield* withTypes(rule.queries)
-            const unsupported = queries.filter((query) =>
-              query.datasourceUid !== "__expr__" && query.datasourceType !== "__expr__"
-              && (query.datasourceType === undefined || roleForType(query.datasourceType) === undefined)
-            )
-            if (unsupported.length > 0 || queries.length === 0) {
-              return yield* new UnsupportedRule({
-                message: queries.length === 0
-                  ? `Rule ${rule.uid} has no stored queries to evaluate`
-                  : `graf only replays rules over metrics, logs and traces datasources; this rule queries ${
-                    unsupported.map((query) => `${query.refId} → ${query.datasourceUid ?? "?"} (${query.datasourceType ?? "unknown type"})`).join(", ")
-                  }. See the queries with \`graf alerts get ${rule.uid}\`.`,
-              })
-            }
+            const queries = yield* replayable(rule)
             const at = yield* parseInstant(input.at)
-            const response = yield* client.postJson(DsQueryResponse, "/api/ds/query", evaluationBody(queries, at))
-            return { at: new Date(at).toISOString(), ...summarizeFrames(response) }
+            return { at: new Date(at).toISOString(), ...(yield* evaluateAt(queries, at)) }
+          }),
+
+        replay: (rule, input) =>
+          Effect.gen(function* () {
+            const queries = yield* replayable(rule)
+            const { start, end } = yield* resolveRange(input.from, input.to)
+            const requested = input.step === undefined ? rule.intervalSeconds ?? 60 : yield* parseDurationSeconds(input.step)
+            const plan = replayTicks(start, end, requested)
+            const ticks = yield* Effect.forEach(plan.ticks, (at) =>
+              Effect.map(evaluateAt(queries, at), (result) => ({ at, ...result })), { concurrency: 4 })
+            return { stepSeconds: plan.stepSeconds, widened: plan.widened, series: replaySummary(ticks, rule.definition?.condition) }
           }),
       }
     }),
