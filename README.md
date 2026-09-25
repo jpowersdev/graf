@@ -1,6 +1,6 @@
 # graf
 
-A command-line client for querying observability data through [Grafana](https://grafana.com) — metrics today; logs, traces, and profiles next.
+A command-line client for querying observability data through [Grafana](https://grafana.com) — metrics and logs today; traces and profiles next.
 
 graf talks only to Grafana's API. It picks a datasource for each signal (metrics, logs, traces, profiles) by type, and reaches each backend through Grafana's datasource proxy, so the backend behind a signal can change without changing how you use graf. It is read-only.
 
@@ -42,11 +42,20 @@ graf metrics list --search spanmetrics --output table
 graf metrics describe traces_spanmetrics_calls_total --output table
 graf metrics query 'sum by (service_name) (rate(traces_spanmetrics_calls_total[5m]))' --from "3 hours" --output table
 graf metrics query 'count(up)' --instant
+
+graf logs values service_name
+graf logs search --service <service> --level error --contains timeout --from "30 minutes" --output table
+graf logs search --service <service> --trace-id <trace-id>
+graf logs context --service <service> --at <time-from-search> --around 20 --output table
+graf logs aggregate --service <service> --group-by detected_level
+graf logs timeseries --service <service> --level error --step "5 minutes" --output table
+graf logs aggregate --service <service> --parser json --aggregation p99 --aggregate-on duration_ms --time-series
 ```
 
 - **`--from` / `--to`** take a duration back from now (`"30 minutes"`, `"2 days"`), `now`, an ISO-8601 timestamp, or Unix milliseconds. `--to` defaults to now.
 - **`--output`** is one of `json` (default), `table`, `tsv`, `ndjson`, `values`. Warnings and notes (such as an auto-chosen `--step`) go to **stderr**, so stdout stays parseable.
-- Queries use the backend's own language (PromQL for metrics).
+- Queries use the backend's own language (PromQL for metrics, LogQL for logs). Log commands build LogQL from `--service`, `--label`, `--contains`, `--level`, `--trace-id` and `--filter` (raw pipeline stages), and print it to stderr as `# logql: ...`; `--query` takes a complete LogQL query instead.
+- Logs always need a stream selector (`--service` or `--label`): many Loki setups reject queries that match every stream.
 
 ## Development
 
