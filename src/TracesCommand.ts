@@ -371,7 +371,81 @@ const values = Command.make(
     }).pipe(Effect.provide(Traces.Live)),
 ).pipe(Command.withDescription("List values of a span/resource attribute (e.g. all services with traces)"))
 
+const aggregate = Command.make(
+  "aggregate",
+  {
+    ...filterFlags,
+    aggregation: Flag.string("aggregation").pipe(
+      Flag.withDefault("count"),
+      Flag.withDescription(`${TraceQL.traceAggregations.join(" | ")}`),
+    ),
+    aggregateOn: Flag.string("aggregate-on").pipe(
+      Flag.optional,
+      Flag.withDescription("Numeric attribute for avg/sum/min/max/pNN (default: span duration, shown in ms)"),
+    ),
+    groupBy: Flag.string("group-by").pipe(
+      Flag.atMost(5),
+      Flag.withDescription("Attribute(s) to group by, repeatable or comma-separated (default: no grouping)"),
+    ),
+    order: Flag.string("order").pipe(Flag.withDefault("desc"), Flag.withDescription("asc | desc, by value")),
+    limit: limitFlag,
+    timeSeries: Flag.boolean("time-series").pipe(Flag.withDescription("Values per --step instead of over the whole window")),
+    step: Flag.string("step").pipe(Flag.optional, Flag.withDescription("Bucket size with --time-series (default: ~300 buckets)")),
+    from: Flags.from,
+    to: Flags.to,
+    output: Output.outputFlag,
+  },
+  (input) =>
+    Effect.gen(function* () {
+      const config = yield* GrafanaConfig
+      const traces = yield* Traces
+      if (input.order !== "asc" && input.order !== "desc") {
+        return yield* new TraceQL.InvalidTraceQuery({ message: `--order must be asc or desc; got ${input.order}` })
+      }
+      const selector = yield* spanSelector(filterInput(input))
+      const groupBy = TraceQL.splitList(input.groupBy).map(TraceQL.attributeName)
+      const built = yield* TraceQL.buildTraceMetricsQuery({
+        selector,
+        aggregation: input.aggregation,
+        aggregateOn: Option.getOrUndefined(input.aggregateOn),
+        groupBy,
+      })
+      yield* printQuery(built.query)
+      const valueColumn = built.unit === undefined ? "value" : `value${built.unit[0]!.toUpperCase()}${built.unit.slice(1)}`
+      const scaled = (value: number | undefined) => value === undefined ? undefined : round(value * built.scale, 3)
+      const range = { from: Option.getOrUndefined(input.from) ?? config.defaultFrom, to: Option.getOrUndefined(input.to) }
+
+      if (input.timeSeries) {
+        const result = yield* traces.range(built.query, { ...range, step: Option.getOrUndefined(input.step) })
+        if (result.autoStepSeconds !== undefined) yield* Console.error(`# step ${result.autoStepSeconds}s (auto; set --step to override)`)
+        const rows = (result.response.series ?? []).flatMap((series) => {
+          const labels = seriesLabels(series)
+          return (series.samples ?? []).map((sample) => ({
+            timestamp: new Date(Number(sample.timestampMs)).toISOString(),
+            ...Object.fromEntries(groupBy.map((key) => [key, labels[key]])),
+            [valueColumn]: scaled(sample.value),
+          }))
+        })
+        yield* printTable(["timestamp", ...groupBy, valueColumn], rows, input.output)
+        if (rows.length === 0) yield* Console.error("# 0 series")
+        return
+      }
+      const response = yield* traces.instant(built.query, range)
+      const rows = (response.series ?? []).map((series) => {
+        const labels = seriesLabels(series)
+        return { ...Object.fromEntries(groupBy.map((key) => [key, labels[key]])), [valueColumn]: scaled(series.value) }
+      })
+      const sorted = [...rows].sort((a, b) =>
+        (input.order === "asc" ? 1 : -1) * (Number(a[valueColumn] ?? 0) - Number(b[valueColumn] ?? 0))
+      )
+      const limited = Option.match(input.limit, { onNone: () => sorted, onSome: (n) => sorted.slice(0, n) })
+      yield* printTable([...groupBy, valueColumn], limited, input.output)
+      if (rows.length === 0) yield* Console.error("# 0 groups")
+      else if (limited.length < rows.length) yield* Console.error(`# ${limited.length} of ${rows.length} groups`)
+    }).pipe(Effect.provide(Traces.Live)),
+).pipe(Command.withDescription("Aggregate spans: count, rate, or avg/sum/min/max/pNN of duration or an attribute, per group"))
+
 export const command = Command.make("traces").pipe(
   Command.withDescription("Query traces (TraceQL) from the traces datasource"),
-  Command.withSubcommands([search, get, errors, latency, operations, values]),
+  Command.withSubcommands([search, get, aggregate, errors, latency, operations, values]),
 )

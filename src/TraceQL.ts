@@ -136,3 +136,40 @@ export const base64ToHex = (value: string | undefined | null): string | undefine
   if (/^[0-9a-f]+$/i.test(value) && (value.length === 16 || value.length === 32)) return value.toLowerCase()
   return Buffer.from(value, "base64").toString("hex")
 }
+
+export const traceAggregations = ["count", "rate", "avg", "sum", "min", "max", "p50", "p75", "p90", "p95", "p99"] as const
+
+export interface TraceMetricsQuery {
+  readonly query: string
+  // Tempo reports durations in seconds; callers multiply by this to show milliseconds.
+  readonly scale: number
+  readonly unit?: string | undefined
+}
+
+export const buildTraceMetricsQuery = (input: {
+  readonly selector: string
+  readonly aggregation: string
+  readonly aggregateOn?: string | undefined
+  readonly groupBy: ReadonlyArray<string>
+}): Effect.Effect<TraceMetricsQuery, InvalidTraceQuery> =>
+  Effect.gen(function* () {
+    const aggregation = input.aggregation.toLowerCase()
+    if (!(traceAggregations as ReadonlyArray<string>).includes(aggregation)) {
+      return yield* new InvalidTraceQuery({
+        message: `Unknown --aggregation ${quote(input.aggregation)}; expected one of: ${traceAggregations.join(", ")}`,
+      })
+    }
+    const by = groupByClause(input.groupBy)
+    if (aggregation === "count" || aggregation === "rate") {
+      if (input.aggregateOn !== undefined) {
+        return yield* new InvalidTraceQuery({ message: `--aggregate-on does not apply to --aggregation ${aggregation}` })
+      }
+      return { query: `${input.selector} | ${aggregation === "count" ? "count_over_time" : "rate"}()${by}`, scale: 1 }
+    }
+    const field = input.aggregateOn === undefined ? "duration" : attributeName(input.aggregateOn)
+    const isDuration = field === "duration"
+    const fn = aggregation.startsWith("p")
+      ? `quantile_over_time(${field}, ${Number(aggregation.slice(1)) / 100})`
+      : `${aggregation}_over_time(${field})`
+    return { query: `${input.selector} | ${fn}${by}`, scale: isDuration ? 1_000 : 1, unit: isDuration ? "ms" : undefined }
+  })

@@ -83,6 +83,9 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - \`graf traces search [filters] [--spans] [--limit N]\` — traces (or matching spans) with IDs. Tempo search is
   not exhaustive; a note says when results may be partial.
 - \`graf traces get TRACE_ID\` — the span waterfall (\`--output table\` indents children).
+- \`graf traces aggregate [filters] [--aggregation count|rate|avg|sum|min|max|p50..p99] [--aggregate-on ATTR]
+  [--group-by ATTR ...] [--order asc|desc] [--limit N] [--time-series --step DUR]\` — any span statistic per group;
+  durations are shown in ms. Numeric attributes (e.g. \`span.http.response.status_code\`) need \`>=\`/\`<\`, not \`=~\`.
 - \`graf traces errors [filters] [--group-by ATTR ...]\` — error spans, total spans and error rate per group.
 - \`graf traces latency [filters] [--quantiles p50,p95,p99] [--group-by ATTR ...] [--time-series]\` — in ms.
 - \`graf traces operations --service S [--kind server] [--order-by p99Ms|spans|errors]\` — per-operation health.

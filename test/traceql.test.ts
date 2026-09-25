@@ -83,3 +83,26 @@ it("normalizes trace and span IDs", () => {
   expect(base64ToHex("fd69db203b33ebeb")).toBe("fd69db203b33ebeb")
   expect(base64ToHex(null)).toBeUndefined()
 })
+
+it.effect("buildTraceMetricsQuery maps aggregations to TraceQL metrics", () =>
+  Effect.gen(function* () {
+    const { buildTraceMetricsQuery } = yield* Effect.promise(() => import("../src/TraceQL.ts"))
+    const base = { selector: `{ name = "x" }`, groupBy: [] as ReadonlyArray<string> }
+    expect(yield* buildTraceMetricsQuery({ ...base, aggregation: "count", groupBy: ["span.http.route"] })).toEqual({
+      query: `{ name = "x" } | count_over_time() by (span.http.route)`,
+      scale: 1,
+    })
+    expect(yield* buildTraceMetricsQuery({ ...base, aggregation: "p99" })).toEqual({
+      query: `{ name = "x" } | quantile_over_time(duration, 0.99)`,
+      scale: 1000,
+      unit: "ms",
+    })
+    expect(yield* buildTraceMetricsQuery({ ...base, aggregation: "avg", aggregateOn: "span.db.rows" })).toEqual({
+      query: `{ name = "x" } | avg_over_time(span.db.rows)`,
+      scale: 1,
+      unit: undefined,
+    })
+    expect((yield* Effect.flip(buildTraceMetricsQuery({ ...base, aggregation: "rate", aggregateOn: "duration" }))).message)
+      .toContain("does not apply")
+    expect((yield* Effect.flip(buildTraceMetricsQuery({ ...base, aggregation: "median" }))).message).toContain("Unknown")
+  }))
