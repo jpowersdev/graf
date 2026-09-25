@@ -10,24 +10,14 @@ export class InvalidLogQuery extends Data.TaggedError("InvalidLogQuery")<{
 
 // Loki's OTLP ingestion maps resource `service.name` to this stream label.
 export const serviceLabel = "service_name"
-// Loki derives this from the OTel severity number (or the line); values are lowercase.
+// Loki derives this from the OTel severity number; the collector normalizes severity so its
+// values are canonical and lowercase: "info", "warn", "error", ...
 export const levelLabel = "detected_level"
-// The OTel severity text as the app emitted it; casing and spelling vary by logger.
-export const severityTextLabel = "severity_text"
 
-// Level spellings seen in real logs besides case variants: "warning" for WARN.
-const levelAliases: Record<string, ReadonlyArray<string>> = {
-  warn: ["warn", "warning"],
-  warning: ["warn", "warning"],
-}
-
-// A severity number wrongly defaulted upstream leaves detected_level at "info" while
-// severity_text says "ERROR", so match either one, case-insensitively.
-export const levelFilter = (levels: ReadonlyArray<string>): string => {
-  const spellings = [...new Set(levels.flatMap((level) => levelAliases[level] ?? [level]))]
-  const pattern = quote(`(?i)^(${spellings.map(escapeRegex).join("|")})$`)
-  return `| ${levelLabel}=~${pattern} or ${severityTextLabel}=~${pattern}`
-}
+export const levelFilter = (levels: ReadonlyArray<string>): string =>
+  levels.length === 1
+    ? `| ${levelLabel}=${quote(levels[0]!)}`
+    : `| ${levelLabel}=~${quote(levels.map(escapeRegex).join("|"))}`
 
 export interface LabelMatcher {
   readonly name: string
