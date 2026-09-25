@@ -97,7 +97,7 @@ graf alerts evaluate <rule-uid> --from "6 hours"  # replay every evaluation tick
 ## For coding agents
 
 - **`graf agent instructions`** prints a version-stamped usage guide (commands, query languages, time syntax, triage recipes). Re-dump it after upgrades: `graf agent instructions > AGENTS-graf.md`.
-- **`graf agent context`** prints a live Markdown overview of the target Grafana: datasource per signal, services with logs and traces, log stream labels, trace attributes by scope, and metric names by prefix. Add `--full` for exhaustive lists.
+- **`graf agent context`** prints a live Markdown overview of the target Grafana: datasource per signal, services with logs, traces and profiles, log stream labels, trace attributes by scope, metric names by prefix, profile types, firing and pending alert rules, and dashboards by folder and tag. Add `--full` for exhaustive lists.
 
 ## Development
 

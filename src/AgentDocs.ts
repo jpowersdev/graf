@@ -26,7 +26,7 @@ Verify with \`graf config doctor\`; it reports the datasource used for each sign
 ## Get the lay of the land first
 
 \`\`\`
-graf agent context          # services, log labels, trace attributes, metric families
+graf agent context          # services, labels, attributes, metrics, profiles, firing alerts, dashboards
 graf agent context --full   # exhaustive lists
 \`\`\`
 

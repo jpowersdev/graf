@@ -43,6 +43,16 @@ it("renderAgentContext degrades per section", () => {
     logLabels: { ok: true, value: ["service_name", "k8s_namespace_name"] },
     traceAttributes: { ok: true, value: [{ scope: "resource", name: "resource.service.name" }, { scope: "span", name: "span.http.route" }] },
     metricNames: { ok: true, value: ["up"] },
+    profileServices: { ok: true, value: ["api"] },
+    profileTypes: { ok: false, error: "No profiles datasource found" },
+    alerts: {
+      ok: true,
+      value: [
+        { uid: "r1", name: "API errors", state: "firing", health: "ok", severity: "critical", firing: 3 },
+        { uid: "r2", name: "Quiet", state: "inactive", health: "nodata", firing: 0 },
+      ],
+    },
+    dashboards: { ok: true, value: [{ uid: "d1", title: "API", folder: "Prod", tags: ["api"] }, { uid: "d2", title: "Web", tags: ["api", "web"] }] },
   }, false)
   expect(text).toContain("- metrics: `mimir` (prometheus)")
   expect(text).toContain("- profiles: _No profiles datasource found_")
@@ -50,4 +60,8 @@ it("renderAgentContext degrades per section", () => {
   expect(text).toContain("_unavailable: 403: Permission denied_")
   expect(text).toContain("- resource (1): `resource.service.name`\n- span (1): `span.http.route`")
   expect(text).toContain("- `up` × 1: `up`")
+  expect(text).toContain("types: _unavailable")
+  expect(text).toContain("2 rules: 1 firing, 1 inactive; 1 unhealthy (1 nodata)\n- firing: `r1` API errors [critical] (3 instances)")
+  expect(text).toContain("2 dashboards; by folder: General 1, Prod 1")
+  expect(text).toContain("tags: `api (2)`, `web (1)`")
 })
