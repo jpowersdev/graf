@@ -10,8 +10,31 @@ export class InvalidLogQuery extends Data.TaggedError("InvalidLogQuery")<{
 
 // Loki's OTLP ingestion maps resource `service.name` to this stream label.
 export const serviceLabel = "service_name"
-// Loki derives this from the line or OTel severity; values are lowercase ("error", "warn", ...).
+// Loki derives this from the OTel severity number (or the line); values are lowercase.
 export const levelLabel = "detected_level"
+// The OTel severity text as the app emitted it; casing and spelling vary by logger.
+export const severityTextLabel = "severity_text"
+
+// Spellings loggers use for the same level.
+const levelAliases: Record<string, ReadonlyArray<string>> = {
+  trace: ["trace"],
+  debug: ["debug"],
+  info: ["info", "information"],
+  warn: ["warn", "warning"],
+  warning: ["warn", "warning"],
+  error: ["error", "err"],
+  err: ["error", "err"],
+  fatal: ["fatal", "critical", "crit"],
+  critical: ["fatal", "critical", "crit"],
+}
+
+// A severity number wrongly defaulted upstream leaves detected_level at "info" while
+// severity_text says "ERROR", so match either one, case-insensitively.
+export const levelFilter = (levels: ReadonlyArray<string>): string => {
+  const spellings = [...new Set(levels.flatMap((level) => levelAliases[level] ?? [level]))]
+  const pattern = quote(`(?i)^(${spellings.map(escapeRegex).join("|")})$`)
+  return `| ${levelLabel}=~${pattern} or ${severityTextLabel}=~${pattern}`
+}
 
 export interface LabelMatcher {
   readonly name: string
@@ -86,8 +109,7 @@ export const buildLogQuery = (input: LogFilterInput): Effect.Effect<string, Inva
     for (const text of input.contains ?? []) stages.push(`|= ${quote(text)}`)
     if (input.traceId !== undefined) stages.push(`| trace_id=${quote(normalizeTraceId(input.traceId))}`)
     const levels = splitList(input.levels).map((level) => level.toLowerCase())
-    if (levels.length === 1) stages.push(`| ${levelLabel}=${quote(levels[0]!)}`)
-    if (levels.length > 1) stages.push(`| ${levelLabel}=~${quote(levels.map(escapeRegex).join("|"))}`)
+    if (levels.length > 0) stages.push(levelFilter(levels))
     if (input.filter !== undefined && input.filter.trim().length > 0) {
       const filter = input.filter.trim()
       stages.push(/^(\||!=|!~|\|=|\|~)/.test(filter) ? filter : `| ${filter}`)

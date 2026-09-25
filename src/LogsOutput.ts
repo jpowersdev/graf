@@ -1,6 +1,6 @@
 import { Console, Effect } from "effect"
 import type { LogEntry, LogsResult } from "./Logs.js"
-import { levelLabel, serviceLabel } from "./LogQL.js"
+import { levelLabel, serviceLabel, severityTextLabel } from "./LogQL.js"
 import type { QueryResponse } from "./Metrics.js"
 import * as Output from "./Output.js"
 import { renderRows } from "./Rows.js"
@@ -23,7 +23,7 @@ export const render = (entries: ReadonlyArray<LogEntry>, format: Output.OutputFo
         entries.map((entry) => [
           entry.time,
           entry.labels[serviceLabel],
-          entry.labels[levelLabel],
+          (entry.labels[severityTextLabel] ?? entry.labels[levelLabel])?.toLowerCase(),
           singleLine(entry.line),
         ]),
         format,

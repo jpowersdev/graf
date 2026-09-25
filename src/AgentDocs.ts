@@ -47,7 +47,7 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - **Metrics: PromQL.** \`graf metrics query '<promql>'\`. Metric names use underscores
   (\`traces_spanmetrics_calls_total\`); find them with \`metrics list --search\`.
 - **Logs: LogQL.** Filter flags: \`--service\` (the \`service_name\` stream label), \`--label name=value\`
-  (also \`!=\`, \`=~\`, \`!~\`), \`--contains TEXT\`, \`--level error,warn\` (the \`detected_level\` label),
+  (also \`!=\`, \`=~\`, \`!~\`), \`--contains TEXT\`, \`--level error,warn\` (matches \`detected_level\` or \`severity_text\`, any case; group by \`severity_text\` to see what apps actually emitted),
   \`--trace-id ID\`, and \`--filter\` for raw pipeline stages (\`'| json | status >= 500'\`).
   **Every log query needs a stream selector** (\`--service\` or \`--label\`): Loki may reject queries that match
   every stream with "query blocked by policy".
