@@ -70,6 +70,10 @@ graf profiles values service_name
 graf profiles top --service <service> --type cpu --from "30 minutes" --output table
 graf profiles top --service <service> --type alloc_space --order-by total --output table
 
+# dashboards: reuse the queries behind panels
+graf dashboards search latency --output table
+graf dashboards get <dashboard-uid> --output table
+
 # alerts (Grafana-managed rules)
 graf alerts list --state firing --output table
 graf alerts get <rule-uid> --output table

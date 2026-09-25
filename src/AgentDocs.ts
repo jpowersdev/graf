@@ -93,6 +93,11 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - \`graf profiles top [--service S] [--label k=v] [--type cpu|wall|alloc_space|...] [--order-by self|total] [--limit N]\`
   — hottest functions with self/total share; nanosecond profiles are shown in ms.
 
+**Dashboards** (the team's curated queries)
+- \`graf dashboards search [TEXT] [--tag T]\` — find dashboards.
+- \`graf dashboards get UID [--search TEXT]\` — variables and each panel's queries with the signal to run them
+  with (\`graf metrics query\`, \`graf logs search --query\`, ...). Substitute \`$variables\` yourself.
+
 **Alerts** (Grafana-managed rules; read-only)
 - \`graf alerts list [--state firing|pending|inactive|nodata|error] [--search]\` — rules, firing first, with instance counts.
 - \`graf alerts get UID\` — definition (condition, \`for\`, no-data/error handling), queries, current instances, link.
