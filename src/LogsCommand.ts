@@ -12,31 +12,31 @@ import { printRows } from "./Rows.js"
 import { Traces } from "./Traces.js"
 
 const filterFlags = {
-  service: Flag.string("service").pipe(
+  service: Flag.String("service").pipe(
     Flag.optional,
     Flag.withDescription("Service name (the service_name stream label)"),
   ),
-  label: Flag.string("label").pipe(
+  label: Flag.String("label").pipe(
     Flag.atMost(20),
     Flag.withDescription("Stream label matcher, repeatable: name=value, name!=value, name=~regex, name!~regex"),
   ),
-  contains: Flag.string("contains").pipe(
+  contains: Flag.String("contains").pipe(
     Flag.atMost(10),
     Flag.withDescription("Case-sensitive substring the line must contain, repeatable"),
   ),
-  level: Flag.string("level").pipe(
+  level: Flag.String("level").pipe(
     Flag.atMost(10),
     Flag.withDescription("Log level(s), repeatable or comma-separated: error, warn, info, debug, ..."),
   ),
-  traceId: Flag.string("trace-id").pipe(
+  traceId: Flag.String("trace-id").pipe(
     Flag.optional,
     Flag.withDescription("Only lines carrying this trace ID"),
   ),
-  filter: Flag.string("filter").pipe(
+  filter: Flag.String("filter").pipe(
     Flag.optional,
     Flag.withDescription("Raw LogQL pipeline stages appended to the query, e.g. '| json | status >= 500'"),
   ),
-  query: Flag.string("query").pipe(
+  query: Flag.String("query").pipe(
     Flag.optional,
     Flag.withDescription("A complete LogQL log query, instead of the filter flags"),
   ),
@@ -83,7 +83,7 @@ const search = Command.make(
     ...filterFlags,
     from: Flags.from,
     to: Flags.to,
-    limit: Flag.integer("limit").pipe(
+    limit: Flag.Int("limit").pipe(
       Flag.optional,
       Flag.withDescription("Maximum number of lines (default: GRAFANA_DEFAULT_LIMIT or 100)"),
     ),
@@ -122,22 +122,22 @@ const search = Command.make(
 const context = Command.make(
   "context",
   {
-    at: Flag.string("at").pipe(
+    at: Flag.String("at").pipe(
       Flag.withDescription("Anchor time: ISO-8601 timestamp or Unix ms (e.g. a `time` from logs search)"),
     ),
-    around: Flag.integer("around").pipe(
+    around: Flag.Int("around").pipe(
       Flag.optional,
       Flag.withDescription("Lines on each side of the anchor (default: 10)"),
     ),
-    before: Flag.integer("before").pipe(
+    before: Flag.Int("before").pipe(
       Flag.optional,
       Flag.withDescription("Lines up to and including the anchor (overrides --around)"),
     ),
-    after: Flag.integer("after").pipe(
+    after: Flag.Int("after").pipe(
       Flag.optional,
       Flag.withDescription("Lines after the anchor (overrides --around)"),
     ),
-    window: Flag.string("window").pipe(
+    window: Flag.String("window").pipe(
       Flag.withDefault("1 hour"),
       Flag.withDescription("How far from the anchor to look on each side"),
     ),
@@ -160,19 +160,19 @@ const context = Command.make(
 ).pipe(Command.withDescription("Show the lines around a moment in time, oldest first"))
 
 const aggregateFlags = {
-  aggregation: Flag.string("aggregation").pipe(
+  aggregation: Flag.String("aggregation").pipe(
     Flag.withDefault("count"),
     Flag.withDescription("count | count_distinct | rate | bytes | sum | avg | min | max | p50 | p75 | p90 | p95 | p99"),
   ),
-  aggregateOn: Flag.string("aggregate-on").pipe(
+  aggregateOn: Flag.String("aggregate-on").pipe(
     Flag.optional,
     Flag.withDescription("Numeric field for sum/avg/min/max/pNN: a label, structured metadata, or a parsed field"),
   ),
-  parser: Flag.string("parser").pipe(
+  parser: Flag.String("parser").pipe(
     Flag.optional,
     Flag.withDescription("Parse lines first so --aggregate-on/--group-by can use their fields: json | logfmt"),
   ),
-  groupBy: Flag.string("group-by").pipe(
+  groupBy: Flag.String("group-by").pipe(
     Flag.atMost(10),
     Flag.withDescription("Label(s) to group by, repeatable or comma-separated, e.g. detected_level"),
   ),
@@ -201,19 +201,19 @@ const aggregate = Command.make(
   {
     ...aggregateFlags,
     ...filterFlags,
-    timeSeries: Flag.boolean("time-series").pipe(
+    timeSeries: Flag.Boolean("time-series").pipe(Flag.withDefault(false), 
       Flag.withDescription("Return values per --step instead of one value per group over the whole window"),
     ),
-    step: Flag.string("step").pipe(
+    step: Flag.String("step").pipe(
       Flag.optional,
       Flag.withDescription("Bucket size with --time-series, e.g. \"5 minutes\" (default: ~300 buckets)"),
     ),
-    order: Flag.string("order").pipe(Flag.withDefault("desc"), Flag.withDescription("asc | desc (scalar mode)")),
-    orderBy: Flag.string("order-by").pipe(
+    order: Flag.String("order").pipe(Flag.withDefault("desc"), Flag.withDescription("asc | desc (scalar mode)")),
+    orderBy: Flag.String("order-by").pipe(
       Flag.withDefault("value"),
       Flag.withDescription("value, or one of the --group-by labels (scalar mode)"),
     ),
-    limit: Flag.integer("limit").pipe(
+    limit: Flag.Int("limit").pipe(
       Flag.optional,
       Flag.withDescription("Keep only the first N groups after sorting (scalar mode)"),
     ),
@@ -256,7 +256,7 @@ const timeseries = Command.make(
   {
     ...aggregateFlags,
     ...filterFlags,
-    step: Flag.string("step").pipe(
+    step: Flag.String("step").pipe(
       Flag.optional,
       Flag.withDescription("Bucket size, e.g. \"5 minutes\" (default: ~300 buckets)"),
     ),
@@ -290,10 +290,10 @@ export const indexNote =
 const values = Command.make(
   "values",
   {
-    label: Argument.string("label").pipe(
+    label: Argument.String("label").pipe(
       Argument.withDescription("Stream label, e.g. service_name, k8s_namespace_name, deployment_environment"),
     ),
-    selector: Flag.string("selector").pipe(
+    selector: Flag.String("selector").pipe(
       Flag.optional,
       Flag.withDescription("Only streams matching this LogQL selector, e.g. '{deployment_environment=\"prod\"}'"),
     ),

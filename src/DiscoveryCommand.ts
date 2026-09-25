@@ -17,7 +17,7 @@ class InvalidSignal extends Data.TaggedError("InvalidSignal")<{ readonly message
 
 type Signal = "logs" | "traces" | "metrics"
 
-const signalFlag = Flag.string("signal").pipe(
+const signalFlag = Flag.String("signal").pipe(
   Flag.withDescription("logs | traces | metrics"),
 )
 
@@ -26,7 +26,7 @@ const parseSignal = (input: string): Effect.Effect<Signal, InvalidSignal> =>
     ? Effect.succeed(input)
     : Effect.fail(new InvalidSignal({ message: `Unknown --signal ${input}; expected logs, traces or metrics` }))
 
-const searchFlag = Flag.string("search").pipe(
+const searchFlag = Flag.String("search").pipe(
   Flag.optional,
   Flag.withDescription("Case-insensitive substring filter"),
 )
@@ -42,7 +42,7 @@ const range = (input: { readonly from: Option.Option<string>; readonly to: Optio
 const servicesList = Command.make(
   "list",
   {
-    signal: Flag.string("signal").pipe(Flag.optional, Flag.withDescription("Only services with logs or traces")),
+    signal: Flag.String("signal").pipe(Flag.optional, Flag.withDescription("Only services with logs or traces")),
     search: searchFlag,
     from: Flags.from,
     to: Flags.to,
@@ -90,12 +90,12 @@ export const fieldsCommand = Command.make(
   "fields",
   {
     signal: signalFlag,
-    service: Flag.string("service").pipe(
+    service: Flag.String("service").pipe(
       Flag.optional,
       Flag.withDescription("logs: also list fields detected in this service's lines; metrics: labels on this metric"),
     ),
-    metric: Flag.string("metric").pipe(Flag.optional, Flag.withDescription("metrics: only labels present on this metric")),
-    scope: Flag.string("scope").pipe(
+    metric: Flag.String("metric").pipe(Flag.optional, Flag.withDescription("metrics: only labels present on this metric")),
+    scope: Flag.String("scope").pipe(
       Flag.optional,
       Flag.withDescription("traces: resource | span | event | link | instrumentation | intrinsic"),
     ),
@@ -147,11 +147,11 @@ export const valuesCommand = Command.make(
   "values",
   {
     signal: signalFlag,
-    name: Argument.string("name").pipe(
+    name: Argument.String("name").pipe(
       Argument.withDescription("Log label, trace attribute (e.g. resource.deployment.environment), or metric label"),
     ),
     search: searchFlag,
-    limit: Flag.integer("limit").pipe(Flag.optional, Flag.withDescription("Maximum number of values")),
+    limit: Flag.Int("limit").pipe(Flag.optional, Flag.withDescription("Maximum number of values")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,

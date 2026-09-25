@@ -39,8 +39,9 @@ const describe = (cause: unknown): Described => {
     case "ConfigError": {
       const text = String(outer.message)
       const key = /at \["([A-Z0-9_]+)"\]/.exec(text)?.[1]
+      // Effect's wording for a missing value varies across releases; check the environment.
       return {
-        message: key !== undefined && /got undefined/.test(text)
+        message: key !== undefined && (process.env[key] === undefined || /got undefined/.test(text))
           ? `${key} is not set (graf needs GRAFANA_URL and GRAFANA_SERVICE_ACCOUNT_TOKEN)`
           : `invalid configuration: ${text}`,
       }

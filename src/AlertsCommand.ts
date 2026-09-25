@@ -5,7 +5,7 @@ import * as Flags from "./Flags.js"
 import * as Output from "./Output.js"
 import { printRows } from "./Rows.js"
 
-const uidArgument = Argument.string("rule-uid").pipe(Argument.withDescription("Alert rule UID (from `graf alerts list`)"))
+const uidArgument = Argument.String("rule-uid").pipe(Argument.withDescription("Alert rule UID (from `graf alerts list`)"))
 
 const labelText = (labels: Readonly<Record<string, string>>, skip: ReadonlySet<string> = new Set()): string =>
   Object.entries(labels).filter(([key]) => !skip.has(key)).map(([key, value]) => `${key}=${value}`).join(", ")
@@ -13,11 +13,11 @@ const labelText = (labels: Readonly<Record<string, string>>, skip: ReadonlySet<s
 const list = Command.make(
   "list",
   {
-    state: Flag.string("state").pipe(
+    state: Flag.String("state").pipe(
       Flag.optional,
       Flag.withDescription("Only rules in this state: firing | pending | inactive | nodata | error"),
     ),
-    search: Flag.string("search").pipe(Flag.optional, Flag.withDescription("Case-insensitive substring of the rule name or folder")),
+    search: Flag.String("search").pipe(Flag.optional, Flag.withDescription("Case-insensitive substring of the rule name or folder")),
     output: Output.outputFlag,
   },
   (input) =>
@@ -109,8 +109,8 @@ const history = Command.make(
   "history",
   {
     uid: uidArgument,
-    state: Flag.string("state").pipe(Flag.optional, Flag.withDescription("Only transitions into this state, e.g. Alerting, Normal")),
-    limit: Flag.integer("limit").pipe(Flag.optional, Flag.withDescription("Most recent N transitions")),
+    state: Flag.String("state").pipe(Flag.optional, Flag.withDescription("Only transitions into this state, e.g. Alerting, Normal")),
+    limit: Flag.Int("limit").pipe(Flag.optional, Flag.withDescription("Most recent N transitions")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,
@@ -130,7 +130,7 @@ const triage = Command.make(
   "triage",
   {
     uid: uidArgument,
-    limit: Flag.integer("limit").pipe(Flag.withDefault(10), Flag.withDescription("Recent transitions to show")),
+    limit: Flag.Int("limit").pipe(Flag.withDefault(10), Flag.withDescription("Recent transitions to show")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,
@@ -177,13 +177,13 @@ const evaluate = Command.make(
   "evaluate",
   {
     uid: uidArgument,
-    at: Flag.string("at").pipe(Flag.withDefault("now"), Flag.withDescription("Evaluate once, as of this time (default now)")),
-    from: Flag.string("from").pipe(
+    at: Flag.String("at").pipe(Flag.withDefault("now"), Flag.withDescription("Evaluate once, as of this time (default now)")),
+    from: Flag.String("from").pipe(
       Flag.optional,
       Flag.withDescription("Replay instead: evaluate at every tick from here to --to (e.g. \"6 hours\")"),
     ),
     to: Flags.to,
-    step: Flag.string("step").pipe(
+    step: Flag.String("step").pipe(
       Flag.optional,
       Flag.withDescription("Replay tick size (default: the rule's evaluation interval; widened to at most 120 ticks)"),
     ),

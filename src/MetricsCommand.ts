@@ -10,11 +10,11 @@ import { printRows } from "./Rows.js"
 const list = Command.make(
   "list",
   {
-    search: Flag.string("search").pipe(
+    search: Flag.String("search").pipe(
       Flag.optional,
       Flag.withDescription("Case-insensitive substring of the metric name"),
     ),
-    limit: Flag.integer("limit").pipe(
+    limit: Flag.Int("limit").pipe(
       Flag.optional,
       Flag.withDescription("Maximum number of metrics to return"),
     ),
@@ -46,7 +46,7 @@ const previewValues = (values: ReadonlyArray<string>, limit = 5): string =>
 const describe = Command.make(
   "describe",
   {
-    name: Argument.string("name").pipe(
+    name: Argument.String("name").pipe(
       Argument.withDescription("Metric name, exactly as `metrics list` prints it"),
     ),
     from: Flags.from,
@@ -85,7 +85,7 @@ const describe = Command.make(
 const query = Command.make(
   "query",
   {
-    query: Argument.string("query").pipe(
+    query: Argument.String("query").pipe(
       Argument.withDescription(
         "PromQL expression, e.g. 'sum by (service) (rate(traces_spanmetrics_calls_total[5m]))'. "
           + "Find metric names with `metrics list --search` and labels with `metrics describe`.",
@@ -93,11 +93,11 @@ const query = Command.make(
     ),
     from: Flags.from,
     to: Flags.to,
-    step: Flag.string("step").pipe(
+    step: Flag.String("step").pipe(
       Flag.optional,
       Flag.withDescription("Range-query resolution, e.g. \"1 minute\" (default: ~300 points over the range)"),
     ),
-    instant: Flag.boolean("instant").pipe(
+    instant: Flag.Boolean("instant").pipe(Flag.withDefault(false), 
       Flag.withDescription("Evaluate once at --to (default now) instead of over a range"),
     ),
     output: Output.outputFlag,

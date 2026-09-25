@@ -7,662 +7,454 @@ import * as HttpClientError from "effect/unstable/http/HttpClientError"
 import * as HttpClientRequest from "effect/unstable/http/HttpClientRequest"
 import * as HttpClientResponse from "effect/unstable/http/HttpClientResponse"
 // recursive declarations
-export type RouteExport = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "continue"?: boolean, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "match"?: { readonly [x: string]: string }, readonly "match_re"?: MatchRegexps, readonly "matchers"?: Matchers1, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "object_matchers"?: ObjectMatchers, readonly "receiver"?: string, readonly "repeat_interval"?: string, readonly "routes"?: ReadonlyArray<RouteExport> }
-export const RouteExport = Schema.suspend((): Schema.Codec<RouteExport> => __recursive_RouteExport)
-export type TimeInterval = { readonly "name"?: string, readonly "time_intervals"?: ReadonlyArray<TimeInterval> }
+export type TimeInterval = { readonly "name"?: string, readonly "time_intervals"?: ReadonlyArray<TimeInterval> } & { readonly [x: string]: Schema.Json }
 export const TimeInterval = Schema.suspend((): Schema.Codec<TimeInterval> => __recursive_TimeInterval)
-export type Route = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "continue"?: boolean, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "match"?: { readonly [x: string]: string }, readonly "match_re"?: MatchRegexps, readonly "matchers"?: Matchers1, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "object_matchers"?: ObjectMatchers, readonly "provenance"?: Provenance, readonly "receiver"?: string, readonly "repeat_interval"?: string, readonly "routes"?: ReadonlyArray<Route> }
+export type RouteExport = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "continue"?: boolean, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "match"?: { readonly [x: string]: string }, readonly "match_re"?: MatchRegexps, readonly "matchers"?: Matchers, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "object_matchers"?: ObjectMatchers, readonly "receiver"?: string, readonly "repeat_interval"?: string, readonly "routes"?: ReadonlyArray<RouteExport> } & { readonly [x: string]: Schema.Json }
+export const RouteExport = Schema.suspend((): Schema.Codec<RouteExport> => __recursive_RouteExport)
+export type Route = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "continue"?: boolean, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "match"?: { readonly [x: string]: string }, readonly "match_re"?: MatchRegexps, readonly "matchers"?: Matchers, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "object_matchers"?: ObjectMatchers, readonly "provenance"?: Provenance, readonly "receiver"?: string, readonly "repeat_interval"?: string, readonly "routes"?: ReadonlyArray<Route> } & { readonly [x: string]: Schema.Json }
 export const Route = Schema.suspend((): Schema.Codec<Route> => __recursive_Route)
 // non-recursive definitions
-export type ActiveUserStats = { readonly "active_admins_and_editors"?: number, readonly "active_anonymous_devices"?: number, readonly "active_users"?: number, readonly "active_viewers"?: number }
-export const ActiveUserStats = Schema.Struct({ "active_admins_and_editors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "active_anonymous_devices": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "active_users": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "active_viewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type Address = { readonly "address1"?: string, readonly "address2"?: string, readonly "city"?: string, readonly "country"?: string, readonly "state"?: string, readonly "zipCode"?: string }
-export const Address = Schema.Struct({ "address1": Schema.optionalKey(Schema.String), "address2": Schema.optionalKey(Schema.String), "city": Schema.optionalKey(Schema.String), "country": Schema.optionalKey(Schema.String), "state": Schema.optionalKey(Schema.String), "zipCode": Schema.optionalKey(Schema.String) })
-export type AdminStats = { readonly "activeAdmins"?: number, readonly "activeDevices"?: number, readonly "activeEditors"?: number, readonly "activeSessions"?: number, readonly "activeUsers"?: number, readonly "activeViewers"?: number, readonly "admins"?: number, readonly "alerts"?: number, readonly "dailyActiveAdmins"?: number, readonly "dailyActiveEditors"?: number, readonly "dailyActiveSessions"?: number, readonly "dailyActiveUsers"?: number, readonly "dailyActiveViewers"?: number, readonly "dashboards"?: number, readonly "datasources"?: number, readonly "editors"?: number, readonly "monthlyActiveUsers"?: number, readonly "orgs"?: number, readonly "playlists"?: number, readonly "snapshots"?: number, readonly "stars"?: number, readonly "tags"?: number, readonly "users"?: number, readonly "viewers"?: number }
-export const AdminStats = Schema.Struct({ "activeAdmins": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "activeDevices": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "activeEditors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "activeSessions": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "activeUsers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "activeViewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "admins": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "alerts": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dailyActiveAdmins": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dailyActiveEditors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dailyActiveSessions": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dailyActiveUsers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dailyActiveViewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dashboards": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "datasources": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "editors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "monthlyActiveUsers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "orgs": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "playlists": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "snapshots": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "stars": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "tags": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "users": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "viewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type AlertInstancesResponse = { readonly "instances"?: ReadonlyArray<ReadonlyArray<number>> }
-export const AlertInstancesResponse = Schema.Struct({ "instances": Schema.optionalKey(Schema.Array(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))).annotate({ "description": "Instances is an array of arrow encoded dataframes\neach frame has a single row, and a column for each instance (alert identified by unique labels) with a boolean value (firing/not firing)" })) })
-export type AlertManager = { readonly "url"?: string }
-export const AlertManager = Schema.Struct({ "url": Schema.optionalKey(Schema.String) }).annotate({ "title": "AlertManager models a configured Alert Manager." })
-export type AlertRuleEditorSettings = { readonly "simplified_notifications_section"?: boolean, readonly "simplified_query_and_expressions_section"?: boolean }
-export const AlertRuleEditorSettings = Schema.Struct({ "simplified_notifications_section": Schema.optionalKey(Schema.Boolean), "simplified_query_and_expressions_section": Schema.optionalKey(Schema.Boolean) })
-export type AlertRuleNotificationSettings = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "receiver": string, readonly "repeat_interval"?: string }
-export const AlertRuleNotificationSettings = Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Override the times when notifications should not be muted. These must match the name of a mute time interval defined\nin the alertmanager configuration time_intervals section. All notifications will be suppressed unless they are sent\nat the time that matches any interval.", "examples": [["maintenance"]] })), "group_by": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Override the labels by which incoming alerts are grouped together. For example, multiple alerts coming in for\ncluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels\nuse the special value '...' as the sole label name.\nThis effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what\nyou want, unless you have a very low alert volume or your upstream notification system performs its own grouping.\nMust include 'alertname' and 'grafana_folder' if not using '...'.", "default": ["alertname","grafana_folder"], "examples": [["alertname","grafana_folder","cluster"]] })), "group_interval": Schema.optionalKey(Schema.String.annotate({ "description": "Override how long to wait before sending a notification about new alerts that are added to a group of alerts for\nwhich an initial notification has already been sent. (Usually ~5m or more.)", "examples": ["5m"] })), "group_wait": Schema.optionalKey(Schema.String.annotate({ "description": "Override how long to initially wait to send a notification for a group of alerts. Allows to wait for an\ninhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)", "examples": ["30s"] })), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Override the times when notifications should be muted. These must match the name of a mute time interval defined\nin the alertmanager configuration time_intervals section. When muted it will not send any notifications, but\notherwise acts normally.", "examples": [["maintenance"]] })), "receiver": Schema.String.annotate({ "description": "Name of the receiver to send notifications to.", "examples": ["grafana-default-email"] }), "repeat_interval": Schema.optionalKey(Schema.String.annotate({ "description": "Override how long to wait before sending a notification again if it has already been sent successfully for an\nalert. (Usually ~3h or more).\nNote that this parameter is implicitly bound by Alertmanager's `--data.retention` configuration flag.\nNotifications will be resent after either repeat_interval or the data retention period have passed, whichever\noccurs first. `repeat_interval` should not be less than `group_interval`.", "examples": ["4h"] })) })
-export type AlertRuleNotificationSettingsExport = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "receiver"?: string, readonly "repeat_interval"?: string }
-export const AlertRuleNotificationSettingsExport = Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String) }).annotate({ "title": "AlertRuleNotificationSettingsExport is the provisioned export of models.NotificationSettings." })
-export type AlertRuleRecordExport = { readonly "from"?: string, readonly "metric"?: string, readonly "targetDatasourceUid"?: string }
-export const AlertRuleRecordExport = Schema.Struct({ "from": Schema.optionalKey(Schema.String), "metric": Schema.optionalKey(Schema.String), "targetDatasourceUid": Schema.optionalKey(Schema.String) }).annotate({ "title": "Record is the provisioned export of models.Record." })
-export type AnnotationActions = { readonly "canAdd"?: boolean, readonly "canDelete"?: boolean, readonly "canEdit"?: boolean }
-export const AnnotationActions = Schema.Struct({ "canAdd": Schema.optionalKey(Schema.Boolean), "canDelete": Schema.optionalKey(Schema.Boolean), "canEdit": Schema.optionalKey(Schema.Boolean) }).annotate({ "description": "+k8s:deepcopy-gen=true" })
-export type AnnotationPanelFilter = { readonly "exclude"?: boolean, readonly "ids"?: ReadonlyArray<number> }
-export const AnnotationPanelFilter = Schema.Struct({ "exclude": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Should the specified panels be included or excluded" })), "ids": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt())).annotate({ "description": "Panel IDs that should be included or excluded" })) })
-export type AnnotationTarget = { readonly "limit"?: number, readonly "matchAny"?: boolean, readonly "tags"?: ReadonlyArray<string>, readonly "type"?: string }
-export const AnnotationTarget = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change", "format": "int64" }).check(Schema.isInt())), "matchAny": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change" })), "tags": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change" })), "type": Schema.optionalKey(Schema.String.annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change" })) }).annotate({ "description": "TODO: this should be a regular DataQuery that depends on the selected dashboard\nthese match the properties of the \"grafana\" datasouce that is default in most dashboards" })
-export type Assignments = { readonly "builtInRoles"?: boolean, readonly "serviceAccounts"?: boolean, readonly "teams"?: boolean, readonly "users"?: boolean }
-export const Assignments = Schema.Struct({ "builtInRoles": Schema.optionalKey(Schema.Boolean), "serviceAccounts": Schema.optionalKey(Schema.Boolean), "teams": Schema.optionalKey(Schema.Boolean), "users": Schema.optionalKey(Schema.Boolean) })
-export type CacheConfigResponse = { readonly "created"?: string, readonly "dataSourceID"?: number, readonly "dataSourceUID"?: string, readonly "defaultTTLMs"?: number, readonly "enabled"?: boolean, readonly "message"?: string, readonly "ttlQueriesMs"?: number, readonly "ttlResourcesMs"?: number, readonly "updated"?: string, readonly "useDefaultTTL"?: boolean }
-export const CacheConfigResponse = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "dataSourceID": Schema.optionalKey(Schema.Number.annotate({ "description": "Fields that can be set by the API caller - read/write", "format": "int64" }).check(Schema.isInt())), "dataSourceUID": Schema.optionalKey(Schema.String), "defaultTTLMs": Schema.optionalKey(Schema.Number.annotate({ "description": "These are returned by the HTTP API, but are managed internally - read-only\nNote: 'created' and 'updated' are special properties managed automatically by xorm, but we are setting them manually", "format": "int64" }).check(Schema.isInt())), "enabled": Schema.optionalKey(Schema.Boolean), "message": Schema.optionalKey(Schema.String), "ttlQueriesMs": Schema.optionalKey(Schema.Number.annotate({ "description": "TTL MS, or \"time to live\", is how long a cached item will stay in the cache before it is removed (in milliseconds)", "format": "int64" }).check(Schema.isInt())), "ttlResourcesMs": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "useDefaultTTL": Schema.optionalKey(Schema.Boolean.annotate({ "description": "If UseDefaultTTL is enabled, then the TTLQueriesMS and TTLResourcesMS in this object is always sent as the default TTL located in grafana.ini" })) })
-export type CloudMigrationSessionResponseDTO = { readonly "created"?: string, readonly "slug"?: string, readonly "uid"?: string, readonly "updated"?: string }
-export const CloudMigrationSessionResponseDTO = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "slug": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) })
-export type ConfFloat64 = number
-export const ConfFloat64 = Schema.Number.annotate({ "description": "ConfFloat64 is a float64. It Marshals float64 values of NaN of Inf\nto null.", "format": "double" }).check(Schema.isFinite())
-export type CorrelationType = string
-export const CorrelationType = Schema.String.annotate({ "description": "the type of correlation, either query for containing query information, or external for containing an external URL\n+enum" })
-export type CounterResetHint = number
-export const CounterResetHint = Schema.Number.annotate({ "title": "CounterResetHint contains the known information about a counter reset,", "description": "or alternatively that we are dealing with a gauge histogram, where counter resets do not apply.", "format": "uint8" }).check(Schema.isInt())
-export type DashboardSnapshotDTO = { readonly "created"?: string, readonly "expires"?: string, readonly "external"?: boolean, readonly "externalUrl"?: string, readonly "key"?: string, readonly "name"?: string, readonly "updated"?: string }
-export const DashboardSnapshotDTO = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "expires": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "external": Schema.optionalKey(Schema.Boolean), "externalUrl": Schema.optionalKey(Schema.String), "key": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }).annotate({ "description": "DashboardSnapshotDTO without dashboard map" })
-export type DashboardTagCloudItem = { readonly "count"?: number, readonly "term"?: string }
-export const DashboardTagCloudItem = Schema.Struct({ "count": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "term": Schema.optionalKey(Schema.String) })
-export type DataSourceRef = { readonly "type"?: string, readonly "uid"?: string }
-export const DataSourceRef = Schema.Struct({ "type": Schema.optionalKey(Schema.String.annotate({ "description": "The plugin type-id" })), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Specific datasource instance" })) }).annotate({ "description": "Ref to a DataSource instance" })
-export type DataTopic = string
-export const DataTopic = Schema.String.annotate({ "title": "DataTopic is used to identify which topic the frame should be assigned to.", "description": "nolint:revive" })
-export type DescendantCounts = { readonly [x: string]: number }
-export const DescendantCounts = Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))
-export type DeviceSearchHitDTO = { readonly "clientIp"?: string, readonly "createdAt"?: string, readonly "deviceId"?: string, readonly "lastSeenAt"?: string, readonly "updatedAt"?: string, readonly "userAgent"?: string }
-export const DeviceSearchHitDTO = Schema.Struct({ "clientIp": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "deviceId": Schema.optionalKey(Schema.String), "lastSeenAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "userAgent": Schema.optionalKey(Schema.String) })
-export type DsAccess = string
-export const DsAccess = Schema.String
-export type Duration = number
-export const Duration = Schema.Number.annotate({ "description": "A Duration represents the elapsed time between two instants\nas an int64 nanosecond count. The representation limits the\nlargest representable duration to approximately 290 years.", "format": "int64" }).check(Schema.isInt())
-export type EmailDTO = { readonly "recipient"?: string, readonly "uid"?: string }
-export const EmailDTO = Schema.Struct({ "recipient": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type EnumFieldConfig = { readonly "color"?: ReadonlyArray<string>, readonly "description"?: ReadonlyArray<string>, readonly "icon"?: ReadonlyArray<string>, readonly "text"?: ReadonlyArray<string> }
-export const EnumFieldConfig = Schema.Struct({ "color": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Color is the color value for a given index (empty is undefined)" })), "description": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Description of the enum state" })), "icon": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Icon supports setting an icon for a given index value" })), "text": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Value is the string display value for a given index" })) }).annotate({ "description": "Enum field config\nVector values are used as lookup keys into the enum fields" })
-export type ErrorResponseBody = { readonly "error"?: string, readonly "message": string, readonly "status"?: string }
-export const ErrorResponseBody = Schema.Struct({ "error": Schema.optionalKey(Schema.String.annotate({ "description": "Error An optional detailed description of the actual error. Only included if running in developer mode." })), "message": Schema.String.annotate({ "description": "a human readable version of the error" }), "status": Schema.optionalKey(Schema.String.annotate({ "description": "Status An optional status to denote the cause of the error.\n\nFor example, a 412 Precondition Failed error may include additional information of why that error happened." })) })
-export type ErrorType = string
-export const ErrorType = Schema.String.annotate({ "title": "ErrorType models the different API error types." })
-export type ExplorePanelsState = Schema.Json
-export const ExplorePanelsState = Schema.Json.annotate({ "description": "This is an object constructed with the keys as the values of the enum VisType and the value being a bag of properties" })
-export type ExtKeyUsage = number
-export const ExtKeyUsage = Schema.Number.annotate({ "title": "ExtKeyUsage represents an extended set of actions that are valid for a given key.", "description": "Each of the ExtKeyUsage* constants define a unique action.", "format": "int64" }).check(Schema.isInt())
-export type FailedUser = { readonly "Error"?: string, readonly "Login"?: string }
-export const FailedUser = Schema.Struct({ "Error": Schema.optionalKey(Schema.String), "Login": Schema.optionalKey(Schema.String) }).annotate({ "description": "FailedUser holds the information of an user that failed" })
-export type FooterItem = { readonly "color"?: string, readonly "fontSize"?: string, readonly "fontStyle"?: string, readonly "fontWeight"?: string, readonly "type"?: string, readonly "value"?: string }
-export const FooterItem = Schema.Struct({ "color": Schema.optionalKey(Schema.String), "fontSize": Schema.optionalKey(Schema.String), "fontStyle": Schema.optionalKey(Schema.String), "fontWeight": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(Schema.String) })
-export type FrameLabels = { readonly [x: string]: string }
-export const FrameLabels = Schema.Record(Schema.String, Schema.String).annotate({ "description": "Labels are used to add metadata to an object.  The JSON will always be sorted keys" })
-export type FrameType = string
-export const FrameType = Schema.String.annotate({ "description": "A FrameType string, when present in a frame's metadata, asserts that the\nframe's structure conforms to the FrameType's specification.\nThis property is currently optional, so FrameType may be FrameTypeUnknown even if the properties of\nthe Frame correspond to a defined FrameType.\n+enum" })
-export type FrameTypeVersion = ReadonlyArray<number>
-export const FrameTypeVersion = Schema.Array(Schema.Number.annotate({ "format": "uint64" }).check(Schema.isInt())).annotate({ "title": "FrameType is a 2 number version (Major / Minor)." })
-export type GetAccessTokenResponseDTO = { readonly "createdAt"?: string, readonly "displayName"?: string, readonly "expiresAt"?: string, readonly "firstUsedAt"?: string, readonly "id"?: string, readonly "lastUsedAt"?: string }
-export const GetAccessTokenResponseDTO = Schema.Struct({ "createdAt": Schema.optionalKey(Schema.String), "displayName": Schema.optionalKey(Schema.String), "expiresAt": Schema.optionalKey(Schema.String), "firstUsedAt": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.String), "lastUsedAt": Schema.optionalKey(Schema.String) })
-export type HitType = string
-export const HitType = Schema.String
-export type HostPort = { readonly "Host"?: string, readonly "Port"?: string }
-export const HostPort = Schema.Struct({ "Host": Schema.optionalKey(Schema.String), "Port": Schema.optionalKey(Schema.String) }).annotate({ "title": "HostPort represents a \"host:port\" network address." })
-export type IPMask = ReadonlyArray<number>
-export const IPMask = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt())).annotate({ "title": "An IPMask is a bitmask that can be used to manipulate\nIP addresses for IP addressing and routing.", "description": "See type [IPNet] and func [ParseCIDR] for details." })
-export type ImportDashboardInput = { readonly "name"?: string, readonly "pluginId"?: string, readonly "type"?: string, readonly "value"?: string }
-export const ImportDashboardInput = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "pluginId": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(Schema.String) }).annotate({ "title": "ImportDashboardInput definition of input parameters when importing a dashboard." })
-export type InspectType = number
-export const InspectType = Schema.Number.annotate({ "title": "InspectType is a type for the Inspect property of a Notice.", "format": "int64" }).check(Schema.isInt())
-export type IntegrationStatus = { readonly "lastNotifyAttempt"?: string, readonly "lastNotifyAttemptDuration"?: string, readonly "lastNotifyAttemptError"?: string, readonly "name"?: string, readonly "sendResolved"?: boolean }
-export const IntegrationStatus = Schema.Struct({ "lastNotifyAttempt": Schema.optionalKey(Schema.String.annotate({ "description": "A timestamp indicating the last attempt to deliver a notification regardless of the outcome.\nFormat: date-time", "format": "date-time" })), "lastNotifyAttemptDuration": Schema.optionalKey(Schema.String.annotate({ "description": "Duration of the last attempt to deliver a notification in humanized format (`1s` or `15ms`, etc)." })), "lastNotifyAttemptError": Schema.optionalKey(Schema.String.annotate({ "description": "Error string for the last attempt to deliver a notification. Empty if the last attempt was successful." })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of the integration." })), "sendResolved": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Whether the integration is configured to send resolved notifications." })) })
-export type Json = {  }
-export const Json = Schema.Struct({  })
-export type KeyUsage = number
-export const KeyUsage = Schema.Number.annotate({ "description": "KeyUsage represents the set of actions that are valid for a given key. It's\na bitmap of the KeyUsage* constants.", "format": "int64" }).check(Schema.isInt())
-export type Label = { readonly "Name"?: string }
-export const Label = Schema.Struct({ "Name": Schema.optionalKey(Schema.String) }).annotate({ "title": "Label is a key/value pair of strings." })
-export type LibraryElementDTOMetaUser = { readonly "avatarUrl"?: string, readonly "id"?: number, readonly "name"?: string }
-export const LibraryElementDTOMetaUser = Schema.Struct({ "avatarUrl": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String) })
-export type ManagerKind = string
-export const ManagerKind = Schema.String.annotate({ "title": "ManagerKind is the type of manager, which is responsible for managing the resource.", "description": "It can be a user or a tool or a generic API client.\n+enum" })
-export type MatchRegexps = { readonly [x: string]: string }
-export const MatchRegexps = Schema.Record(Schema.String, Schema.String).annotate({ "title": "MatchRegexps represents a map of Regexp." })
-export type MatchType = number
-export const MatchType = Schema.Number.annotate({ "title": "MatchType is an enum for label matching types.", "format": "int64" }).check(Schema.isInt())
-export type Metadata = { readonly [x: string]: boolean }
-export const Metadata = Schema.Record(Schema.String, Schema.Boolean).annotate({ "description": "Metadata contains user accesses for a given resource\nEx: map[string]bool{\"create\":true, \"delete\": true}" })
-export type MigrateDataResponseItemDTO = { readonly "errorCode"?: "ALERT_RULES_QUOTA_REACHED" | "ALERT_RULES_GROUP_QUOTA_REACHED" | "DATASOURCE_NAME_CONFLICT" | "DATASOURCE_INVALID_URL" | "DATASOURCE_ALREADY_MANAGED" | "FOLDER_NAME_CONFLICT" | "DASHBOARD_ALREADY_MANAGED" | "LIBRARY_ELEMENT_NAME_CONFLICT" | "UNSUPPORTED_DATA_TYPE" | "RESOURCE_CONFLICT" | "UNEXPECTED_STATUS_CODE" | "INTERNAL_SERVICE_ERROR" | "GENERIC_ERROR", readonly "message"?: string, readonly "name"?: string, readonly "parentName"?: string, readonly "refId": string, readonly "status": "OK" | "WARNING" | "ERROR" | "PENDING" | "UNKNOWN", readonly "type": "DASHBOARD" | "DATASOURCE" | "FOLDER" | "LIBRARY_ELEMENT" | "ALERT_RULE" | "ALERT_RULE_GROUP" | "CONTACT_POINT" | "NOTIFICATION_POLICY" | "NOTIFICATION_TEMPLATE" | "MUTE_TIMING" | "PLUGIN" }
-export const MigrateDataResponseItemDTO = Schema.Struct({ "errorCode": Schema.optionalKey(Schema.Literals(["ALERT_RULES_QUOTA_REACHED", "ALERT_RULES_GROUP_QUOTA_REACHED", "DATASOURCE_NAME_CONFLICT", "DATASOURCE_INVALID_URL", "DATASOURCE_ALREADY_MANAGED", "FOLDER_NAME_CONFLICT", "DASHBOARD_ALREADY_MANAGED", "LIBRARY_ELEMENT_NAME_CONFLICT", "UNSUPPORTED_DATA_TYPE", "RESOURCE_CONFLICT", "UNEXPECTED_STATUS_CODE", "INTERNAL_SERVICE_ERROR", "GENERIC_ERROR"])), "message": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "parentName": Schema.optionalKey(Schema.String), "refId": Schema.String, "status": Schema.Literals(["OK", "WARNING", "ERROR", "PENDING", "UNKNOWN"]), "type": Schema.Literals(["DASHBOARD", "DATASOURCE", "FOLDER", "LIBRARY_ELEMENT", "ALERT_RULE", "ALERT_RULE_GROUP", "CONTACT_POINT", "NOTIFICATION_POLICY", "NOTIFICATION_TEMPLATE", "MUTE_TIMING", "PLUGIN"]) })
-export type MigrateDataResponseListDTO = { readonly "uid"?: string }
-export const MigrateDataResponseListDTO = Schema.Struct({ "uid": Schema.optionalKey(Schema.String) })
-export type MuteTimeInterval = { readonly "name"?: string, readonly "time_intervals"?: ReadonlyArray<TimeInterval> }
-export const MuteTimeInterval = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) }).annotate({ "title": "MuteTimeInterval represents a named set of time intervals for which a route should be muted." })
-export type MuteTimeIntervalExport = { readonly "name"?: string, readonly "orgId"?: number, readonly "time_intervals"?: ReadonlyArray<TimeInterval> }
-export const MuteTimeIntervalExport = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) })
-export type NavbarPreference = { readonly "bookmarkUrls"?: ReadonlyArray<string> }
-export const NavbarPreference = Schema.Struct({ "bookmarkUrls": Schema.optionalKey(Schema.Array(Schema.String)) })
-export type NotFound = {  }
-export const NotFound = Schema.Struct({  })
-export type NoticeSeverity = number
-export const NoticeSeverity = Schema.Number.annotate({ "title": "NoticeSeverity is a type for the Severity property of a Notice.", "format": "int64" }).check(Schema.isInt())
-export type ObjectIdentifier = ReadonlyArray<number>
-export const ObjectIdentifier = Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())).annotate({ "title": "An ObjectIdentifier represents an ASN.1 OBJECT IDENTIFIER." })
-export type ObjectMatcher = ReadonlyArray<string>
-export const ObjectMatcher = Schema.Array(Schema.String).annotate({ "title": "ObjectMatcher is a matcher that can be used to filter alerts." })
-export type OpsGenieConfigResponder = { readonly "id"?: string, readonly "name"?: string, readonly "type"?: string, readonly "username"?: string }
-export const OpsGenieConfigResponder = Schema.Struct({ "id": Schema.optionalKey(Schema.String.annotate({ "description": "One of those 3 should be filled." })), "name": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String.annotate({ "description": "team, user, escalation, schedule etc." })), "username": Schema.optionalKey(Schema.String) })
-export type OrgDTO = { readonly "id"?: number, readonly "name"?: string }
-export const OrgDTO = Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String) })
-export type OrgUserDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "authLabels"?: ReadonlyArray<string>, readonly "avatarUrl"?: string, readonly "created"?: string, readonly "email"?: string, readonly "isDisabled"?: boolean, readonly "isExternallySynced"?: boolean, readonly "isProvisioned"?: boolean, readonly "lastSeenAt"?: string, readonly "lastSeenAtAge"?: string, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: string, readonly "uid"?: string, readonly "userId"?: number }
-export const OrgUserDTO = Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "authLabels": Schema.optionalKey(Schema.Array(Schema.String)), "avatarUrl": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "isDisabled": Schema.optionalKey(Schema.Boolean), "isExternallySynced": Schema.optionalKey(Schema.Boolean), "isProvisioned": Schema.optionalKey(Schema.Boolean), "lastSeenAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "lastSeenAtAge": Schema.optionalKey(Schema.String), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "role": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type PagerdutyImage = { readonly "alt"?: string, readonly "href"?: string, readonly "src"?: string }
-export const PagerdutyImage = Schema.Struct({ "alt": Schema.optionalKey(Schema.String), "href": Schema.optionalKey(Schema.String), "src": Schema.optionalKey(Schema.String) }).annotate({ "title": "PagerdutyImage is an image." })
-export type PagerdutyLink = { readonly "href"?: string, readonly "text"?: string }
-export const PagerdutyLink = Schema.Struct({ "href": Schema.optionalKey(Schema.String), "text": Schema.optionalKey(Schema.String) }).annotate({ "title": "PagerdutyLink is a link." })
-export type Password = string
-export const Password = Schema.String
-export type Permission = { readonly "action"?: string, readonly "created"?: string, readonly "scope"?: string, readonly "updated"?: string }
-export const Permission = Schema.Struct({ "action": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "scope": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }).annotate({ "description": "Permission is the model for access control permissions" })
-export type PermissionDenied = {  }
-export const PermissionDenied = Schema.Struct({  })
-export type PermissionType = number
-export const PermissionType = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())
-export type Playlist = { readonly "id"?: number, readonly "interval"?: string, readonly "name"?: string, readonly "uid"?: string }
-export const Playlist = Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "interval": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }).annotate({ "description": "Playlist model" })
-export type PlaylistDashboard = { readonly "id"?: number, readonly "order"?: number, readonly "slug"?: string, readonly "title"?: string, readonly "uri"?: string, readonly "url"?: string }
-export const PlaylistDashboard = Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "order": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "slug": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uri": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) })
-export type PlaylistItem = { readonly "Id"?: number, readonly "PlaylistId"?: number, readonly "order"?: number, readonly "title"?: string, readonly "type"?: string, readonly "value"?: string }
-export const PlaylistItem = Schema.Struct({ "Id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "PlaylistId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "order": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "title": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(Schema.String) })
-export type PlaylistItemDTO = { readonly "title"?: string, readonly "type"?: string, readonly "value"?: string }
-export const PlaylistItemDTO = Schema.Struct({ "title": Schema.optionalKey(Schema.String.annotate({ "description": "Title is an unused property -- it will be removed in the future" })), "type": Schema.optionalKey(Schema.String.annotate({ "description": "Type of the item." })), "value": Schema.optionalKey(Schema.String.annotate({ "description": "Value depends on type and describes the playlist item.\n\ndashboard_by_id: The value is an internal numerical identifier set by Grafana. This\nis not portable as the numerical identifier is non-deterministic between different instances.\nWill be replaced by dashboard_by_uid in the future. (deprecated)\ndashboard_by_tag: The value is a tag which is set on any number of dashboards. All\ndashboards behind the tag will be added to the playlist.\ndashboard_by_uid: The value is the dashboard UID" })) })
-export type PolicyMapping = { readonly "IssuerDomainPolicy"?: string, readonly "SubjectDomainPolicy"?: string }
-export const PolicyMapping = Schema.Struct({ "IssuerDomainPolicy": Schema.optionalKey(Schema.String.annotate({ "description": "IssuerDomainPolicy contains a policy OID the issuing certificate considers\nequivalent to SubjectDomainPolicy in the subject certificate." })), "SubjectDomainPolicy": Schema.optionalKey(Schema.String.annotate({ "description": "SubjectDomainPolicy contains a OID the issuing certificate considers\nequivalent to IssuerDomainPolicy in the subject certificate." })) }).annotate({ "title": "PolicyMapping represents a policy mapping entry in the policyMappings extension." })
-export type PreferencesNavbarPreference = { readonly "bookmarkUrls"?: ReadonlyArray<string> }
-export const PreferencesNavbarPreference = Schema.Struct({ "bookmarkUrls": Schema.optionalKey(Schema.Array(Schema.String)) }).annotate({ "description": "+k8s:openapi-gen=true" })
-export type PreferencesQueryHistoryPreference = { readonly "homeTab"?: string }
-export const PreferencesQueryHistoryPreference = Schema.Struct({ "homeTab": Schema.optionalKey(Schema.String.annotate({ "description": "one of: '' | 'query' | 'starred';" })) }).annotate({ "description": "+k8s:openapi-gen=true" })
-export type PrometheusRemoteWriteTargetJSON = { readonly "data_source_uid"?: string, readonly "id"?: string, readonly "remote_write_path"?: string }
-export const PrometheusRemoteWriteTargetJSON = Schema.Struct({ "data_source_uid": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.String), "remote_write_path": Schema.optionalKey(Schema.String) })
-export type PrometheusRule = { readonly "alert"?: string, readonly "annotations"?: { readonly [x: string]: string }, readonly "expr"?: string, readonly "for"?: string, readonly "keep_firing_for"?: string, readonly "labels"?: { readonly [x: string]: string }, readonly "record"?: string }
-export const PrometheusRule = Schema.Struct({ "alert": Schema.optionalKey(Schema.String), "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "expr": Schema.optionalKey(Schema.String), "for": Schema.optionalKey(Schema.String), "keep_firing_for": Schema.optionalKey(Schema.String), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "record": Schema.optionalKey(Schema.String) })
-export type Provenance = string
-export const Provenance = Schema.String
-export type PublicDashboardListResponse = { readonly "accessToken"?: string, readonly "dashboardUid"?: string, readonly "isEnabled"?: boolean, readonly "slug"?: string, readonly "title"?: string, readonly "uid"?: string }
-export const PublicDashboardListResponse = Schema.Struct({ "accessToken": Schema.optionalKey(Schema.String), "dashboardUid": Schema.optionalKey(Schema.String), "isEnabled": Schema.optionalKey(Schema.Boolean), "slug": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type PublicError = { readonly "extra"?: { readonly [x: string]: Schema.Json }, readonly "message"?: string, readonly "messageId"?: string, readonly "statusCode"?: number }
-export const PublicError = Schema.Struct({ "extra": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json)), "message": Schema.optionalKey(Schema.String), "messageId": Schema.optionalKey(Schema.String), "statusCode": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "description": "PublicError is derived from Error and only contains information\navailable to the end user." })
-export type PublicKeyAlgorithm = number
-export const PublicKeyAlgorithm = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())
-export type QueryHistoryPreference = { readonly "homeTab"?: string }
-export const QueryHistoryPreference = Schema.Struct({ "homeTab": Schema.optionalKey(Schema.String) })
-export type QuotaDTO = { readonly "limit"?: number, readonly "org_id"?: number, readonly "target"?: string, readonly "used"?: number, readonly "user_id"?: number }
-export const QuotaDTO = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "org_id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "target": Schema.optionalKey(Schema.String), "used": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "user_id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type RawMessage = {  }
-export const RawMessage = Schema.Struct({  })
-export type Record = { readonly "from": string, readonly "metric": string, readonly "target_datasource_uid"?: string }
-export const Record = Schema.Struct({ "from": Schema.String.annotate({ "description": "Which expression node should be used as the input for the recorded metric.", "examples": ["A"] }), "metric": Schema.String.annotate({ "description": "Name of the recorded metric.", "examples": ["grafana_alerts_ratio"] }), "target_datasource_uid": Schema.optionalKey(Schema.String.annotate({ "description": "Which data source should be used to write the output of the recording rule, specified by UID.", "examples": ["my-prom"] })) })
-export type RecordingRuleJSON = { readonly "active"?: boolean, readonly "count"?: boolean, readonly "description"?: string, readonly "dest_data_source_uid"?: string, readonly "id"?: string, readonly "interval"?: number, readonly "name"?: string, readonly "prom_name"?: string, readonly "queries"?: ReadonlyArray<{ readonly [x: string]: Schema.Json }>, readonly "range"?: number, readonly "target_ref_id"?: string }
-export const RecordingRuleJSON = Schema.Struct({ "active": Schema.optionalKey(Schema.Boolean), "count": Schema.optionalKey(Schema.Boolean), "description": Schema.optionalKey(Schema.String), "dest_data_source_uid": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String), "prom_name": Schema.optionalKey(Schema.String), "queries": Schema.optionalKey(Schema.Array(Schema.Record(Schema.String, Schema.Json))), "range": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "target_ref_id": Schema.optionalKey(Schema.String) }).annotate({ "description": "RecordingRuleJSON is the external representation of a recording rule" })
-export type RelativeTimeRangeExport = { readonly "from"?: number, readonly "to"?: number }
-export const RelativeTimeRangeExport = Schema.Struct({ "from": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "to": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type RemoteWriteConfig = { readonly "url"?: string }
-export const RemoteWriteConfig = Schema.Struct({ "url": Schema.optionalKey(Schema.String) })
-export type ReportBrandingOptions = { readonly "emailFooterLink"?: string, readonly "emailFooterMode"?: string, readonly "emailFooterText"?: string, readonly "emailLogoUrl"?: string, readonly "reportLogoUrl"?: string }
-export const ReportBrandingOptions = Schema.Struct({ "emailFooterLink": Schema.optionalKey(Schema.String), "emailFooterMode": Schema.optionalKey(Schema.String), "emailFooterText": Schema.optionalKey(Schema.String), "emailLogoUrl": Schema.optionalKey(Schema.String), "reportLogoUrl": Schema.optionalKey(Schema.String) })
-export type ReportDashboardID = { readonly "id"?: number, readonly "name"?: string, readonly "uid"?: string }
-export const ReportDashboardID = Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type ReportSchedule = { readonly "dayOfMonth"?: string, readonly "endDate"?: string, readonly "frequency"?: string, readonly "intervalAmount"?: number, readonly "intervalFrequency"?: string, readonly "startDate"?: string, readonly "timeZone"?: string, readonly "workdaysOnly"?: boolean }
-export const ReportSchedule = Schema.Struct({ "dayOfMonth": Schema.optionalKey(Schema.String), "endDate": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "frequency": Schema.optionalKey(Schema.String), "intervalAmount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "intervalFrequency": Schema.optionalKey(Schema.String), "startDate": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "timeZone": Schema.optionalKey(Schema.String), "workdaysOnly": Schema.optionalKey(Schema.Boolean) })
-export type ReportTimeRange = { readonly "from"?: string, readonly "to"?: string }
-export const ReportTimeRange = Schema.Struct({ "from": Schema.optionalKey(Schema.String), "to": Schema.optionalKey(Schema.String) })
-export type ReportURLItem = { readonly "title"?: string, readonly "url"?: string }
-export const ReportURLItem = Schema.Struct({ "title": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) })
-export type ResourceDependencyDTO = { readonly "dependencies"?: ReadonlyArray<"DASHBOARD" | "DATASOURCE" | "FOLDER" | "LIBRARY_ELEMENT" | "ALERT_RULE" | "ALERT_RULE_GROUP" | "CONTACT_POINT" | "NOTIFICATION_POLICY" | "NOTIFICATION_TEMPLATE" | "MUTE_TIMING" | "PLUGIN">, readonly "resourceType"?: "DASHBOARD" | "DATASOURCE" | "FOLDER" | "LIBRARY_ELEMENT" | "ALERT_RULE" | "ALERT_RULE_GROUP" | "CONTACT_POINT" | "NOTIFICATION_POLICY" | "NOTIFICATION_TEMPLATE" | "MUTE_TIMING" | "PLUGIN" }
-export const ResourceDependencyDTO = Schema.Struct({ "dependencies": Schema.optionalKey(Schema.Array(Schema.Literals(["DASHBOARD", "DATASOURCE", "FOLDER", "LIBRARY_ELEMENT", "ALERT_RULE", "ALERT_RULE_GROUP", "CONTACT_POINT", "NOTIFICATION_POLICY", "NOTIFICATION_TEMPLATE", "MUTE_TIMING", "PLUGIN"]))), "resourceType": Schema.optionalKey(Schema.Literals(["DASHBOARD", "DATASOURCE", "FOLDER", "LIBRARY_ELEMENT", "ALERT_RULE", "ALERT_RULE_GROUP", "CONTACT_POINT", "NOTIFICATION_POLICY", "NOTIFICATION_TEMPLATE", "MUTE_TIMING", "PLUGIN"])) })
-export type ResponseDetails = { readonly "msg"?: string }
-export const ResponseDetails = Schema.Struct({ "msg": Schema.optionalKey(Schema.String) })
-export type RoleAssignmentsDTO = { readonly "role_uid"?: string, readonly "service_accounts"?: ReadonlyArray<number>, readonly "teams"?: ReadonlyArray<number>, readonly "users"?: ReadonlyArray<number> }
-export const RoleAssignmentsDTO = Schema.Struct({ "role_uid": Schema.optionalKey(Schema.String), "service_accounts": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "teams": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "users": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))) })
-export type Secret = string
-export const Secret = Schema.String.annotate({ "title": "Secret special type for storing secrets." })
-export type ServiceAccountDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "avatarUrl"?: string, readonly "id"?: number, readonly "isDisabled"?: boolean, readonly "isExternal"?: boolean, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: string, readonly "tokens"?: number, readonly "uid"?: string }
-export const ServiceAccountDTO = Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean).annotate({ "examples": [{"serviceaccounts:delete":true,"serviceaccounts:read":true,"serviceaccounts:write":true}] })), "avatarUrl": Schema.optionalKey(Schema.String.annotate({ "examples": ["/avatar/85ec38023d90823d3e5b43ef35646af9"] })), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isDisabled": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "isExternal": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "login": Schema.optionalKey(Schema.String.annotate({ "examples": ["sa-grafana"] })), "name": Schema.optionalKey(Schema.String.annotate({ "examples": ["grafana"] })), "orgId": Schema.optionalKey(Schema.Number.annotate({ "examples": [1], "format": "int64" }).check(Schema.isInt())), "role": Schema.optionalKey(Schema.String.annotate({ "examples": ["Viewer"] })), "tokens": Schema.optionalKey(Schema.Number.annotate({ "examples": [0], "format": "int64" }).check(Schema.isInt())), "uid": Schema.optionalKey(Schema.String.annotate({ "examples": ["fe1xejlha91xce"] })) }).annotate({ "description": "swagger: model" })
-export type SetResourcePermissionCommand = { readonly "builtInRole"?: string, readonly "permission"?: string, readonly "teamId"?: number, readonly "userId"?: number }
-export const SetResourcePermissionCommand = Schema.Struct({ "builtInRole": Schema.optionalKey(Schema.String), "permission": Schema.optionalKey(Schema.String), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type SettingsBag = { readonly [x: string]: { readonly [x: string]: string } }
-export const SettingsBag = Schema.Record(Schema.String, Schema.Record(Schema.String, Schema.String))
-export type ShareType = string
-export const ShareType = Schema.String
-export type SignatureAlgorithm = number
-export const SignatureAlgorithm = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())
-export type SilenceMetadata = { readonly "folder_uid"?: string, readonly "rule_title"?: string, readonly "rule_uid"?: string }
-export const SilenceMetadata = Schema.Struct({ "folder_uid": Schema.optionalKey(Schema.String), "rule_title": Schema.optionalKey(Schema.String), "rule_uid": Schema.optionalKey(Schema.String) })
-export type SlackConfirmationField = { readonly "dismiss_text"?: string, readonly "ok_text"?: string, readonly "text"?: string, readonly "title"?: string }
-export const SlackConfirmationField = Schema.Struct({ "dismiss_text": Schema.optionalKey(Schema.String), "ok_text": Schema.optionalKey(Schema.String), "text": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String) }).annotate({ "description": "SlackConfirmationField protect users from destructive actions or particularly distinguished decisions\nby asking them to confirm their button click one more time.\nSee https://api.slack.com/docs/interactive-message-field-guide#confirmation_fields for more information." })
-export type SlackField = { readonly "short"?: boolean, readonly "title"?: string, readonly "value"?: string }
-export const SlackField = Schema.Struct({ "short": Schema.optionalKey(Schema.Boolean), "title": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(Schema.String) }).annotate({ "title": "SlackField configures a single Slack field that is sent with each notification.", "description": "Each field must contain a title, value, and optionally, a boolean value to indicate if the field\nis short enough to be displayed next to other fields designated as short.\nSee https://api.slack.com/docs/message-attachments#fields for more information." })
-export type SnapshotDTO = { readonly "created"?: string, readonly "finished"?: string, readonly "sessionUid"?: string, readonly "status"?: "INITIALIZING" | "CREATING" | "PENDING_UPLOAD" | "UPLOADING" | "PENDING_PROCESSING" | "PROCESSING" | "FINISHED" | "CANCELED" | "ERROR" | "UNKNOWN", readonly "uid"?: string }
-export const SnapshotDTO = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "finished": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "sessionUid": Schema.optionalKey(Schema.String), "status": Schema.optionalKey(Schema.Literals(["INITIALIZING", "CREATING", "PENDING_UPLOAD", "UPLOADING", "PENDING_PROCESSING", "PROCESSING", "FINISHED", "CANCELED", "ERROR", "UNKNOWN"])), "uid": Schema.optionalKey(Schema.String) }).annotate({ "description": "Base snapshot without results" })
-export type SnapshotResourceStats = { readonly "statuses"?: { readonly [x: string]: number }, readonly "total"?: number, readonly "types"?: { readonly [x: string]: number } }
-export const SnapshotResourceStats = Schema.Struct({ "statuses": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "total": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "types": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))) })
-export type Source = string
-export const Source = Schema.String.annotate({ "title": "Source type defines the status source." })
-export type Span = { readonly "Length"?: number, readonly "Offset"?: number }
-export const Span = Schema.Struct({ "Length": Schema.optionalKey(Schema.Number.annotate({ "description": "Length of the span.", "format": "uint32" }).check(Schema.isInt())), "Offset": Schema.optionalKey(Schema.Number.annotate({ "description": "Gap to previous span (always positive), or starting index for the 1st\nspan (which can be negative).", "format": "int32" }).check(Schema.isInt())) }).annotate({ "title": "A Span defines a continuous sequence of buckets." })
-export type State = string
-export const State = Schema.String.annotate({ "description": "+enum" })
+export type Permission = { readonly "action"?: string, readonly "created"?: string, readonly "scope"?: string, readonly "updated"?: string } & { readonly [x: string]: Schema.Json }
+export const Permission = Schema.StructWithRest(Schema.Struct({ "action": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "scope": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Permission is the model for access control permissions", "identifier": "Permission" })
+export type ErrorResponseBody = { readonly "error"?: string, readonly "message": string, readonly "status"?: string } & { readonly [x: string]: Schema.Json }
+export const ErrorResponseBody = Schema.StructWithRest(Schema.Struct({ "error": Schema.optionalKey(Schema.String.annotate({ "description": "Error An optional detailed description of the actual error. Only included if running in developer mode." })), "message": Schema.String.annotate({ "description": "a human readable version of the error" }), "status": Schema.optionalKey(Schema.String.annotate({ "description": "Status An optional status to denote the cause of the error.\n\nFor example, a 412 Precondition Failed error may include additional information of why that error happened." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ErrorResponseBody" })
+export type RoleAssignmentsDTO = { readonly "role_uid"?: string, readonly "service_accounts"?: ReadonlyArray<number>, readonly "teams"?: ReadonlyArray<number>, readonly "users"?: ReadonlyArray<number> } & { readonly [x: string]: Schema.Json }
+export const RoleAssignmentsDTO = Schema.StructWithRest(Schema.Struct({ "role_uid": Schema.optionalKey(Schema.String), "service_accounts": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "teams": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "users": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "RoleAssignmentsDTO" })
 export type Status = number
-export const Status = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())
-export type SuccessResponseBody = { readonly "message"?: string }
-export const SuccessResponseBody = Schema.Struct({ "message": Schema.optionalKey(Schema.String) })
+export const Status = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "Status" }))
+export type SuccessResponseBody = { readonly "message"?: string } & { readonly [x: string]: Schema.Json }
+export const SuccessResponseBody = Schema.StructWithRest(Schema.Struct({ "message": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SuccessResponseBody" })
+export type Assignments = { readonly "builtInRoles"?: boolean, readonly "serviceAccounts"?: boolean, readonly "teams"?: boolean, readonly "users"?: boolean } & { readonly [x: string]: Schema.Json }
+export const Assignments = Schema.StructWithRest(Schema.Struct({ "builtInRoles": Schema.optionalKey(Schema.Boolean), "serviceAccounts": Schema.optionalKey(Schema.Boolean), "teams": Schema.optionalKey(Schema.Boolean), "users": Schema.optionalKey(Schema.Boolean) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Assignments" })
+export type ResourcePermissionDTO = { readonly "actions"?: ReadonlyArray<string>, readonly "builtInRole"?: string, readonly "id"?: number, readonly "isInherited"?: boolean, readonly "isManaged"?: boolean, readonly "isServiceAccount"?: boolean, readonly "permission"?: string, readonly "roleName"?: string, readonly "team"?: string, readonly "teamAvatarUrl"?: string, readonly "teamId"?: number, readonly "teamUid"?: string, readonly "userAvatarUrl"?: string, readonly "userId"?: number, readonly "userLogin"?: string, readonly "userUid"?: string } & { readonly [x: string]: Schema.Json }
+export const ResourcePermissionDTO = Schema.StructWithRest(Schema.Struct({ "actions": Schema.optionalKey(Schema.Array(Schema.String)), "builtInRole": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isInherited": Schema.optionalKey(Schema.Boolean), "isManaged": Schema.optionalKey(Schema.Boolean), "isServiceAccount": Schema.optionalKey(Schema.Boolean), "permission": Schema.optionalKey(Schema.String), "roleName": Schema.optionalKey(Schema.String), "team": Schema.optionalKey(Schema.String), "teamAvatarUrl": Schema.optionalKey(Schema.String), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teamUid": Schema.optionalKey(Schema.String), "userAvatarUrl": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userLogin": Schema.optionalKey(Schema.String), "userUid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "resourcePermissionDTO" })
+export type Duration = number
+export const Duration = Schema.Number.annotate({ "description": "A Duration represents the elapsed time between two instants\nas an int64 nanosecond count. The representation limits the\nlargest representable duration to approximately 290 years.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "Duration" }))
+export type FailedUser = { readonly "Error"?: string, readonly "Login"?: string } & { readonly [x: string]: Schema.Json }
+export const FailedUser = Schema.StructWithRest(Schema.Struct({ "Error": Schema.optionalKey(Schema.String), "Login": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "FailedUser holds the information of an user that failed", "identifier": "FailedUser" })
+export type SettingsBag = { readonly [x: string]: { readonly [x: string]: string } }
+export const SettingsBag = Schema.Record(Schema.String, Schema.Record(Schema.String, Schema.String)).annotate({ "identifier": "SettingsBag" })
+export type AdminStats = { readonly "activeAdmins"?: number, readonly "activeDevices"?: number, readonly "activeEditors"?: number, readonly "activeSessions"?: number, readonly "activeUsers"?: number, readonly "activeViewers"?: number, readonly "admins"?: number, readonly "alerts"?: number, readonly "dailyActiveAdmins"?: number, readonly "dailyActiveEditors"?: number, readonly "dailyActiveSessions"?: number, readonly "dailyActiveUsers"?: number, readonly "dailyActiveViewers"?: number, readonly "dashboards"?: number, readonly "datasources"?: number, readonly "editors"?: number, readonly "monthlyActiveUsers"?: number, readonly "orgs"?: number, readonly "playlists"?: number, readonly "snapshots"?: number, readonly "stars"?: number, readonly "tags"?: number, readonly "users"?: number, readonly "viewers"?: number } & { readonly [x: string]: Schema.Json }
+export const AdminStats = Schema.StructWithRest(Schema.Struct({ "activeAdmins": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "activeDevices": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "activeEditors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "activeSessions": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "activeUsers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "activeViewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "admins": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "alerts": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dailyActiveAdmins": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dailyActiveEditors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dailyActiveSessions": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dailyActiveUsers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dailyActiveViewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dashboards": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "datasources": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "editors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "monthlyActiveUsers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "orgs": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "playlists": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "snapshots": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "stars": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "tags": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "users": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "viewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "AdminStats" })
+export type UserToken = { readonly "AuthToken"?: string, readonly "AuthTokenSeen"?: boolean, readonly "ClientIp"?: string, readonly "CreatedAt"?: number, readonly "ExternalSessionId"?: number, readonly "Id"?: number, readonly "PrevAuthToken"?: string, readonly "RevokedAt"?: number, readonly "RotatedAt"?: number, readonly "SeenAt"?: number, readonly "UnhashedToken"?: string, readonly "UpdatedAt"?: number, readonly "UserAgent"?: string, readonly "UserId"?: number } & { readonly [x: string]: Schema.Json }
+export const UserToken = Schema.StructWithRest(Schema.Struct({ "AuthToken": Schema.optionalKey(Schema.String), "AuthTokenSeen": Schema.optionalKey(Schema.Boolean), "ClientIp": Schema.optionalKey(Schema.String), "CreatedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "ExternalSessionId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "Id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "PrevAuthToken": Schema.optionalKey(Schema.String), "RevokedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "RotatedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "SeenAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "UnhashedToken": Schema.optionalKey(Schema.String), "UpdatedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "UserAgent": Schema.optionalKey(Schema.String), "UserId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "UserToken represents a user token", "identifier": "UserToken" })
+export type QuotaDTO = { readonly "limit"?: number, readonly "org_id"?: number, readonly "target"?: string, readonly "used"?: number, readonly "user_id"?: number } & { readonly [x: string]: Schema.Json }
+export const QuotaDTO = Schema.StructWithRest(Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "org_id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "target": Schema.optionalKey(Schema.String), "used": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "user_id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "QuotaDTO" })
+export type Json = { readonly [x: string]: Schema.Json }
+export const Json = Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "identifier": "Json" })
+export type TagsDTO = { readonly "count"?: number, readonly "tag"?: string } & { readonly [x: string]: Schema.Json }
+export const TagsDTO = Schema.StructWithRest(Schema.Struct({ "count": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "tag": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "TagsDTO is the frontend DTO for Tag.", "identifier": "TagsDTO" })
+export type DeviceDTO = { readonly "avatarUrl"?: string, readonly "clientIp"?: string, readonly "createdAt"?: string, readonly "deviceId"?: string, readonly "lastSeenAt"?: string, readonly "updatedAt"?: string, readonly "userAgent"?: string } & { readonly [x: string]: Schema.Json }
+export const DeviceDTO = Schema.StructWithRest(Schema.Struct({ "avatarUrl": Schema.optionalKey(Schema.String), "clientIp": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "deviceId": Schema.optionalKey(Schema.String), "lastSeenAt": Schema.optionalKey(Schema.String), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "userAgent": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "deviceDTO" })
+export type DeviceSearchHitDTO = { readonly "clientIp"?: string, readonly "createdAt"?: string, readonly "deviceId"?: string, readonly "lastSeenAt"?: string, readonly "updatedAt"?: string, readonly "userAgent"?: string } & { readonly [x: string]: Schema.Json }
+export const DeviceSearchHitDTO = Schema.StructWithRest(Schema.Struct({ "clientIp": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "deviceId": Schema.optionalKey(Schema.String), "lastSeenAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "userAgent": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DeviceSearchHitDTO" })
+export type CloudMigrationSessionResponseDTO = { readonly "created"?: string, readonly "slug"?: string, readonly "uid"?: string, readonly "updated"?: string } & { readonly [x: string]: Schema.Json }
+export const CloudMigrationSessionResponseDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "slug": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "CloudMigrationSessionResponseDTO" })
+export type MigrateDataResponseItemDTO = { readonly "errorCode"?: "ALERT_RULES_QUOTA_REACHED" | "ALERT_RULES_GROUP_QUOTA_REACHED" | "DATASOURCE_NAME_CONFLICT" | "DATASOURCE_INVALID_URL" | "DATASOURCE_ALREADY_MANAGED" | "FOLDER_NAME_CONFLICT" | "DASHBOARD_ALREADY_MANAGED" | "LIBRARY_ELEMENT_NAME_CONFLICT" | "UNSUPPORTED_DATA_TYPE" | "RESOURCE_CONFLICT" | "UNEXPECTED_STATUS_CODE" | "INTERNAL_SERVICE_ERROR" | "GENERIC_ERROR", readonly "message"?: string, readonly "name"?: string, readonly "parentName"?: string, readonly "refId": string, readonly "status": "OK" | "WARNING" | "ERROR" | "PENDING" | "UNKNOWN", readonly "type": "DASHBOARD" | "DATASOURCE" | "FOLDER" | "LIBRARY_ELEMENT" | "ALERT_RULE" | "ALERT_RULE_GROUP" | "CONTACT_POINT" | "NOTIFICATION_POLICY" | "NOTIFICATION_TEMPLATE" | "MUTE_TIMING" | "PLUGIN" } & { readonly [x: string]: Schema.Json }
+export const MigrateDataResponseItemDTO = Schema.StructWithRest(Schema.Struct({ "errorCode": Schema.optionalKey(Schema.Literals(["ALERT_RULES_QUOTA_REACHED", "ALERT_RULES_GROUP_QUOTA_REACHED", "DATASOURCE_NAME_CONFLICT", "DATASOURCE_INVALID_URL", "DATASOURCE_ALREADY_MANAGED", "FOLDER_NAME_CONFLICT", "DASHBOARD_ALREADY_MANAGED", "LIBRARY_ELEMENT_NAME_CONFLICT", "UNSUPPORTED_DATA_TYPE", "RESOURCE_CONFLICT", "UNEXPECTED_STATUS_CODE", "INTERNAL_SERVICE_ERROR", "GENERIC_ERROR"])), "message": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "parentName": Schema.optionalKey(Schema.String), "refId": Schema.String, "status": Schema.Literals(["OK", "WARNING", "ERROR", "PENDING", "UNKNOWN"]), "type": Schema.Literals(["DASHBOARD", "DATASOURCE", "FOLDER", "LIBRARY_ELEMENT", "ALERT_RULE", "ALERT_RULE_GROUP", "CONTACT_POINT", "NOTIFICATION_POLICY", "NOTIFICATION_TEMPLATE", "MUTE_TIMING", "PLUGIN"]) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "MigrateDataResponseItemDTO" })
+export type SnapshotResourceStats = { readonly "statuses"?: { readonly [x: string]: number }, readonly "total"?: number, readonly "types"?: { readonly [x: string]: number } } & { readonly [x: string]: Schema.Json }
+export const SnapshotResourceStats = Schema.StructWithRest(Schema.Struct({ "statuses": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "total": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "types": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SnapshotResourceStats" })
+export type SnapshotDTO = { readonly "created"?: string, readonly "finished"?: string, readonly "sessionUid"?: string, readonly "status"?: "INITIALIZING" | "CREATING" | "PENDING_UPLOAD" | "UPLOADING" | "PENDING_PROCESSING" | "PROCESSING" | "FINISHED" | "CANCELED" | "ERROR" | "UNKNOWN", readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const SnapshotDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "finished": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "sessionUid": Schema.optionalKey(Schema.String), "status": Schema.optionalKey(Schema.Literals(["INITIALIZING", "CREATING", "PENDING_UPLOAD", "UPLOADING", "PENDING_PROCESSING", "PROCESSING", "FINISHED", "CANCELED", "ERROR", "UNKNOWN"])), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Base snapshot without results", "identifier": "SnapshotDTO" })
+export type ResourceDependencyDTO = { readonly "dependencies"?: ReadonlyArray<"DASHBOARD" | "DATASOURCE" | "FOLDER" | "LIBRARY_ELEMENT" | "ALERT_RULE" | "ALERT_RULE_GROUP" | "CONTACT_POINT" | "NOTIFICATION_POLICY" | "NOTIFICATION_TEMPLATE" | "MUTE_TIMING" | "PLUGIN">, readonly "resourceType"?: "DASHBOARD" | "DATASOURCE" | "FOLDER" | "LIBRARY_ELEMENT" | "ALERT_RULE" | "ALERT_RULE_GROUP" | "CONTACT_POINT" | "NOTIFICATION_POLICY" | "NOTIFICATION_TEMPLATE" | "MUTE_TIMING" | "PLUGIN" } & { readonly [x: string]: Schema.Json }
+export const ResourceDependencyDTO = Schema.StructWithRest(Schema.Struct({ "dependencies": Schema.optionalKey(Schema.Array(Schema.Literals(["DASHBOARD", "DATASOURCE", "FOLDER", "LIBRARY_ELEMENT", "ALERT_RULE", "ALERT_RULE_GROUP", "CONTACT_POINT", "NOTIFICATION_POLICY", "NOTIFICATION_TEMPLATE", "MUTE_TIMING", "PLUGIN"]))), "resourceType": Schema.optionalKey(Schema.Literals(["DASHBOARD", "DATASOURCE", "FOLDER", "LIBRARY_ELEMENT", "ALERT_RULE", "ALERT_RULE_GROUP", "CONTACT_POINT", "NOTIFICATION_POLICY", "NOTIFICATION_TEMPLATE", "MUTE_TIMING", "PLUGIN"])) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ResourceDependencyDTO" })
+export type GetAccessTokenResponseDTO = { readonly "createdAt"?: string, readonly "displayName"?: string, readonly "expiresAt"?: string, readonly "firstUsedAt"?: string, readonly "id"?: string, readonly "lastUsedAt"?: string } & { readonly [x: string]: Schema.Json }
+export const GetAccessTokenResponseDTO = Schema.StructWithRest(Schema.Struct({ "createdAt": Schema.optionalKey(Schema.String), "displayName": Schema.optionalKey(Schema.String), "expiresAt": Schema.optionalKey(Schema.String), "firstUsedAt": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.String), "lastUsedAt": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "GetAccessTokenResponseDTO" })
+export type DashboardSnapshotDTO = { readonly "created"?: string, readonly "expires"?: string, readonly "external"?: boolean, readonly "externalUrl"?: string, readonly "key"?: string, readonly "name"?: string, readonly "updated"?: string } & { readonly [x: string]: Schema.Json }
+export const DashboardSnapshotDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "expires": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "external": Schema.optionalKey(Schema.Boolean), "externalUrl": Schema.optionalKey(Schema.String), "key": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "DashboardSnapshotDTO without dashboard map", "identifier": "DashboardSnapshotDTO" })
+export type AnnotationActions = { readonly "canAdd"?: boolean, readonly "canDelete"?: boolean, readonly "canEdit"?: boolean } & { readonly [x: string]: Schema.Json }
+export const AnnotationActions = Schema.StructWithRest(Schema.Struct({ "canAdd": Schema.optionalKey(Schema.Boolean), "canDelete": Schema.optionalKey(Schema.Boolean), "canEdit": Schema.optionalKey(Schema.Boolean) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "+k8s:deepcopy-gen=true", "identifier": "AnnotationActions" })
+export type PublicDashboardListResponse = { readonly "accessToken"?: string, readonly "dashboardUid"?: string, readonly "isEnabled"?: boolean, readonly "slug"?: string, readonly "title"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const PublicDashboardListResponse = Schema.StructWithRest(Schema.Struct({ "accessToken": Schema.optionalKey(Schema.String), "dashboardUid": Schema.optionalKey(Schema.String), "isEnabled": Schema.optionalKey(Schema.Boolean), "slug": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "PublicDashboardListResponse" })
+export type PublicError = { readonly "extra"?: { readonly [x: string]: Schema.Json }, readonly "message"?: string, readonly "messageId": string, readonly "statusCode": number } & { readonly [x: string]: Schema.Json }
+export const PublicError = Schema.StructWithRest(Schema.Struct({ "extra": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "Extra Additional information about the error" })), "message": Schema.optionalKey(Schema.String.annotate({ "description": "Message A human readable message" })), "messageId": Schema.String.annotate({ "description": "MessageID A unique identifier for the error" }), "statusCode": Schema.Number.annotate({ "description": "StatusCode The HTTP status code returned", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "PublicError is derived from Error and only contains information\navailable to the end user.", "identifier": "publicError" })
+export type DashboardTagCloudItem = { readonly "count"?: number, readonly "term"?: string } & { readonly [x: string]: Schema.Json }
+export const DashboardTagCloudItem = Schema.StructWithRest(Schema.Struct({ "count": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "term": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DashboardTagCloudItem" })
+export type EmailDTO = { readonly "recipient"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const EmailDTO = Schema.StructWithRest(Schema.Struct({ "recipient": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "EmailDTO" })
+export type ShareType = string
+export const ShareType = Schema.String.annotate({ "identifier": "ShareType" })
+export type PermissionType = number
+export const PermissionType = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "PermissionType" }))
+export type DsAccess = string
+export const DsAccess = Schema.String.annotate({ "identifier": "DsAccess" })
+export type Transformation = { readonly "expression"?: string, readonly "field"?: string, readonly "mapValue"?: string, readonly "type"?: "regex" | "logfmt" } & { readonly [x: string]: Schema.Json }
+export const Transformation = Schema.StructWithRest(Schema.Struct({ "expression": Schema.optionalKey(Schema.String), "field": Schema.optionalKey(Schema.String), "mapValue": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.Literals(["regex", "logfmt"])) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Transformation" })
+export type CorrelationType = string
+export const CorrelationType = Schema.String.annotate({ "description": "the type of correlation, either query for containing query information, or external for containing an external URL\n+enum", "identifier": "CorrelationType" })
+export type Metadata = { readonly [x: string]: boolean }
+export const Metadata = Schema.Record(Schema.String, Schema.Boolean).annotate({ "description": "Metadata contains user accesses for a given resource\nEx: map[string]bool{\"create\":true, \"delete\": true}", "identifier": "Metadata" })
+export type TeamLBACRule = { readonly "rules"?: ReadonlyArray<string>, readonly "teamId"?: string, readonly "teamUid"?: string } & { readonly [x: string]: Schema.Json }
+export const TeamLBACRule = Schema.StructWithRest(Schema.Struct({ "rules": Schema.optionalKey(Schema.Array(Schema.String)), "teamId": Schema.optionalKey(Schema.String), "teamUid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TeamLBACRule" })
+export type CacheConfigResponse = { readonly "created"?: string, readonly "dataSourceID"?: number, readonly "dataSourceUID"?: string, readonly "defaultTTLMs"?: number, readonly "enabled"?: boolean, readonly "message"?: string, readonly "ttlQueriesMs"?: number, readonly "ttlResourcesMs"?: number, readonly "updated"?: string, readonly "useDefaultTTL"?: boolean } & { readonly [x: string]: Schema.Json }
+export const CacheConfigResponse = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "dataSourceID": Schema.optionalKey(Schema.Number.annotate({ "description": "Fields that can be set by the API caller - read/write", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dataSourceUID": Schema.optionalKey(Schema.String), "defaultTTLMs": Schema.optionalKey(Schema.Number.annotate({ "description": "These are returned by the HTTP API, but are managed internally - read-only\nNote: 'created' and 'updated' are special properties managed automatically by xorm, but we are setting them manually", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "enabled": Schema.optionalKey(Schema.Boolean), "message": Schema.optionalKey(Schema.String), "ttlQueriesMs": Schema.optionalKey(Schema.Number.annotate({ "description": "TTL MS, or \"time to live\", is how long a cached item will stay in the cache before it is removed (in milliseconds)", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "ttlResourcesMs": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "useDefaultTTL": Schema.optionalKey(Schema.Boolean.annotate({ "description": "If UseDefaultTTL is enabled, then the TTLQueriesMS and TTLResourcesMS in this object is always sent as the default TTL located in grafana.ini" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "CacheConfigResponse" })
+export type Source = string
+export const Source = Schema.String.annotate({ "title": "Source type defines the status source.", "identifier": "Source" })
+export type ExplorePanelsState = Schema.Json
+export const ExplorePanelsState = Schema.Json.annotate({ "expected": "JSON value", "description": "This is an object constructed with the keys as the values of the enum VisType and the value being a bag of properties", "identifier": "ExplorePanelsState" })
+export type TimeRange = { readonly "from"?: string, readonly "to"?: string } & { readonly [x: string]: Schema.Json }
+export const TimeRange = Schema.StructWithRest(Schema.Struct({ "from": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "to": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Redefining this to avoid an import cycle", "identifier": "TimeRange" })
 export type SupportedTransformationTypes = string
-export const SupportedTransformationTypes = Schema.String
-export type TLSVersion = number
-export const TLSVersion = Schema.Number.annotate({ "format": "uint16" }).check(Schema.isInt())
-export type TagsDTO = { readonly "count"?: number, readonly "tag"?: string }
-export const TagsDTO = Schema.Struct({ "count": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "tag": Schema.optionalKey(Schema.String) }).annotate({ "title": "TagsDTO is the frontend DTO for Tag." })
-export type TeamGroupDTO = { readonly "groupId"?: string, readonly "orgId"?: number, readonly "teamId"?: number, readonly "teamUid"?: string, readonly "uid"?: string }
-export const TeamGroupDTO = Schema.Struct({ "groupId": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teamUid": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Deprecated: always empty; no per-entry id." })) })
-export type TeamLBACRule = { readonly "rules"?: ReadonlyArray<string>, readonly "teamId"?: string, readonly "teamUid"?: string }
-export const TeamLBACRule = Schema.Struct({ "rules": Schema.optionalKey(Schema.Array(Schema.String)), "teamId": Schema.optionalKey(Schema.String), "teamUid": Schema.optionalKey(Schema.String) })
-export type TempUserStatus = string
-export const TempUserStatus = Schema.String
-export type TestTemplatesErrorResult = { readonly "kind"?: "invalid_template" | "execution_error", readonly "message"?: string, readonly "name"?: string }
-export const TestTemplatesErrorResult = Schema.Struct({ "kind": Schema.optionalKey(Schema.Literals(["invalid_template", "execution_error"]).annotate({ "description": "Kind of template error that occurred." })), "message": Schema.optionalKey(Schema.String.annotate({ "description": "Error message." })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of the associated template for this error. Will be empty if the Kind is \"invalid_template\"." })) })
-export type TestTemplatesResult = { readonly "name"?: string, readonly "scope"?: "." | ".Alerts" | ".Alert", readonly "text"?: string }
-export const TestTemplatesResult = Schema.Struct({ "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of the associated template definition for this result." })), "scope": Schema.optionalKey(Schema.Literals([".", ".Alerts", ".Alert"]).annotate({ "description": "Scope that was successfully used to interpolate the template. If the root scope \".\" fails, more specific\nscopes will be tried, such as \".Alerts', or \".Alert\"." })), "text": Schema.optionalKey(Schema.String.annotate({ "description": "Interpolated value of the template." })) })
+export const SupportedTransformationTypes = Schema.String.annotate({ "identifier": "SupportedTransformationTypes" })
+export type ValueMapping = { readonly [x: string]: Schema.Json }
+export const ValueMapping = Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "ValueMapping allows mapping input values to text and color", "identifier": "ValueMapping" })
+export type ConfFloat64 = number
+export const ConfFloat64 = Schema.Number.annotate({ "description": "ConfFloat64 is a float64. It Marshals float64 values of NaN of Inf\nto null.", "format": "double" }).check(Schema.isFinite().annotate({ "expected": "a finite number", "identifier": "ConfFloat64" }))
 export type ThresholdsMode = string
-export const ThresholdsMode = Schema.String.annotate({ "description": "ThresholdsMode absolute or percentage" })
-export type TimeIntervalTimeRange = { readonly "end_time"?: string, readonly "start_time"?: string }
-export const TimeIntervalTimeRange = Schema.Struct({ "end_time": Schema.optionalKey(Schema.String), "start_time": Schema.optionalKey(Schema.String) })
-export type TimeRange = { readonly "from"?: string, readonly "to"?: string }
-export const TimeRange = Schema.Struct({ "from": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "to": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }).annotate({ "description": "Redefining this to avoid an import cycle" })
-export type TokenDTO = { readonly "created"?: string, readonly "expiration"?: string, readonly "hasExpired"?: boolean, readonly "id"?: number, readonly "isRevoked"?: boolean, readonly "lastUsedAt"?: string, readonly "name"?: string, readonly "secondsUntilExpiration"?: number }
-export const TokenDTO = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "examples": ["2022-03-23T10:31:02Z"], "format": "date-time" })), "expiration": Schema.optionalKey(Schema.String.annotate({ "examples": ["2022-03-23T10:31:02Z"], "format": "date-time" })), "hasExpired": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "id": Schema.optionalKey(Schema.Number.annotate({ "examples": [1], "format": "int64" }).check(Schema.isInt())), "isRevoked": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "lastUsedAt": Schema.optionalKey(Schema.String.annotate({ "examples": ["2022-03-23T10:31:02Z"], "format": "date-time" })), "name": Schema.optionalKey(Schema.String.annotate({ "examples": ["grafana"] })), "secondsUntilExpiration": Schema.optionalKey(Schema.Number.annotate({ "examples": [0], "format": "double" }).check(Schema.isFinite())) })
-export type TokenStatus = number
-export const TokenStatus = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())
-export type Transformation = { readonly "expression"?: string, readonly "field"?: string, readonly "mapValue"?: string, readonly "type"?: "regex" | "logfmt" }
-export const Transformation = Schema.Struct({ "expression": Schema.optionalKey(Schema.String), "field": Schema.optionalKey(Schema.String), "mapValue": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.Literals(["regex", "logfmt"])) })
-export type Type = string
-export const Type = Schema.String.annotate({ "description": "+enum" })
-export type URL = string
-export const URL = Schema.String.annotate({ "format": "url" })
-export type Unstructured = { readonly "Object"?: { readonly [x: string]: Schema.Json } }
-export const Unstructured = Schema.Struct({ "Object": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Object is a JSON compatible map with string, float, int, bool, []any,\nor map[string]any children." })) }).annotate({ "description": "Unstructured allows objects that do not have Golang structs registered to be manipulated\ngenerically." })
-export type UserInfo = { readonly "name"?: string, readonly "uid"?: string }
-export const UserInfo = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }).annotate({ "title": "UserInfo represents user-related information, including a unique identifier and a name." })
-export type UserLookupDTO = { readonly "avatarUrl"?: string, readonly "login"?: string, readonly "uid"?: string, readonly "userId"?: number }
-export const UserLookupDTO = Schema.Struct({ "avatarUrl": Schema.optionalKey(Schema.String), "login": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type UserOrgDTO = { readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin" }
-export const UserOrgDTO = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])) })
-export type UserProfileDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "authLabels"?: ReadonlyArray<string> | null, readonly "avatarUrl"?: string, readonly "createdAt"?: string, readonly "email"?: string, readonly "id"?: number, readonly "isDisabled"?: boolean, readonly "isExternal"?: boolean, readonly "isExternallySynced"?: boolean, readonly "isGrafanaAdmin"?: boolean, readonly "isGrafanaAdminExternallySynced"?: boolean, readonly "isProvisioned"?: boolean, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "theme"?: string, readonly "uid"?: string, readonly "updatedAt"?: string }
-export const UserProfileDTO = Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "authLabels": Schema.optionalKey(Schema.Union([Schema.Array(Schema.String), Schema.Null])), "avatarUrl": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isDisabled": Schema.optionalKey(Schema.Boolean), "isExternal": Schema.optionalKey(Schema.Boolean), "isExternallySynced": Schema.optionalKey(Schema.Boolean), "isGrafanaAdmin": Schema.optionalKey(Schema.Boolean), "isGrafanaAdminExternallySynced": Schema.optionalKey(Schema.Boolean), "isProvisioned": Schema.optionalKey(Schema.Boolean), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "theme": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) })
-export type UserSearchHitDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "authLabels"?: ReadonlyArray<string>, readonly "avatarUrl"?: string, readonly "created"?: string, readonly "email"?: string, readonly "id"?: number, readonly "isAdmin"?: boolean, readonly "isDisabled"?: boolean, readonly "isProvisioned"?: boolean, readonly "lastSeenAt"?: string, readonly "lastSeenAtAge"?: string, readonly "login"?: string, readonly "name"?: string, readonly "role"?: string, readonly "uid"?: string }
-export const UserSearchHitDTO = Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "authLabels": Schema.optionalKey(Schema.Array(Schema.String)), "avatarUrl": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isAdmin": Schema.optionalKey(Schema.Boolean), "isDisabled": Schema.optionalKey(Schema.Boolean), "isProvisioned": Schema.optionalKey(Schema.Boolean), "lastSeenAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "lastSeenAtAge": Schema.optionalKey(Schema.String), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "role": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type UserToken = { readonly "AuthToken"?: string, readonly "AuthTokenSeen"?: boolean, readonly "ClientIp"?: string, readonly "CreatedAt"?: number, readonly "ExternalSessionId"?: number, readonly "Id"?: number, readonly "PrevAuthToken"?: string, readonly "RevokedAt"?: number, readonly "RotatedAt"?: number, readonly "SeenAt"?: number, readonly "UnhashedToken"?: string, readonly "UpdatedAt"?: number, readonly "UserAgent"?: string, readonly "UserId"?: number }
-export const UserToken = Schema.Struct({ "AuthToken": Schema.optionalKey(Schema.String), "AuthTokenSeen": Schema.optionalKey(Schema.Boolean), "ClientIp": Schema.optionalKey(Schema.String), "CreatedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "ExternalSessionId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "Id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "PrevAuthToken": Schema.optionalKey(Schema.String), "RevokedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "RotatedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "SeenAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "UnhashedToken": Schema.optionalKey(Schema.String), "UpdatedAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "UserAgent": Schema.optionalKey(Schema.String), "UserId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "description": "UserToken represents a user token" })
-export type ValueMapping = {  }
-export const ValueMapping = Schema.Struct({  }).annotate({ "description": "ValueMapping allows mapping input values to text and color" })
+export const ThresholdsMode = Schema.String.annotate({ "description": "ThresholdsMode absolute or percentage", "identifier": "ThresholdsMode" })
+export type EnumFieldConfig = { readonly "color"?: ReadonlyArray<string>, readonly "description"?: ReadonlyArray<string>, readonly "icon"?: ReadonlyArray<string>, readonly "text"?: ReadonlyArray<string> } & { readonly [x: string]: Schema.Json }
+export const EnumFieldConfig = Schema.StructWithRest(Schema.Struct({ "color": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Color is the color value for a given index (empty is undefined)" })), "description": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Description of the enum state" })), "icon": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Icon supports setting an icon for a given index value" })), "text": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Value is the string display value for a given index" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Enum field config\nVector values are used as lookup keys into the enum fields", "identifier": "EnumFieldConfig" })
+export type FrameLabels = { readonly [x: string]: string }
+export const FrameLabels = Schema.Record(Schema.String, Schema.String).annotate({ "description": "Labels are used to add metadata to an object.  The JSON will always be sorted keys", "identifier": "FrameLabels" })
+export type DataTopic = string
+export const DataTopic = Schema.String.annotate({ "title": "DataTopic is used to identify which topic the frame should be assigned to.", "description": "nolint:revive", "identifier": "DataTopic" })
+export type InspectType = number
+export const InspectType = Schema.Number.annotate({ "title": "InspectType is a type for the Inspect property of a Notice.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "InspectType" }))
+export type NoticeSeverity = number
+export const NoticeSeverity = Schema.Number.annotate({ "title": "NoticeSeverity is a type for the Severity property of a Notice.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "NoticeSeverity" }))
 export type VisType = string
-export const VisType = Schema.String.annotate({ "title": "VisType is used to indicate how the data should be visualized in explore." })
-export type AlertStatus = { readonly "inhibitedBy": ReadonlyArray<string>, readonly "silencedBy": ReadonlyArray<string>, readonly "state": "[unprocessed active suppressed]" }
-export const AlertStatus = Schema.Struct({ "inhibitedBy": Schema.Array(Schema.String).annotate({ "description": "inhibited by" }), "silencedBy": Schema.Array(Schema.String).annotate({ "description": "silenced by" }), "state": Schema.Literal("[unprocessed active suppressed]").annotate({ "description": "state" }) }).annotate({ "description": "AlertStatus alert status" })
-export type AlertmanagerConfig = { readonly "original": string }
-export const AlertmanagerConfig = Schema.Struct({ "original": Schema.String.annotate({ "description": "original" }) }).annotate({ "description": "AlertmanagerConfig alertmanager config" })
-export type DeviceDTO = { readonly "avatarUrl"?: string, readonly "clientIp"?: string, readonly "createdAt"?: string, readonly "deviceId"?: string, readonly "lastSeenAt"?: string, readonly "updatedAt"?: string, readonly "userAgent"?: string }
-export const DeviceDTO = Schema.Struct({ "avatarUrl": Schema.optionalKey(Schema.String), "clientIp": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "deviceId": Schema.optionalKey(Schema.String), "lastSeenAt": Schema.optionalKey(Schema.String), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "userAgent": Schema.optionalKey(Schema.String) })
-export type HealthResponse = { readonly "apiserver"?: string, readonly "commit"?: string, readonly "database"?: string, readonly "enterpriseCommit"?: string, readonly "version"?: string }
-export const HealthResponse = Schema.Struct({ "apiserver": Schema.optionalKey(Schema.String), "commit": Schema.optionalKey(Schema.String), "database": Schema.optionalKey(Schema.String), "enterpriseCommit": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.String) })
-export type LabelSet = { readonly [x: string]: string }
-export const LabelSet = Schema.Record(Schema.String, Schema.String).annotate({ "description": "LabelSet label set" })
-export type Matcher = { readonly "isEqual"?: boolean, readonly "isRegex": boolean, readonly "name": string, readonly "value": string }
-export const Matcher = Schema.Struct({ "isEqual": Schema.optionalKey(Schema.Boolean.annotate({ "description": "is equal" })), "isRegex": Schema.Boolean.annotate({ "description": "is regex" }), "name": Schema.String.annotate({ "description": "name" }), "value": Schema.String.annotate({ "description": "value" }) }).annotate({ "description": "Matcher matcher" })
-export type PeerStatus = { readonly "address": string, readonly "name": string }
-export const PeerStatus = Schema.Struct({ "address": Schema.String.annotate({ "description": "address" }), "name": Schema.String.annotate({ "description": "name" }) }).annotate({ "description": "PeerStatus peer status" })
-export type PublicError1 = { readonly "extra"?: { readonly [x: string]: Schema.Json }, readonly "message"?: string, readonly "messageId": string, readonly "statusCode": number }
-export const PublicError1 = Schema.Struct({ "extra": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Extra Additional information about the error" })), "message": Schema.optionalKey(Schema.String.annotate({ "description": "Message A human readable message" })), "messageId": Schema.String.annotate({ "description": "MessageID A unique identifier for the error" }), "statusCode": Schema.Number.annotate({ "description": "StatusCode The HTTP status code returned", "format": "int64" }).check(Schema.isInt()) }).annotate({ "description": "PublicError is derived from Error and only contains information\navailable to the end user." })
-export type Receiver = { readonly "name": string }
-export const Receiver = Schema.Struct({ "name": Schema.String.annotate({ "description": "name" }) }).annotate({ "description": "Receiver receiver" })
-export type ResourcePermissionDTO = { readonly "actions"?: ReadonlyArray<string>, readonly "builtInRole"?: string, readonly "id"?: number, readonly "isInherited"?: boolean, readonly "isManaged"?: boolean, readonly "isServiceAccount"?: boolean, readonly "permission"?: string, readonly "roleName"?: string, readonly "team"?: string, readonly "teamAvatarUrl"?: string, readonly "teamId"?: number, readonly "teamUid"?: string, readonly "userAvatarUrl"?: string, readonly "userId"?: number, readonly "userLogin"?: string, readonly "userUid"?: string }
-export const ResourcePermissionDTO = Schema.Struct({ "actions": Schema.optionalKey(Schema.Array(Schema.String)), "builtInRole": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isInherited": Schema.optionalKey(Schema.Boolean), "isManaged": Schema.optionalKey(Schema.Boolean), "isServiceAccount": Schema.optionalKey(Schema.Boolean), "permission": Schema.optionalKey(Schema.String), "roleName": Schema.optionalKey(Schema.String), "team": Schema.optionalKey(Schema.String), "teamAvatarUrl": Schema.optionalKey(Schema.String), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teamUid": Schema.optionalKey(Schema.String), "userAvatarUrl": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userLogin": Schema.optionalKey(Schema.String), "userUid": Schema.optionalKey(Schema.String) })
-export type SilenceStatus = { readonly "state": "[expired active pending]" }
-export const SilenceStatus = Schema.Struct({ "state": Schema.Literal("[expired active pending]").annotate({ "description": "state" }) }).annotate({ "description": "SilenceStatus silence status" })
-export type VersionInfo = { readonly "branch": string, readonly "buildDate": string, readonly "buildUser": string, readonly "goVersion": string, readonly "revision": string, readonly "version": string }
-export const VersionInfo = Schema.Struct({ "branch": Schema.String.annotate({ "description": "branch" }), "buildDate": Schema.String.annotate({ "description": "build date" }), "buildUser": Schema.String.annotate({ "description": "build user" }), "goVersion": Schema.String.annotate({ "description": "go version" }), "revision": Schema.String.annotate({ "description": "revision" }), "version": Schema.String.annotate({ "description": "version" }) }).annotate({ "description": "VersionInfo version info" })
-export type OrgDetailsDTO = { readonly "address"?: Address, readonly "id"?: number, readonly "name"?: string }
-export const OrgDetailsDTO = Schema.Struct({ "address": Schema.optionalKey(Address), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String) })
-export type AlertManagersResult = { readonly "activeAlertManagers"?: ReadonlyArray<AlertManager>, readonly "droppedAlertManagers"?: ReadonlyArray<AlertManager> }
-export const AlertManagersResult = Schema.Struct({ "activeAlertManagers": Schema.optionalKey(Schema.Array(AlertManager)), "droppedAlertManagers": Schema.optionalKey(Schema.Array(AlertManager)) }).annotate({ "title": "AlertManagersResult contains the result from querying the alertmanagers endpoint." })
-export type AlertRuleMetadata = { readonly "editor_settings"?: AlertRuleEditorSettings }
-export const AlertRuleMetadata = Schema.Struct({ "editor_settings": Schema.optionalKey(AlertRuleEditorSettings) })
-export type AnnotationPermission = { readonly "dashboard"?: AnnotationActions }
-export const AnnotationPermission = Schema.Struct({ "dashboard": Schema.optionalKey(AnnotationActions) }).annotate({ "description": "+k8s:deepcopy-gen=true" })
-export type Description = { readonly "assignments"?: Assignments, readonly "permissions"?: ReadonlyArray<string> }
-export const Description = Schema.Struct({ "assignments": Schema.optionalKey(Assignments), "permissions": Schema.optionalKey(Schema.Array(Schema.String)) })
-export type CloudMigrationSessionListResponseDTO = { readonly "sessions"?: ReadonlyArray<CloudMigrationSessionResponseDTO> }
-export const CloudMigrationSessionListResponseDTO = Schema.Struct({ "sessions": Schema.optionalKey(Schema.Array(CloudMigrationSessionResponseDTO)) })
-export type Threshold = { readonly "color"?: string, readonly "state"?: string, readonly "value"?: ConfFloat64 }
-export const Threshold = Schema.Struct({ "color": Schema.optionalKey(Schema.String), "state": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(ConfFloat64) }).annotate({ "description": "Threshold a single step on the threshold list" })
-export type AnnotationQuery = { readonly "builtIn"?: number, readonly "datasource"?: DataSourceRef, readonly "enable"?: boolean, readonly "filter"?: AnnotationPanelFilter, readonly "hide"?: boolean, readonly "iconColor"?: string, readonly "name"?: string, readonly "placement"?: string, readonly "target"?: AnnotationTarget, readonly "type"?: string }
-export const AnnotationQuery = Schema.Struct({ "builtIn": Schema.optionalKey(Schema.Number.annotate({ "description": "Set to 1 for the standard annotation query all dashboards have by default.", "format": "double" }).check(Schema.isFinite())), "datasource": Schema.optionalKey(DataSourceRef), "enable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "When enabled the annotation query is issued with every dashboard refresh" })), "filter": Schema.optionalKey(AnnotationPanelFilter), "hide": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Annotation queries can be toggled on or off at the top of the dashboard.\nWhen hide is true, the toggle is not shown in the dashboard." })), "iconColor": Schema.optionalKey(Schema.String.annotate({ "description": "Color to use for the annotation event markers" })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of annotation." })), "placement": Schema.optionalKey(Schema.String.annotate({ "description": "Placement can be used to display the annotation query somewhere else on the dashboard other than the default location." })), "target": Schema.optionalKey(AnnotationTarget), "type": Schema.optionalKey(Schema.String.annotate({ "description": "TODO -- this should not exist here, it is based on the --grafana-- datasource" })) }).annotate({ "description": "TODO docs\nFROM: AnnotationQuery in grafana-data/src/types/annotations.ts" })
-export type SearchDeviceQueryResult = { readonly "devices"?: ReadonlyArray<DeviceSearchHitDTO>, readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number }
-export const SearchDeviceQueryResult = Schema.Struct({ "devices": Schema.optionalKey(Schema.Array(DeviceSearchHitDTO)), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type RelativeTimeRange = { readonly "from"?: Duration, readonly "to"?: Duration }
-export const RelativeTimeRange = Schema.Struct({ "from": Schema.optionalKey(Duration), "to": Schema.optionalKey(Duration) }).annotate({ "description": "RelativeTimeRange is the per query start and end time\nfor requests." })
-export type FieldTypeConfig = { readonly "enum"?: EnumFieldConfig }
-export const FieldTypeConfig = Schema.Struct({ "enum": Schema.optionalKey(EnumFieldConfig) }).annotate({ "description": "FieldTypeConfig has type specific configs, only one should be active at a time" })
-export type SyncResult = { readonly "Elapsed"?: Duration, readonly "FailedUsers"?: ReadonlyArray<FailedUser>, readonly "MissingUserIds"?: ReadonlyArray<number>, readonly "Started"?: string, readonly "UpdatedUserIds"?: ReadonlyArray<number> }
-export const SyncResult = Schema.Struct({ "Elapsed": Schema.optionalKey(Duration), "FailedUsers": Schema.optionalKey(Schema.Array(FailedUser)), "MissingUserIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "Started": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "UpdatedUserIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))) }).annotate({ "title": "SyncResult holds the result of a sync with LDAP. This gives us information on which users were updated and how." })
-export type Hit = { readonly "description"?: string, readonly "folderId"?: number, readonly "folderTitle"?: string, readonly "folderUid"?: string, readonly "folderUrl"?: string, readonly "id"?: number, readonly "isDeleted"?: boolean, readonly "isStarred"?: boolean, readonly "orgId"?: number, readonly "permanentlyDeleteDate"?: string, readonly "slug"?: string, readonly "sortMeta"?: number, readonly "sortMetaName"?: string, readonly "tags"?: ReadonlyArray<string>, readonly "title"?: string, readonly "type"?: HitType, readonly "uid"?: string, readonly "uri"?: string, readonly "url"?: string }
-export const Hit = Schema.Struct({ "description": Schema.optionalKey(Schema.String), "folderId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "folderTitle": Schema.optionalKey(Schema.String), "folderUid": Schema.optionalKey(Schema.String), "folderUrl": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isDeleted": Schema.optionalKey(Schema.Boolean), "isStarred": Schema.optionalKey(Schema.Boolean), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "permanentlyDeleteDate": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "slug": Schema.optionalKey(Schema.String), "sortMeta": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "sortMetaName": Schema.optionalKey(Schema.String), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "title": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(HitType), "uid": Schema.optionalKey(Schema.String), "uri": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) })
-export type IPNet = { readonly "IP"?: string, readonly "Mask"?: IPMask }
-export const IPNet = Schema.Struct({ "IP": Schema.optionalKey(Schema.String), "Mask": Schema.optionalKey(IPMask) }).annotate({ "title": "An IPNet represents an IP network." })
-export type Annotation = { readonly "alertId"?: number, readonly "alertName"?: string, readonly "avatarUrl"?: string, readonly "created"?: number, readonly "dashboardId"?: number, readonly "dashboardUID"?: string, readonly "data"?: Json, readonly "email"?: string, readonly "id"?: number, readonly "login"?: string, readonly "newState"?: string, readonly "panelId"?: number, readonly "prevState"?: string, readonly "tags"?: ReadonlyArray<string>, readonly "text"?: string, readonly "time"?: number, readonly "timeEnd"?: number, readonly "updated"?: number, readonly "userId"?: number, readonly "userUID"?: string }
-export const Annotation = Schema.Struct({ "alertId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "alertName": Schema.optionalKey(Schema.String), "avatarUrl": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: Use DashboardUID and OrgID instead", "format": "int64" }).check(Schema.isInt())), "dashboardUID": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Json), "email": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "login": Schema.optionalKey(Schema.String), "newState": Schema.optionalKey(Schema.String), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "prevState": Schema.optionalKey(Schema.String), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "text": Schema.optionalKey(Schema.String), "time": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "timeEnd": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "updated": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userUID": Schema.optionalKey(Schema.String) })
-export type DashboardVersionMeta = { readonly "created"?: string, readonly "createdBy"?: string, readonly "dashboardId"?: number, readonly "data"?: Json, readonly "id"?: number, readonly "message"?: string, readonly "parentVersion"?: number, readonly "restoredFrom"?: number, readonly "uid"?: string, readonly "version"?: number }
-export const DashboardVersionMeta = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.String), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "data": Schema.optionalKey(Json), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "message": Schema.optionalKey(Schema.String), "parentVersion": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "restoredFrom": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "uid": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "description": "DashboardVersionMeta extends the DashboardVersionDTO with the names\nassociated with the UserIds, overriding the field with the same name from\nthe DashboardVersionDTO model." })
-export type DataSourceListItemDTO = { readonly "access"?: DsAccess, readonly "basicAuth"?: boolean, readonly "database"?: string, readonly "id"?: number, readonly "isDefault"?: boolean, readonly "jsonData"?: Json, readonly "name"?: string, readonly "orgId"?: number, readonly "readOnly"?: boolean, readonly "type"?: string, readonly "typeLogoUrl"?: string, readonly "typeName"?: string, readonly "uid"?: string, readonly "url"?: string, readonly "user"?: string }
-export const DataSourceListItemDTO = Schema.Struct({ "access": Schema.optionalKey(DsAccess), "basicAuth": Schema.optionalKey(Schema.Boolean), "database": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isDefault": Schema.optionalKey(Schema.Boolean), "jsonData": Schema.optionalKey(Json), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "readOnly": Schema.optionalKey(Schema.Boolean), "type": Schema.optionalKey(Schema.String), "typeLogoUrl": Schema.optionalKey(Schema.String), "typeName": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "user": Schema.optionalKey(Schema.String) })
-export type EmbeddedContactPoint = { readonly "disableResolveMessage"?: boolean, readonly "name"?: string, readonly "provenance"?: string, readonly "settings": Json, readonly "type": "alertmanager" | "dingding" | "discord" | "email" | "googlechat" | "kafka" | "line" | "opsgenie" | "pagerduty" | "pushover" | "sensugo" | "slack" | "teams" | "telegram" | "threema" | "victorops" | "webhook" | "wecom", readonly "uid"?: string }
-export const EmbeddedContactPoint = Schema.Struct({ "disableResolveMessage": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name is used as grouping key in the UI. Contact points with the\nsame name will be grouped in the UI.", "examples": ["webhook_1"] })), "provenance": Schema.optionalKey(Schema.String.annotate({ "readOnly": true })), "settings": Json, "type": Schema.Literals(["alertmanager", "dingding", "discord", "email", "googlechat", "kafka", "line", "opsgenie", "pagerduty", "pushover", "sensugo", "slack", "teams", "telegram", "threema", "victorops", "webhook", "wecom"]).annotate({ "examples": ["webhook"] }), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "UID is the unique identifier of the contact point. The UID can be\nset by the user.", "examples": ["my_external_reference"] }).check(Schema.isMinLength(1)).check(Schema.isMaxLength(40)).check(Schema.isPattern(new RegExp("^[a-zA-Z0-9\\-\\_]+$")))) }).annotate({ "description": "EmbeddedContactPoint is the contact point type that is used\nby grafanas embedded alertmanager implementation." })
-export type MetricRequest = { readonly "debug"?: boolean, readonly "from": string, readonly "queries": ReadonlyArray<Json>, readonly "to": string }
-export const MetricRequest = Schema.Struct({ "debug": Schema.optionalKey(Schema.Boolean), "from": Schema.String.annotate({ "description": "From Start time in epoch timestamps in milliseconds or relative using Grafana time units.", "examples": ["now-1h"] }), "queries": Schema.Array(Json).annotate({ "description": "queries.refId – Specifies an identifier of the query. Is optional and default to “A”.\nqueries.datasourceId – Specifies the data source to be queried. Each query in the request must have an unique datasourceId.\nqueries.maxDataPoints - Species maximum amount of data points that dashboard panel can render. Is optional and default to 100.\nqueries.intervalMs - Specifies the time interval in milliseconds of time series. Is optional and defaults to 1000.", "examples": [[{"datasource":{"uid":"PD8C576611E62080A"},"format":"table","intervalMs":86400000,"maxDataPoints":1092,"rawSql":"SELECT 1 as valueOne, 2 as valueTwo","refId":"A"}]] }), "to": Schema.String.annotate({ "description": "To End time in epoch timestamps in milliseconds or relative using Grafana time units.", "examples": ["now"] }) })
-export type QueryHistoryDTO = { readonly "comment"?: string, readonly "createdAt"?: number, readonly "createdBy"?: number, readonly "datasourceUid"?: string, readonly "queries"?: Json, readonly "starred"?: boolean, readonly "uid"?: string }
-export const QueryHistoryDTO = Schema.Struct({ "comment": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "createdBy": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "datasourceUid": Schema.optionalKey(Schema.String), "queries": Schema.optionalKey(Json), "starred": Schema.optionalKey(Schema.Boolean), "uid": Schema.optionalKey(Schema.String) })
-export type Labels = ReadonlyArray<Label>
-export const Labels = Schema.Array(Label).annotate({ "description": "Labels is a sorted set of labels. Order has to be guaranteed upon\ninstantiation." })
-export type LibraryElementConnectionDTO = { readonly "connectionId"?: number, readonly "connectionUid"?: string, readonly "created"?: string, readonly "createdBy"?: LibraryElementDTOMetaUser, readonly "elementId"?: number, readonly "id"?: number, readonly "kind"?: number }
-export const LibraryElementConnectionDTO = Schema.Struct({ "connectionId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "connectionUid": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(LibraryElementDTOMetaUser), "elementId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "id": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: this field will be removed in the future", "format": "int64" }).check(Schema.isInt())), "kind": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "title": "LibraryElementConnectionDTO is the frontend DTO for element connections." })
-export type LibraryElementDTOMeta = { readonly "connectedDashboards"?: number, readonly "created"?: string, readonly "createdBy"?: LibraryElementDTOMetaUser, readonly "folderName"?: string, readonly "folderUid"?: string, readonly "updated"?: string, readonly "updatedBy"?: LibraryElementDTOMetaUser }
-export const LibraryElementDTOMeta = Schema.Struct({ "connectedDashboards": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(LibraryElementDTOMetaUser), "folderName": Schema.optionalKey(Schema.String), "folderUid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(LibraryElementDTOMetaUser) }).annotate({ "title": "LibraryElementDTOMeta is the meta information for LibraryElementDTO." })
-export type FolderSearchHit = { readonly "id"?: number, readonly "managedBy"?: ManagerKind, readonly "parentUid"?: string, readonly "title"?: string, readonly "uid"?: string }
-export const FolderSearchHit = Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "managedBy": Schema.optionalKey(ManagerKind), "parentUid": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type Matcher1 = { readonly "Name"?: string, readonly "Type"?: MatchType, readonly "Value"?: string }
-export const Matcher1 = Schema.Struct({ "Name": Schema.optionalKey(Schema.String), "Type": Schema.optionalKey(MatchType), "Value": Schema.optionalKey(Schema.String) }).annotate({ "title": "Matcher models the matching of a label." })
-export type DataSource = { readonly "access"?: DsAccess, readonly "accessControl"?: Metadata, readonly "basicAuth"?: boolean, readonly "basicAuthUser"?: string, readonly "database"?: string, readonly "id"?: number, readonly "isDefault"?: boolean, readonly "jsonData"?: Json, readonly "name"?: string, readonly "orgId"?: number, readonly "readOnly"?: boolean, readonly "secureJsonFields"?: { readonly [x: string]: boolean }, readonly "type"?: string, readonly "typeLogoUrl"?: string, readonly "uid"?: string, readonly "url"?: string, readonly "user"?: string, readonly "version"?: number, readonly "withCredentials"?: boolean }
-export const DataSource = Schema.Struct({ "access": Schema.optionalKey(DsAccess), "accessControl": Schema.optionalKey(Metadata), "basicAuth": Schema.optionalKey(Schema.Boolean), "basicAuthUser": Schema.optionalKey(Schema.String), "database": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isDefault": Schema.optionalKey(Schema.Boolean), "jsonData": Schema.optionalKey(Json), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "readOnly": Schema.optionalKey(Schema.Boolean), "secureJsonFields": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "type": Schema.optionalKey(Schema.String), "typeLogoUrl": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "user": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "withCredentials": Schema.optionalKey(Schema.Boolean) })
-export type MuteTimings = ReadonlyArray<MuteTimeInterval>
-export const MuteTimings = Schema.Array(MuteTimeInterval)
-export type Notice = { readonly "inspect"?: InspectType, readonly "link"?: string, readonly "severity"?: NoticeSeverity, readonly "text"?: string }
-export const Notice = Schema.Struct({ "inspect": Schema.optionalKey(InspectType), "link": Schema.optionalKey(Schema.String.annotate({ "description": "Link is an optional link for display in the user interface and can be an\nabsolute URL or a path relative to Grafana's root url." })), "severity": Schema.optionalKey(NoticeSeverity), "text": Schema.optionalKey(Schema.String.annotate({ "description": "Text is freeform descriptive text for the notice." })) }).annotate({ "title": "Notice provides a structure for presenting notifications in Grafana's user interface." })
-export type AttributeTypeAndValue = { readonly "Type"?: ObjectIdentifier, readonly "Value"?: Schema.Json }
-export const AttributeTypeAndValue = Schema.Struct({ "Type": Schema.optionalKey(ObjectIdentifier), "Value": Schema.optionalKey(Schema.Json) }).annotate({ "description": "AttributeTypeAndValue mirrors the ASN.1 structure of the same name in\nRFC 5280, Section 4.1.2.4." })
-export type Extension = { readonly "Critical"?: boolean, readonly "Id"?: ObjectIdentifier, readonly "Value"?: ReadonlyArray<number> }
-export const Extension = Schema.Struct({ "Critical": Schema.optionalKey(Schema.Boolean), "Id": Schema.optionalKey(ObjectIdentifier), "Value": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))) }).annotate({ "description": "Extension represents the ASN.1 structure of the same name. See RFC\n5280, section 4.2." })
-export type ObjectMatchers = ReadonlyArray<ObjectMatcher>
-export const ObjectMatchers = Schema.Array(ObjectMatcher).annotate({ "title": "ObjectMatchers is a list of matchers that can be used to filter alerts." })
-export type SearchOrgUsersQueryResult = { readonly "orgUsers"?: ReadonlyArray<OrgUserDTO>, readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number }
-export const SearchOrgUsersQueryResult = Schema.Struct({ "orgUsers": Schema.optionalKey(Schema.Array(OrgUserDTO)), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type RoleDTO = { readonly "created": string, readonly "delegatable"?: boolean, readonly "description": string, readonly "displayName": string, readonly "global"?: boolean, readonly "group": string, readonly "hidden"?: boolean, readonly "mapped"?: boolean, readonly "name": string, readonly "permissions"?: ReadonlyArray<Permission>, readonly "uid": string, readonly "updated": string, readonly "version": number }
-export const RoleDTO = Schema.Struct({ "created": Schema.String.annotate({ "format": "date-time" }), "delegatable": Schema.optionalKey(Schema.Boolean), "description": Schema.String, "displayName": Schema.String, "global": Schema.optionalKey(Schema.Boolean), "group": Schema.String, "hidden": Schema.optionalKey(Schema.Boolean), "mapped": Schema.optionalKey(Schema.Boolean), "name": Schema.String, "permissions": Schema.optionalKey(Schema.Array(Permission)), "uid": Schema.String, "updated": Schema.String.annotate({ "format": "date-time" }), "version": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()) })
-export type DashboardACLInfoDTO = { readonly "created"?: string, readonly "dashboardId"?: number, readonly "folderId"?: number, readonly "folderUid"?: string, readonly "inherited"?: boolean, readonly "isFolder"?: boolean, readonly "permission"?: PermissionType, readonly "permissionName"?: string, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin", readonly "slug"?: string, readonly "team"?: string, readonly "teamAvatarUrl"?: string, readonly "teamEmail"?: string, readonly "teamId"?: number, readonly "teamUid"?: string, readonly "title"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "url"?: string, readonly "userAvatarUrl"?: string, readonly "userEmail"?: string, readonly "userId"?: number, readonly "userLogin"?: string, readonly "userUid"?: string }
-export const DashboardACLInfoDTO = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "folderId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use FolderUID instead", "format": "int64" }).check(Schema.isInt())), "folderUid": Schema.optionalKey(Schema.String), "inherited": Schema.optionalKey(Schema.Boolean), "isFolder": Schema.optionalKey(Schema.Boolean), "permission": Schema.optionalKey(PermissionType), "permissionName": Schema.optionalKey(Schema.String), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])), "slug": Schema.optionalKey(Schema.String), "team": Schema.optionalKey(Schema.String), "teamAvatarUrl": Schema.optionalKey(Schema.String), "teamEmail": Schema.optionalKey(Schema.String), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teamUid": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "url": Schema.optionalKey(Schema.String), "userAvatarUrl": Schema.optionalKey(Schema.String), "userEmail": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userLogin": Schema.optionalKey(Schema.String), "userUid": Schema.optionalKey(Schema.String) })
-export type DashboardACLUpdateItem = { readonly "permission"?: PermissionType, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin", readonly "teamId"?: number, readonly "userId"?: number }
-export const DashboardACLUpdateItem = Schema.Struct({ "permission": Schema.optionalKey(PermissionType), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type TeamDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "avatarUrl"?: string, readonly "email"?: string, readonly "externalUID"?: string, readonly "id": number, readonly "isProvisioned": boolean, readonly "memberCount": number, readonly "name": string, readonly "orgId": number, readonly "permission"?: PermissionType, readonly "uid": string }
-export const TeamDTO = Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "avatarUrl": Schema.optionalKey(Schema.String), "email": Schema.optionalKey(Schema.String), "externalUID": Schema.optionalKey(Schema.String), "id": Schema.Number.annotate({ "description": "@deprecated Use UID instead", "format": "int64" }).check(Schema.isInt()), "isProvisioned": Schema.Boolean, "memberCount": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()), "name": Schema.String, "orgId": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()), "permission": Schema.optionalKey(PermissionType), "uid": Schema.String })
-export type TeamMemberDTO = { readonly "auth_module"?: string, readonly "avatarUrl"?: string, readonly "email"?: string, readonly "labels"?: ReadonlyArray<string>, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "permission"?: PermissionType, readonly "teamId"?: number, readonly "teamUID"?: string, readonly "uid"?: string, readonly "userId"?: number, readonly "userUID"?: string }
-export const TeamMemberDTO = Schema.Struct({ "auth_module": Schema.optionalKey(Schema.String), "avatarUrl": Schema.optionalKey(Schema.String), "email": Schema.optionalKey(Schema.String), "labels": Schema.optionalKey(Schema.Array(Schema.String)), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "permission": Schema.optionalKey(PermissionType), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teamUID": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userUID": Schema.optionalKey(Schema.String) })
-export type Playlists = ReadonlyArray<Playlist>
-export const Playlists = Schema.Array(Playlist)
-export type PlaylistDTO = { readonly "interval"?: string, readonly "items"?: ReadonlyArray<PlaylistItemDTO>, readonly "name"?: string, readonly "uid"?: string }
-export const PlaylistDTO = Schema.Struct({ "interval": Schema.optionalKey(Schema.String.annotate({ "description": "Interval sets the time between switching views in a playlist." })), "items": Schema.optionalKey(Schema.Array(PlaylistItemDTO).annotate({ "description": "The ordered list of items that the playlist will iterate over." })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of the playlist." })), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Unique playlist identifier. Generated on creation, either by the\ncreator of the playlist of by the application." })) })
-export type PreferencesSpec = { readonly "homeDashboardUID"?: string, readonly "homeURL"?: string, readonly "language"?: string, readonly "navbar"?: PreferencesNavbarPreference, readonly "queryHistory"?: PreferencesQueryHistoryPreference, readonly "theme"?: string, readonly "timezone"?: string, readonly "weekStart"?: string }
-export const PreferencesSpec = Schema.Struct({ "homeDashboardUID": Schema.optionalKey(Schema.String.annotate({ "description": "UID for the home dashboard" })), "homeURL": Schema.optionalKey(Schema.String.annotate({ "description": "Explicit home URL (NOTE: this can only be modified in the system settings)" })), "language": Schema.optionalKey(Schema.String.annotate({ "description": "Selected language" })), "navbar": Schema.optionalKey(PreferencesNavbarPreference), "queryHistory": Schema.optionalKey(PreferencesQueryHistoryPreference), "theme": Schema.optionalKey(Schema.String.annotate({ "description": "user interface theme" })), "timezone": Schema.optionalKey(Schema.String.annotate({ "description": "The timezone selection" })), "weekStart": Schema.optionalKey(Schema.String.annotate({ "description": "day of the week (sunday, monday, etc)" })) }).annotate({ "description": "+k8s:openapi-gen=true" })
-export type PrometheusRuleGroup = { readonly "interval"?: Duration, readonly "labels"?: { readonly [x: string]: string }, readonly "limit"?: number, readonly "name"?: string, readonly "query_offset"?: string, readonly "rules"?: ReadonlyArray<PrometheusRule> }
-export const PrometheusRuleGroup = Schema.Struct({ "interval": Schema.optionalKey(Duration), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String), "query_offset": Schema.optionalKey(Schema.String), "rules": Schema.optionalKey(Schema.Array(PrometheusRule)) })
-export type NotificationTemplate = { readonly "name"?: string, readonly "provenance"?: Provenance, readonly "template"?: string, readonly "version"?: string }
-export const NotificationTemplate = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "provenance": Schema.optionalKey(Provenance), "template": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.String) })
-export type PublicDashboardListResponseWithPagination = { readonly "page"?: number, readonly "perPage"?: number, readonly "publicDashboards"?: ReadonlyArray<PublicDashboardListResponse>, readonly "totalCount"?: number }
-export const PublicDashboardListResponseWithPagination = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "publicDashboards": Schema.optionalKey(Schema.Array(PublicDashboardListResponse)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type ForbiddenError = { readonly "body"?: PublicError }
-export const ForbiddenError = Schema.Struct({ "body": Schema.optionalKey(PublicError) })
-export type GettableGrafanaReceiver = { readonly "disableResolveMessage"?: boolean, readonly "name"?: string, readonly "provenance"?: Provenance, readonly "secureFields"?: { readonly [x: string]: boolean }, readonly "settings"?: RawMessage, readonly "type"?: string, readonly "uid"?: string }
-export const GettableGrafanaReceiver = Schema.Struct({ "disableResolveMessage": Schema.optionalKey(Schema.Boolean), "name": Schema.optionalKey(Schema.String), "provenance": Schema.optionalKey(Provenance), "secureFields": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "settings": Schema.optionalKey(RawMessage), "type": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type PostableGrafanaReceiver = { readonly "disableResolveMessage"?: boolean, readonly "name"?: string, readonly "secureSettings"?: { readonly [x: string]: string }, readonly "settings"?: RawMessage, readonly "type"?: string, readonly "uid"?: string }
-export const PostableGrafanaReceiver = Schema.Struct({ "disableResolveMessage": Schema.optionalKey(Schema.Boolean), "name": Schema.optionalKey(Schema.String), "secureSettings": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "settings": Schema.optionalKey(RawMessage), "type": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type ReceiverExport = { readonly "disableResolveMessage"?: boolean, readonly "settings"?: RawMessage, readonly "type"?: string, readonly "uid"?: string }
-export const ReceiverExport = Schema.Struct({ "disableResolveMessage": Schema.optionalKey(Schema.Boolean), "settings": Schema.optionalKey(RawMessage), "type": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }).annotate({ "title": "ReceiverExport is the provisioned file export of alerting.ReceiverV1." })
-export type AlertQueryExport = { readonly "datasourceUid"?: string, readonly "model"?: { readonly [x: string]: Schema.Json }, readonly "queryType"?: string, readonly "refId"?: string, readonly "relativeTimeRange"?: RelativeTimeRangeExport }
-export const AlertQueryExport = Schema.Struct({ "datasourceUid": Schema.optionalKey(Schema.String), "model": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json)), "queryType": Schema.optionalKey(Schema.String), "refId": Schema.optionalKey(Schema.String), "relativeTimeRange": Schema.optionalKey(RelativeTimeRangeExport) }).annotate({ "title": "AlertQueryExport is the provisioned export of models.AlertQuery." })
-export type ReportSettings = { readonly "branding"?: ReportBrandingOptions, readonly "embeddedImageTheme"?: string, readonly "footerFontFamily"?: string, readonly "footerItems"?: ReadonlyArray<FooterItem>, readonly "id"?: number, readonly "orgId"?: number, readonly "pdfDashboardTitleEnabled"?: boolean, readonly "pdfHeaderEnabled"?: boolean, readonly "pdfTheme"?: string, readonly "pdfTimeRangeEnabled"?: boolean, readonly "userId"?: number }
-export const ReportSettings = Schema.Struct({ "branding": Schema.optionalKey(ReportBrandingOptions), "embeddedImageTheme": Schema.optionalKey(Schema.String), "footerFontFamily": Schema.optionalKey(Schema.String), "footerItems": Schema.optionalKey(Schema.Array(FooterItem)), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "pdfDashboardTitleEnabled": Schema.optionalKey(Schema.Boolean), "pdfHeaderEnabled": Schema.optionalKey(Schema.Boolean), "pdfTheme": Schema.optionalKey(Schema.String), "pdfTimeRangeEnabled": Schema.optionalKey(Schema.Boolean), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type ReportDashboard = { readonly "dashboard"?: ReportDashboardID, readonly "reportVariables"?: {  }, readonly "timeRange"?: ReportTimeRange }
-export const ReportDashboard = Schema.Struct({ "dashboard": Schema.optionalKey(ReportDashboardID), "reportVariables": Schema.optionalKey(Schema.Struct({  })), "timeRange": Schema.optionalKey(ReportTimeRange) })
-export type ReportOptions = { readonly "csvEncoding"?: string, readonly "layout"?: string, readonly "orientation"?: string, readonly "pdfCombineOneFile"?: boolean, readonly "pdfShowTemplateVariables"?: boolean, readonly "timeRange"?: ReportTimeRange }
-export const ReportOptions = Schema.Struct({ "csvEncoding": Schema.optionalKey(Schema.String), "layout": Schema.optionalKey(Schema.String), "orientation": Schema.optionalKey(Schema.String), "pdfCombineOneFile": Schema.optionalKey(Schema.Boolean), "pdfShowTemplateVariables": Schema.optionalKey(Schema.Boolean), "timeRange": Schema.optionalKey(ReportTimeRange) })
-export type ResourceDependenciesResponseDTO = { readonly "resourceDependencies"?: ReadonlyArray<ResourceDependencyDTO> }
-export const ResourceDependenciesResponseDTO = Schema.Struct({ "resourceDependencies": Schema.optionalKey(Schema.Array(ResourceDependencyDTO)) })
-export type Authorization = { readonly "credentials"?: Secret, readonly "credentials_file"?: string, readonly "credentials_ref"?: string, readonly "type"?: string }
-export const Authorization = Schema.Struct({ "credentials": Schema.optionalKey(Secret), "credentials_file": Schema.optionalKey(Schema.String), "credentials_ref": Schema.optionalKey(Schema.String.annotate({ "description": "CredentialsRef is the name of the secret within the secret manager to use as credentials." })), "type": Schema.optionalKey(Schema.String) }).annotate({ "title": "Authorization contains HTTP authorization credentials." })
-export type BasicAuth = { readonly "password"?: Secret, readonly "password_file"?: string, readonly "password_ref"?: string, readonly "username"?: string, readonly "username_file"?: string, readonly "username_ref"?: string }
-export const BasicAuth = Schema.Struct({ "password": Schema.optionalKey(Secret), "password_file": Schema.optionalKey(Schema.String), "password_ref": Schema.optionalKey(Schema.String.annotate({ "description": "PasswordRef is the name of the secret within the secret manager to use as the password." })), "username": Schema.optionalKey(Schema.String), "username_file": Schema.optionalKey(Schema.String), "username_ref": Schema.optionalKey(Schema.String.annotate({ "description": "UsernameRef is the name of the secret within the secret manager to use as the username." })) }).annotate({ "title": "BasicAuth contains basic HTTP authentication credentials." })
-export type Header = { readonly "files"?: ReadonlyArray<string>, readonly "secrets"?: ReadonlyArray<Secret>, readonly "values"?: ReadonlyArray<string> }
-export const Header = Schema.Struct({ "files": Schema.optionalKey(Schema.Array(Schema.String)), "secrets": Schema.optionalKey(Schema.Array(Secret)), "values": Schema.optionalKey(Schema.Array(Schema.String)) }).annotate({ "title": "Header represents the configuration for a single HTTP header." })
-export type ProxyHeader = { readonly [x: string]: ReadonlyArray<Secret> }
-export const ProxyHeader = Schema.Record(Schema.String, Schema.Array(Secret))
-export type SigV4Config = { readonly "AccessKey"?: string, readonly "Profile"?: string, readonly "Region"?: string, readonly "RoleARN"?: string, readonly "SecretKey"?: Secret }
-export const SigV4Config = Schema.Struct({ "AccessKey": Schema.optionalKey(Schema.String), "Profile": Schema.optionalKey(Schema.String), "Region": Schema.optionalKey(Schema.String), "RoleARN": Schema.optionalKey(Schema.String), "SecretKey": Schema.optionalKey(Secret) }).annotate({ "description": "SigV4Config is the configuration for signing remote write requests with\nAWS's SigV4 verification process. Empty values will be retrieved using the\nAWS default credentials chain." })
-export type SearchOrgServiceAccountsResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "serviceAccounts"?: ReadonlyArray<ServiceAccountDTO>, readonly "totalCount"?: number }
-export const SearchOrgServiceAccountsResult = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "serviceAccounts": Schema.optionalKey(Schema.Array(ServiceAccountDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "description": "It can be used for pagination of the user list\nE.g. if totalCount is equal to 100 users and\nthe perpage parameter is set to 10 then there are 10 pages of users.", "format": "int64" }).check(Schema.isInt())) }).annotate({ "description": "swagger: model" })
-export type PublicDashboard = { readonly "accessToken"?: string, readonly "annotationsEnabled"?: boolean, readonly "createdAt"?: string, readonly "createdBy"?: number, readonly "dashboardUid"?: string, readonly "isEnabled"?: boolean, readonly "recipients"?: ReadonlyArray<EmailDTO>, readonly "share"?: ShareType, readonly "timeSelectionEnabled"?: boolean, readonly "uid"?: string, readonly "updatedAt"?: string, readonly "updatedBy"?: number }
-export const PublicDashboard = Schema.Struct({ "accessToken": Schema.optionalKey(Schema.String), "annotationsEnabled": Schema.optionalKey(Schema.Boolean), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dashboardUid": Schema.optionalKey(Schema.String), "isEnabled": Schema.optionalKey(Schema.Boolean), "recipients": Schema.optionalKey(Schema.Array(EmailDTO)), "share": Schema.optionalKey(ShareType), "timeSelectionEnabled": Schema.optionalKey(Schema.Boolean), "uid": Schema.optionalKey(Schema.String), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type SlackAction = { readonly "confirm"?: SlackConfirmationField, readonly "name"?: string, readonly "style"?: string, readonly "text"?: string, readonly "type"?: string, readonly "url"?: string, readonly "value"?: string }
-export const SlackAction = Schema.Struct({ "confirm": Schema.optionalKey(SlackConfirmationField), "name": Schema.optionalKey(Schema.String), "style": Schema.optionalKey(Schema.String), "text": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(Schema.String) }).annotate({ "title": "SlackAction configures a single Slack action that is sent with each notification.", "description": "See https://api.slack.com/docs/message-attachments#action_fields and https://api.slack.com/docs/message-buttons\nfor more information." })
-export type SnapshotListResponseDTO = { readonly "snapshots"?: ReadonlyArray<SnapshotDTO> }
-export const SnapshotListResponseDTO = Schema.Struct({ "snapshots": Schema.optionalKey(Schema.Array(SnapshotDTO)) })
-export type GetSnapshotResponseDTO = { readonly "created"?: string, readonly "finished"?: string, readonly "results"?: ReadonlyArray<MigrateDataResponseItemDTO>, readonly "sessionUid"?: string, readonly "stats"?: SnapshotResourceStats, readonly "status"?: "INITIALIZING" | "CREATING" | "PENDING_UPLOAD" | "UPLOADING" | "PENDING_PROCESSING" | "PROCESSING" | "FINISHED" | "CANCELED" | "ERROR" | "UNKNOWN", readonly "uid"?: string }
-export const GetSnapshotResponseDTO = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "finished": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "results": Schema.optionalKey(Schema.Array(MigrateDataResponseItemDTO)), "sessionUid": Schema.optionalKey(Schema.String), "stats": Schema.optionalKey(SnapshotResourceStats), "status": Schema.optionalKey(Schema.Literals(["INITIALIZING", "CREATING", "PENDING_UPLOAD", "UPLOADING", "PENDING_PROCESSING", "PROCESSING", "FINISHED", "CANCELED", "ERROR", "UNKNOWN"])), "uid": Schema.optionalKey(Schema.String) })
-export type FloatHistogram = { readonly "Count"?: number, readonly "CounterResetHint"?: CounterResetHint, readonly "CustomValues"?: ReadonlyArray<number>, readonly "PositiveBuckets"?: ReadonlyArray<number>, readonly "PositiveSpans"?: ReadonlyArray<Span>, readonly "Schema"?: number, readonly "Sum"?: number, readonly "ZeroCount"?: number, readonly "ZeroThreshold"?: number }
-export const FloatHistogram = Schema.Struct({ "Count": Schema.optionalKey(Schema.Number.annotate({ "description": "Total number of observations. Must be zero or positive.", "format": "double" }).check(Schema.isFinite())), "CounterResetHint": Schema.optionalKey(CounterResetHint), "CustomValues": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())).annotate({ "description": "Holds the custom (usually upper) bounds for bucket definitions, otherwise nil.\nThis slice is interned, to be treated as immutable and copied by reference.\nThese numbers should be strictly increasing. This field is only used when the\nschema is for custom buckets, and the ZeroThreshold, ZeroCount, NegativeSpans\nand NegativeBuckets fields are not used in that case." })), "PositiveBuckets": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())).annotate({ "description": "Observation counts in buckets. Each represents an absolute count and\nmust be zero or positive." })), "PositiveSpans": Schema.optionalKey(Schema.Array(Span).annotate({ "description": "Spans for positive and negative buckets (see Span below)." })), "Schema": Schema.optionalKey(Schema.Number.annotate({ "description": "Currently valid schema numbers are -4 <= n <= 8 for exponential buckets.\nThey are all for base-2 bucket schemas, where 1 is a bucket boundary in\neach case, and then each power of two is divided into 2^n logarithmic buckets.\nOr in other words, each bucket boundary is the previous boundary times\n2^(2^-n). Another valid schema number is -53 for custom buckets, defined by\nthe CustomValues field.", "format": "int32" }).check(Schema.isInt())), "Sum": Schema.optionalKey(Schema.Number.annotate({ "description": "Sum of observations. This is also used as the stale marker.", "format": "double" }).check(Schema.isFinite())), "ZeroCount": Schema.optionalKey(Schema.Number.annotate({ "description": "Observations falling into the zero bucket. Must be zero or positive.", "format": "double" }).check(Schema.isFinite())), "ZeroThreshold": Schema.optionalKey(Schema.Number.annotate({ "description": "Width of the zero bucket.", "format": "double" }).check(Schema.isFinite())) }).annotate({ "title": "FloatHistogram is similar to Histogram but uses float64 for all\ncounts. Additionally, bucket counts are absolute and not deltas.", "description": "A FloatHistogram is needed by PromQL to handle operations that might result\nin fractional counts. Since the counts in a histogram are unlikely to be too\nlarge to be represented precisely by a float64, a FloatHistogram can also be\nused to represent a histogram with integer counts and thus serves as a more\ngeneralized representation." })
-export type LinkTransformationConfig = { readonly "expression"?: string, readonly "field"?: string, readonly "mapValue"?: string, readonly "type"?: SupportedTransformationTypes }
-export const LinkTransformationConfig = Schema.Struct({ "expression": Schema.optionalKey(Schema.String), "field": Schema.optionalKey(Schema.String), "mapValue": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(SupportedTransformationTypes) })
-export type TLSConfig = { readonly "ca"?: string, readonly "ca_file"?: string, readonly "ca_ref"?: string, readonly "cert"?: string, readonly "cert_file"?: string, readonly "cert_ref"?: string, readonly "insecure_skip_verify"?: boolean, readonly "key"?: Secret, readonly "key_file"?: string, readonly "key_ref"?: string, readonly "max_version"?: TLSVersion, readonly "min_version"?: TLSVersion, readonly "server_name"?: string }
-export const TLSConfig = Schema.Struct({ "ca": Schema.optionalKey(Schema.String.annotate({ "description": "Text of the CA cert to use for the targets." })), "ca_file": Schema.optionalKey(Schema.String.annotate({ "description": "The CA cert to use for the targets." })), "ca_ref": Schema.optionalKey(Schema.String.annotate({ "description": "CARef is the name of the secret within the secret manager to use as the CA cert for the\ntargets." })), "cert": Schema.optionalKey(Schema.String.annotate({ "description": "Text of the client cert file for the targets." })), "cert_file": Schema.optionalKey(Schema.String.annotate({ "description": "The client cert file for the targets." })), "cert_ref": Schema.optionalKey(Schema.String.annotate({ "description": "CertRef is the name of the secret within the secret manager to use as the client cert for\nthe targets." })), "insecure_skip_verify": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Disable target certificate validation." })), "key": Schema.optionalKey(Secret), "key_file": Schema.optionalKey(Schema.String.annotate({ "description": "The client key file for the targets." })), "key_ref": Schema.optionalKey(Schema.String.annotate({ "description": "KeyRef is the name of the secret within the secret manager to use as the client key for\nthe targets." })), "max_version": Schema.optionalKey(TLSVersion), "min_version": Schema.optionalKey(TLSVersion), "server_name": Schema.optionalKey(Schema.String.annotate({ "description": "Used to verify the hostname for the targets." })) }).annotate({ "title": "TLSConfig configures the options for TLS connections." })
-export type FindTagsResult = { readonly "tags"?: ReadonlyArray<TagsDTO> }
-export const FindTagsResult = Schema.Struct({ "tags": Schema.optionalKey(Schema.Array(TagsDTO)) }).annotate({ "title": "FindTagsResult is the result of a tags search." })
-export type SearchTeamGroupsQueryResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "teamGroups"?: ReadonlyArray<TeamGroupDTO>, readonly "totalCount"?: number }
-export const SearchTeamGroupsQueryResult = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teamGroups": Schema.optionalKey(Schema.Array(TeamGroupDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type TeamLBACRules = { readonly "rules"?: ReadonlyArray<TeamLBACRule> }
-export const TeamLBACRules = Schema.Struct({ "rules": Schema.optionalKey(Schema.Array(TeamLBACRule)) })
-export type TempUserDTO = { readonly "code"?: string, readonly "createdOn"?: string, readonly "email"?: string, readonly "emailSent"?: boolean, readonly "emailSentOn"?: string, readonly "id"?: number, readonly "invitedByEmail"?: string, readonly "invitedByLogin"?: string, readonly "invitedByName"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin", readonly "status"?: TempUserStatus, readonly "url"?: string }
-export const TempUserDTO = Schema.Struct({ "code": Schema.optionalKey(Schema.String), "createdOn": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "emailSent": Schema.optionalKey(Schema.Boolean), "emailSentOn": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "invitedByEmail": Schema.optionalKey(Schema.String), "invitedByLogin": Schema.optionalKey(Schema.String), "invitedByName": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])), "status": Schema.optionalKey(TempUserStatus), "url": Schema.optionalKey(Schema.String) })
-export type Token = { readonly "account"?: string, readonly "anonymousRatio"?: number, readonly "company"?: string, readonly "details_url"?: string, readonly "exp"?: number, readonly "iat"?: number, readonly "included_users"?: number, readonly "iss"?: string, readonly "jti"?: string, readonly "lexp"?: number, readonly "lic_exp_warn_days"?: number, readonly "lid"?: string, readonly "limit_by"?: string, readonly "max_concurrent_user_sessions"?: number, readonly "nbf"?: number, readonly "prod"?: ReadonlyArray<string>, readonly "slug"?: string, readonly "status"?: TokenStatus, readonly "sub"?: string, readonly "tok_exp_warn_days"?: number, readonly "trial"?: boolean, readonly "trial_exp"?: number, readonly "update_days"?: number, readonly "usage_billing"?: boolean }
-export const Token = Schema.Struct({ "account": Schema.optionalKey(Schema.String), "anonymousRatio": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "company": Schema.optionalKey(Schema.String), "details_url": Schema.optionalKey(Schema.String), "exp": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "iat": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "included_users": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "iss": Schema.optionalKey(Schema.String), "jti": Schema.optionalKey(Schema.String), "lexp": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "lic_exp_warn_days": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "lid": Schema.optionalKey(Schema.String), "limit_by": Schema.optionalKey(Schema.String), "max_concurrent_user_sessions": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "nbf": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "prod": Schema.optionalKey(Schema.Array(Schema.String)), "slug": Schema.optionalKey(Schema.String), "status": Schema.optionalKey(TokenStatus), "sub": Schema.optionalKey(Schema.String), "tok_exp_warn_days": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "trial": Schema.optionalKey(Schema.Boolean), "trial_exp": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "update_days": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "usage_billing": Schema.optionalKey(Schema.Boolean) })
-export type CorrelationConfigUpdateDTO = { readonly "field"?: string, readonly "target"?: { readonly [x: string]: Schema.Json }, readonly "transformations"?: ReadonlyArray<Transformation> }
-export const CorrelationConfigUpdateDTO = Schema.Struct({ "field": Schema.optionalKey(Schema.String.annotate({ "description": "Field used to attach the correlation link", "examples": ["message"] })), "target": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Target data query", "examples": [{"prop1":"value1","prop2":"value"}] })), "transformations": Schema.optionalKey(Schema.Array(Transformation).annotate({ "description": "Source data transformations" })) })
+export const VisType = Schema.String.annotate({ "title": "VisType is used to indicate how the data should be visualized in explore.", "identifier": "VisType" })
+export type FrameType = string
+export const FrameType = Schema.String.annotate({ "description": "A FrameType string, when present in a frame's metadata, asserts that the\nframe's structure conforms to the FrameType's specification.\nThis property is currently optional, so FrameType may be FrameTypeUnknown even if the properties of\nthe Frame correspond to a defined FrameType.\n+enum", "identifier": "FrameType" })
+export type FrameTypeVersion = ReadonlyArray<number>
+export const FrameTypeVersion = Schema.Array(Schema.Number.annotate({ "format": "uint64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "title": "FrameType is a 2 number version (Major / Minor).", "identifier": "FrameTypeVersion" })
+export type ManagerKind = string
+export const ManagerKind = Schema.String.annotate({ "title": "ManagerKind is the type of manager, which is responsible for managing the resource.", "description": "It can be a user or a tool or a generic API client.\n+enum", "identifier": "ManagerKind" })
+export type DescendantCounts = { readonly [x: string]: number }
+export const DescendantCounts = Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "identifier": "DescendantCounts" })
+export type HealthResponse = { readonly "apiserver"?: string, readonly "commit"?: string, readonly "database"?: string, readonly "enterpriseCommit"?: string, readonly "version"?: string } & { readonly [x: string]: Schema.Json }
+export const HealthResponse = Schema.StructWithRest(Schema.Struct({ "apiserver": Schema.optionalKey(Schema.String), "commit": Schema.optionalKey(Schema.String), "database": Schema.optionalKey(Schema.String), "enterpriseCommit": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "healthResponse" })
+export type LibraryElementDTOMetaUser = { readonly "avatarUrl"?: string, readonly "id"?: number, readonly "name"?: string } & { readonly [x: string]: Schema.Json }
+export const LibraryElementDTOMetaUser = Schema.StructWithRest(Schema.Struct({ "avatarUrl": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "LibraryElementDTOMetaUser" })
+export type ActiveUserStats = { readonly "active_admins_and_editors"?: number, readonly "active_anonymous_devices"?: number, readonly "active_users"?: number, readonly "active_viewers"?: number } & { readonly [x: string]: Schema.Json }
+export const ActiveUserStats = Schema.StructWithRest(Schema.Struct({ "active_admins_and_editors": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "active_anonymous_devices": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "active_users": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "active_viewers": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ActiveUserStats" })
+export type TokenStatus = number
+export const TokenStatus = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "TokenStatus" }))
+export type Address = { readonly "address1"?: string, readonly "address2"?: string, readonly "city"?: string, readonly "country"?: string, readonly "state"?: string, readonly "zipCode"?: string } & { readonly [x: string]: Schema.Json }
+export const Address = Schema.StructWithRest(Schema.Struct({ "address1": Schema.optionalKey(Schema.String), "address2": Schema.optionalKey(Schema.String), "city": Schema.optionalKey(Schema.String), "country": Schema.optionalKey(Schema.String), "state": Schema.optionalKey(Schema.String), "zipCode": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Address" })
+export type TempUserStatus = string
+export const TempUserStatus = Schema.String.annotate({ "identifier": "TempUserStatus" })
+export type PreferencesNavbarPreference = { readonly "bookmarkUrls"?: ReadonlyArray<string> } & { readonly [x: string]: Schema.Json }
+export const PreferencesNavbarPreference = Schema.StructWithRest(Schema.Struct({ "bookmarkUrls": Schema.optionalKey(Schema.Array(Schema.String)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "+k8s:openapi-gen=true", "identifier": "PreferencesNavbarPreference" })
+export type PreferencesQueryHistoryPreference = { readonly "homeTab"?: string } & { readonly [x: string]: Schema.Json }
+export const PreferencesQueryHistoryPreference = Schema.StructWithRest(Schema.Struct({ "homeTab": Schema.optionalKey(Schema.String.annotate({ "description": "one of: '' | 'query' | 'starred';" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "+k8s:openapi-gen=true", "identifier": "PreferencesQueryHistoryPreference" })
+export type OrgUserDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "authLabels"?: ReadonlyArray<string>, readonly "avatarUrl"?: string, readonly "created"?: string, readonly "email"?: string, readonly "isDisabled"?: boolean, readonly "isExternallySynced"?: boolean, readonly "isProvisioned"?: boolean, readonly "lastSeenAt"?: string, readonly "lastSeenAtAge"?: string, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: string, readonly "uid"?: string, readonly "userId"?: number } & { readonly [x: string]: Schema.Json }
+export const OrgUserDTO = Schema.StructWithRest(Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "authLabels": Schema.optionalKey(Schema.Array(Schema.String)), "avatarUrl": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "isDisabled": Schema.optionalKey(Schema.Boolean), "isExternallySynced": Schema.optionalKey(Schema.Boolean), "isProvisioned": Schema.optionalKey(Schema.Boolean), "lastSeenAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "lastSeenAtAge": Schema.optionalKey(Schema.String), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "role": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "OrgUserDTO" })
+export type UserLookupDTO = { readonly "avatarUrl"?: string, readonly "login"?: string, readonly "uid"?: string, readonly "userId"?: number } & { readonly [x: string]: Schema.Json }
+export const UserLookupDTO = Schema.StructWithRest(Schema.Struct({ "avatarUrl": Schema.optionalKey(Schema.String), "login": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "UserLookupDTO" })
+export type OrgDTO = { readonly "id"?: number, readonly "name"?: string } & { readonly [x: string]: Schema.Json }
+export const OrgDTO = Schema.StructWithRest(Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "OrgDTO" })
+export type Playlist = { readonly "id"?: number, readonly "interval"?: string, readonly "name"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const Playlist = Schema.StructWithRest(Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "interval": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Playlist model", "identifier": "Playlist" })
+export type PlaylistItemDTO = { readonly "title"?: string, readonly "type"?: string, readonly "value"?: string } & { readonly [x: string]: Schema.Json }
+export const PlaylistItemDTO = Schema.StructWithRest(Schema.Struct({ "title": Schema.optionalKey(Schema.String.annotate({ "description": "Title is an unused property -- it will be removed in the future" })), "type": Schema.optionalKey(Schema.String.annotate({ "description": "Type of the item." })), "value": Schema.optionalKey(Schema.String.annotate({ "description": "Value depends on type and describes the playlist item.\n\ndashboard_by_id: The value is an internal numerical identifier set by Grafana. This\nis not portable as the numerical identifier is non-deterministic between different instances.\nWill be replaced by dashboard_by_uid in the future. (deprecated)\ndashboard_by_tag: The value is a tag which is set on any number of dashboards. All\ndashboards behind the tag will be added to the playlist.\ndashboard_by_uid: The value is the dashboard UID" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "PlaylistItemDTO" })
+export type DataSourceRef = { readonly "type"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const DataSourceRef = Schema.StructWithRest(Schema.Struct({ "type": Schema.optionalKey(Schema.String.annotate({ "description": "The plugin type-id" })), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Specific datasource instance" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Ref to a DataSource instance", "identifier": "DataSourceRef" })
+export type AnnotationPanelFilter = { readonly "exclude"?: boolean, readonly "ids"?: ReadonlyArray<number> } & { readonly [x: string]: Schema.Json }
+export const AnnotationPanelFilter = Schema.StructWithRest(Schema.Struct({ "exclude": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Should the specified panels be included or excluded" })), "ids": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "description": "Panel IDs that should be included or excluded" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "AnnotationPanelFilter" })
+export type AnnotationTarget = { readonly "limit"?: number, readonly "matchAny"?: boolean, readonly "tags"?: ReadonlyArray<string>, readonly "type"?: string } & { readonly [x: string]: Schema.Json }
+export const AnnotationTarget = Schema.StructWithRest(Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "matchAny": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change" })), "tags": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change" })), "type": Schema.optionalKey(Schema.String.annotate({ "description": "Only required/valid for the grafana datasource...\nbut code+tests is already depending on it so hard to change" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "TODO: this should be a regular DataQuery that depends on the selected dashboard\nthese match the properties of the \"grafana\" datasouce that is default in most dashboards", "identifier": "AnnotationTarget" })
+export type RecordingRuleJSON = { readonly "active"?: boolean, readonly "count"?: boolean, readonly "description"?: string, readonly "dest_data_source_uid"?: string, readonly "id"?: string, readonly "interval"?: number, readonly "name"?: string, readonly "prom_name"?: string, readonly "queries"?: ReadonlyArray<{ readonly [x: string]: Schema.Json }>, readonly "range"?: number, readonly "target_ref_id"?: string } & { readonly [x: string]: Schema.Json }
+export const RecordingRuleJSON = Schema.StructWithRest(Schema.Struct({ "active": Schema.optionalKey(Schema.Boolean), "count": Schema.optionalKey(Schema.Boolean), "description": Schema.optionalKey(Schema.String), "dest_data_source_uid": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String), "prom_name": Schema.optionalKey(Schema.String), "queries": Schema.optionalKey(Schema.Array(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })))), "range": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "target_ref_id": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "RecordingRuleJSON is the external representation of a recording rule", "identifier": "RecordingRuleJSON" })
+export type PrometheusRemoteWriteTargetJSON = { readonly "data_source_uid"?: string, readonly "id"?: string, readonly "remote_write_path"?: string } & { readonly [x: string]: Schema.Json }
+export const PrometheusRemoteWriteTargetJSON = Schema.StructWithRest(Schema.Struct({ "data_source_uid": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.String), "remote_write_path": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "PrometheusRemoteWriteTargetJSON" })
+export type ReportDashboardID = { readonly "id"?: number, readonly "name"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const ReportDashboardID = Schema.StructWithRest(Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportDashboardID" })
+export type ReportTimeRange = { readonly "from"?: string, readonly "to"?: string } & { readonly [x: string]: Schema.Json }
+export const ReportTimeRange = Schema.StructWithRest(Schema.Struct({ "from": Schema.optionalKey(Schema.String), "to": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportTimeRange" })
+export type Type = string
+export const Type = Schema.String.annotate({ "description": "+enum", "identifier": "Type" })
+export type ReportSchedule = { readonly "dayOfMonth"?: string, readonly "endDate"?: string, readonly "frequency"?: string, readonly "intervalAmount"?: number, readonly "intervalFrequency"?: string, readonly "startDate"?: string, readonly "timeZone"?: string, readonly "workdaysOnly"?: boolean } & { readonly [x: string]: Schema.Json }
+export const ReportSchedule = Schema.StructWithRest(Schema.Struct({ "dayOfMonth": Schema.optionalKey(Schema.String), "endDate": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "frequency": Schema.optionalKey(Schema.String), "intervalAmount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "intervalFrequency": Schema.optionalKey(Schema.String), "startDate": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "timeZone": Schema.optionalKey(Schema.String), "workdaysOnly": Schema.optionalKey(Schema.Boolean) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportSchedule" })
+export type State = string
+export const State = Schema.String.annotate({ "description": "+enum", "identifier": "State" })
+export type ReportURLItem = { readonly "title"?: string, readonly "url"?: string } & { readonly [x: string]: Schema.Json }
+export const ReportURLItem = Schema.StructWithRest(Schema.Struct({ "title": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportURLItem" })
+export type ReportBrandingOptions = { readonly "emailFooterLink"?: string, readonly "emailFooterMode"?: string, readonly "emailFooterText"?: string, readonly "emailLogoUrl"?: string, readonly "reportLogoUrl"?: string } & { readonly [x: string]: Schema.Json }
+export const ReportBrandingOptions = Schema.StructWithRest(Schema.Struct({ "emailFooterLink": Schema.optionalKey(Schema.String), "emailFooterMode": Schema.optionalKey(Schema.String), "emailFooterText": Schema.optionalKey(Schema.String), "emailLogoUrl": Schema.optionalKey(Schema.String), "reportLogoUrl": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportBrandingOptions" })
+export type FooterItem = { readonly "color"?: string, readonly "fontSize"?: string, readonly "fontStyle"?: string, readonly "fontWeight"?: string, readonly "type"?: string, readonly "value"?: string } & { readonly [x: string]: Schema.Json }
+export const FooterItem = Schema.StructWithRest(Schema.Struct({ "color": Schema.optionalKey(Schema.String), "fontSize": Schema.optionalKey(Schema.String), "fontStyle": Schema.optionalKey(Schema.String), "fontWeight": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "FooterItem" })
+export type HitType = string
+export const HitType = Schema.String.annotate({ "identifier": "HitType" })
+export type ServiceAccountDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "avatarUrl"?: string, readonly "id"?: number, readonly "isDisabled"?: boolean, readonly "isExternal"?: boolean, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: string, readonly "tokens"?: number, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const ServiceAccountDTO = Schema.StructWithRest(Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean).annotate({ "examples": [{ "serviceaccounts:delete": true, "serviceaccounts:read": true, "serviceaccounts:write": true }] })), "avatarUrl": Schema.optionalKey(Schema.String.annotate({ "examples": ["/avatar/85ec38023d90823d3e5b43ef35646af9"] })), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isDisabled": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "isExternal": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "login": Schema.optionalKey(Schema.String.annotate({ "examples": ["sa-grafana"] })), "name": Schema.optionalKey(Schema.String.annotate({ "examples": ["grafana"] })), "orgId": Schema.optionalKey(Schema.Number.annotate({ "examples": [1], "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "role": Schema.optionalKey(Schema.String.annotate({ "examples": ["Viewer"] })), "tokens": Schema.optionalKey(Schema.Number.annotate({ "examples": [0], "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "uid": Schema.optionalKey(Schema.String.annotate({ "examples": ["fe1xejlha91xce"] })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "swagger: model", "identifier": "ServiceAccountDTO" })
+export type TokenDTO = { readonly "created"?: string, readonly "expiration"?: string, readonly "hasExpired"?: boolean, readonly "id"?: number, readonly "isRevoked"?: boolean, readonly "lastUsedAt"?: string, readonly "name"?: string, readonly "secondsUntilExpiration"?: number } & { readonly [x: string]: Schema.Json }
+export const TokenDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "examples": ["2022-03-23T10:31:02Z"], "format": "date-time" })), "expiration": Schema.optionalKey(Schema.String.annotate({ "examples": ["2022-03-23T10:31:02Z"], "format": "date-time" })), "hasExpired": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "id": Schema.optionalKey(Schema.Number.annotate({ "examples": [1], "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isRevoked": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "lastUsedAt": Schema.optionalKey(Schema.String.annotate({ "examples": ["2022-03-23T10:31:02Z"], "format": "date-time" })), "name": Schema.optionalKey(Schema.String.annotate({ "examples": ["grafana"] })), "secondsUntilExpiration": Schema.optionalKey(Schema.Number.annotate({ "examples": [0], "format": "double" }).check(Schema.isFinite().annotate({ "expected": "a finite number" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TokenDTO" })
+export type IPMask = ReadonlyArray<number>
+export const IPMask = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "title": "An IPMask is a bitmask that can be used to manipulate\nIP addresses for IP addressing and routing.", "description": "See type [IPNet] and func [ParseCIDR] for details.", "identifier": "IPMask" })
+export type ExtKeyUsage = number
+export const ExtKeyUsage = Schema.Number.annotate({ "title": "ExtKeyUsage represents an extended set of actions that are valid for a given key.", "description": "Each of the ExtKeyUsage* constants define a unique action.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "ExtKeyUsage" }))
+export type ObjectIdentifier = ReadonlyArray<number>
+export const ObjectIdentifier = Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "title": "An ObjectIdentifier represents an ASN.1 OBJECT IDENTIFIER.", "identifier": "ObjectIdentifier" })
+export type KeyUsage = number
+export const KeyUsage = Schema.Number.annotate({ "description": "KeyUsage represents the set of actions that are valid for a given key. It's\na bitmap of the KeyUsage* constants.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "KeyUsage" }))
+export type PolicyMapping = { readonly "IssuerDomainPolicy"?: string, readonly "SubjectDomainPolicy"?: string } & { readonly [x: string]: Schema.Json }
+export const PolicyMapping = Schema.StructWithRest(Schema.Struct({ "IssuerDomainPolicy": Schema.optionalKey(Schema.String.annotate({ "description": "IssuerDomainPolicy contains a policy OID the issuing certificate considers\nequivalent to SubjectDomainPolicy in the subject certificate." })), "SubjectDomainPolicy": Schema.optionalKey(Schema.String.annotate({ "description": "SubjectDomainPolicy contains a OID the issuing certificate considers\nequivalent to IssuerDomainPolicy in the subject certificate." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "PolicyMapping represents a policy mapping entry in the policyMappings extension.", "identifier": "PolicyMapping" })
+export type PublicKeyAlgorithm = number
+export const PublicKeyAlgorithm = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "PublicKeyAlgorithm" }))
+export type SignatureAlgorithm = number
+export const SignatureAlgorithm = Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "SignatureAlgorithm" }))
+export type URL = string
+export const URL = Schema.String.annotate({ "format": "url", "identifier": "URL" })
+export type TeamGroupDTO = { readonly "groupId"?: string, readonly "orgId"?: number, readonly "teamId"?: number, readonly "teamUid"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const TeamGroupDTO = Schema.StructWithRest(Schema.Struct({ "groupId": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teamUid": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Deprecated: always empty; no per-entry id." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TeamGroupDTO" })
+export type UserProfileDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "authLabels"?: ReadonlyArray<string> | null, readonly "avatarUrl"?: string, readonly "createdAt"?: string, readonly "email"?: string, readonly "id"?: number, readonly "isDisabled"?: boolean, readonly "isExternal"?: boolean, readonly "isExternallySynced"?: boolean, readonly "isGrafanaAdmin"?: boolean, readonly "isGrafanaAdminExternallySynced"?: boolean, readonly "isProvisioned"?: boolean, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "theme"?: string, readonly "uid"?: string, readonly "updatedAt"?: string } & { readonly [x: string]: Schema.Json }
+export const UserProfileDTO = Schema.StructWithRest(Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "authLabels": Schema.optionalKey(Schema.Union([Schema.Array(Schema.String), Schema.Null])), "avatarUrl": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isDisabled": Schema.optionalKey(Schema.Boolean), "isExternal": Schema.optionalKey(Schema.Boolean), "isExternallySynced": Schema.optionalKey(Schema.Boolean), "isGrafanaAdmin": Schema.optionalKey(Schema.Boolean), "isGrafanaAdminExternallySynced": Schema.optionalKey(Schema.Boolean), "isProvisioned": Schema.optionalKey(Schema.Boolean), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "theme": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "UserProfileDTO" })
+export type UserOrgDTO = { readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin" } & { readonly [x: string]: Schema.Json }
+export const UserOrgDTO = Schema.StructWithRest(Schema.Struct({ "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "UserOrgDTO" })
+export type UserSearchHitDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "authLabels"?: ReadonlyArray<string>, readonly "avatarUrl"?: string, readonly "created"?: string, readonly "email"?: string, readonly "id"?: number, readonly "isAdmin"?: boolean, readonly "isDisabled"?: boolean, readonly "isProvisioned"?: boolean, readonly "lastSeenAt"?: string, readonly "lastSeenAtAge"?: string, readonly "login"?: string, readonly "name"?: string, readonly "role"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const UserSearchHitDTO = Schema.StructWithRest(Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "authLabels": Schema.optionalKey(Schema.Array(Schema.String)), "avatarUrl": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isAdmin": Schema.optionalKey(Schema.Boolean), "isDisabled": Schema.optionalKey(Schema.Boolean), "isProvisioned": Schema.optionalKey(Schema.Boolean), "lastSeenAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "lastSeenAtAge": Schema.optionalKey(Schema.String), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "role": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "UserSearchHitDTO" })
+export type AlertRuleNotificationSettings = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "receiver": string, readonly "repeat_interval"?: string } & { readonly [x: string]: Schema.Json }
+export const AlertRuleNotificationSettings = Schema.StructWithRest(Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Override the times when notifications should not be muted. These must match the name of a mute time interval defined\nin the alertmanager configuration time_intervals section. All notifications will be suppressed unless they are sent\nat the time that matches any interval.", "examples": [["maintenance"]] })), "group_by": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Override the labels by which incoming alerts are grouped together. For example, multiple alerts coming in for\ncluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels\nuse the special value '...' as the sole label name.\nThis effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what\nyou want, unless you have a very low alert volume or your upstream notification system performs its own grouping.\nMust include 'alertname' and 'grafana_folder' if not using '...'.", "default": ["alertname", "grafana_folder"], "examples": [["alertname", "grafana_folder", "cluster"]] })), "group_interval": Schema.optionalKey(Schema.String.annotate({ "description": "Override how long to wait before sending a notification about new alerts that are added to a group of alerts for\nwhich an initial notification has already been sent. (Usually ~5m or more.)", "examples": ["5m"] })), "group_wait": Schema.optionalKey(Schema.String.annotate({ "description": "Override how long to initially wait to send a notification for a group of alerts. Allows to wait for an\ninhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)", "examples": ["30s"] })), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Override the times when notifications should be muted. These must match the name of a mute time interval defined\nin the alertmanager configuration time_intervals section. When muted it will not send any notifications, but\notherwise acts normally.", "examples": [["maintenance"]] })), "receiver": Schema.String.annotate({ "description": "Name of the receiver to send notifications to.", "examples": ["grafana-default-email"] }), "repeat_interval": Schema.optionalKey(Schema.String.annotate({ "description": "Override how long to wait before sending a notification again if it has already been sent successfully for an\nalert. (Usually ~3h or more).\nNote that this parameter is implicitly bound by Alertmanager's `--data.retention` configuration flag.\nNotifications will be resent after either repeat_interval or the data retention period have passed, whichever\noccurs first. `repeat_interval` should not be less than `group_interval`.", "examples": ["4h"] })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "AlertRuleNotificationSettings" })
+export type Provenance = string
+export const Provenance = Schema.String.annotate({ "identifier": "Provenance" })
+export type Record = { readonly "from": string, readonly "metric": string, readonly "target_datasource_uid"?: string } & { readonly [x: string]: Schema.Json }
+export const Record = Schema.StructWithRest(Schema.Struct({ "from": Schema.String.annotate({ "description": "Which expression node should be used as the input for the recorded metric.", "examples": ["A"] }), "metric": Schema.String.annotate({ "description": "Name of the recorded metric.", "examples": ["grafana_alerts_ratio"] }), "target_datasource_uid": Schema.optionalKey(Schema.String.annotate({ "description": "Which data source should be used to write the output of the recording rule, specified by UID.", "examples": ["my-prom"] })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Record" })
+export type PublicError1 = { readonly "extra"?: { readonly [x: string]: Schema.Json }, readonly "message"?: string, readonly "messageId"?: string, readonly "statusCode"?: number } & { readonly [x: string]: Schema.Json }
+export const PublicError1 = Schema.StructWithRest(Schema.Struct({ "extra": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))), "message": Schema.optionalKey(Schema.String), "messageId": Schema.optionalKey(Schema.String), "statusCode": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "PublicError is derived from Error and only contains information\navailable to the end user.", "identifier": "PublicError" })
+export type RawMessage = { readonly [x: string]: Schema.Json }
+export const RawMessage = Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "identifier": "RawMessage" })
+export type RelativeTimeRangeExport = { readonly "from"?: number, readonly "to"?: number } & { readonly [x: string]: Schema.Json }
+export const RelativeTimeRangeExport = Schema.StructWithRest(Schema.Struct({ "from": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "to": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "RelativeTimeRangeExport" })
+export type AlertRuleNotificationSettingsExport = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "receiver"?: string, readonly "repeat_interval"?: string } & { readonly [x: string]: Schema.Json }
+export const AlertRuleNotificationSettingsExport = Schema.StructWithRest(Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "AlertRuleNotificationSettingsExport is the provisioned export of models.NotificationSettings.", "identifier": "AlertRuleNotificationSettingsExport" })
+export type AlertRuleRecordExport = { readonly "from"?: string, readonly "metric"?: string, readonly "targetDatasourceUid"?: string } & { readonly [x: string]: Schema.Json }
+export const AlertRuleRecordExport = Schema.StructWithRest(Schema.Struct({ "from": Schema.optionalKey(Schema.String), "metric": Schema.optionalKey(Schema.String), "targetDatasourceUid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "Record is the provisioned export of models.Record.", "identifier": "AlertRuleRecordExport" })
+export type MuteTimeIntervalExport = { readonly "name"?: string, readonly "orgId"?: number, readonly "time_intervals"?: ReadonlyArray<TimeInterval> } & { readonly [x: string]: Schema.Json }
+export const MuteTimeIntervalExport = Schema.StructWithRest(Schema.Struct({ "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "MuteTimeIntervalExport" })
+export type MatchRegexps = { readonly [x: string]: string }
+export const MatchRegexps = Schema.Record(Schema.String, Schema.String).annotate({ "title": "MatchRegexps represents a map of Regexp.", "identifier": "MatchRegexps" })
+export type MatchType = number
+export const MatchType = Schema.Number.annotate({ "title": "MatchType is an enum for label matching types.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer", "identifier": "MatchType" }))
+export type ObjectMatcher = ReadonlyArray<string>
+export const ObjectMatcher = Schema.Array(Schema.String).annotate({ "title": "ObjectMatcher is a matcher that can be used to filter alerts.", "identifier": "ObjectMatcher" })
+export type PermissionDenied = { readonly [x: string]: Schema.Json }
+export const PermissionDenied = Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "identifier": "PermissionDenied" })
+export type MuteTimeInterval = { readonly "name"?: string, readonly "time_intervals"?: ReadonlyArray<TimeInterval> } & { readonly [x: string]: Schema.Json }
+export const MuteTimeInterval = Schema.StructWithRest(Schema.Struct({ "name": Schema.optionalKey(Schema.String), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "MuteTimeInterval represents a named set of time intervals for which a route should be muted.", "identifier": "MuteTimeInterval" })
+export type NotFound = { readonly [x: string]: Schema.Json }
+export const NotFound = Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "identifier": "NotFound" })
+export type RoleDTO = { readonly "created": string, readonly "delegatable"?: boolean, readonly "description": string, readonly "displayName": string, readonly "global"?: boolean, readonly "group": string, readonly "hidden"?: boolean, readonly "mapped"?: boolean, readonly "name": string, readonly "permissions"?: ReadonlyArray<Permission>, readonly "uid": string, readonly "updated": string, readonly "version": number } & { readonly [x: string]: Schema.Json }
+export const RoleDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.String.annotate({ "format": "date-time" }), "delegatable": Schema.optionalKey(Schema.Boolean), "description": Schema.String, "displayName": Schema.String, "global": Schema.optionalKey(Schema.Boolean), "group": Schema.String, "hidden": Schema.optionalKey(Schema.Boolean), "mapped": Schema.optionalKey(Schema.Boolean), "name": Schema.String, "permissions": Schema.optionalKey(Schema.Array(Permission)), "uid": Schema.String, "updated": Schema.String.annotate({ "format": "date-time" }), "version": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "RoleDTO" })
+export type Description = { readonly "assignments"?: Assignments, readonly "permissions"?: ReadonlyArray<string> } & { readonly [x: string]: Schema.Json }
+export const Description = Schema.StructWithRest(Schema.Struct({ "assignments": Schema.optionalKey(Assignments), "permissions": Schema.optionalKey(Schema.Array(Schema.String)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Description" })
+export type RelativeTimeRange = { readonly "from"?: Duration, readonly "to"?: Duration } & { readonly [x: string]: Schema.Json }
+export const RelativeTimeRange = Schema.StructWithRest(Schema.Struct({ "from": Schema.optionalKey(Duration), "to": Schema.optionalKey(Duration) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "RelativeTimeRange is the per query start and end time\nfor requests.", "identifier": "RelativeTimeRange" })
+export type SyncResult = { readonly "Elapsed"?: Duration, readonly "FailedUsers"?: ReadonlyArray<FailedUser>, readonly "MissingUserIds"?: ReadonlyArray<number>, readonly "Started"?: string, readonly "UpdatedUserIds"?: ReadonlyArray<number> } & { readonly [x: string]: Schema.Json }
+export const SyncResult = Schema.StructWithRest(Schema.Struct({ "Elapsed": Schema.optionalKey(Duration), "FailedUsers": Schema.optionalKey(Schema.Array(FailedUser)), "MissingUserIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "Started": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "UpdatedUserIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "SyncResult holds the result of a sync with LDAP. This gives us information on which users were updated and how.", "identifier": "SyncResult" })
+export type Annotation = { readonly "alertId"?: number, readonly "alertName"?: string, readonly "avatarUrl"?: string, readonly "created"?: number, readonly "dashboardId"?: number, readonly "dashboardUID"?: string, readonly "data"?: Json, readonly "email"?: string, readonly "id"?: number, readonly "login"?: string, readonly "newState"?: string, readonly "panelId"?: number, readonly "prevState"?: string, readonly "tags"?: ReadonlyArray<string>, readonly "text"?: string, readonly "time"?: number, readonly "timeEnd"?: number, readonly "updated"?: number, readonly "userId"?: number, readonly "userUID"?: string } & { readonly [x: string]: Schema.Json }
+export const Annotation = Schema.StructWithRest(Schema.Struct({ "alertId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "alertName": Schema.optionalKey(Schema.String), "avatarUrl": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: Use DashboardUID and OrgID instead", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dashboardUID": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Json), "email": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "login": Schema.optionalKey(Schema.String), "newState": Schema.optionalKey(Schema.String), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "prevState": Schema.optionalKey(Schema.String), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "text": Schema.optionalKey(Schema.String), "time": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "timeEnd": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "updated": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userUID": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Annotation" })
+export type DashboardVersionMeta = { readonly "created"?: string, readonly "createdBy"?: string, readonly "dashboardId"?: number, readonly "data"?: Json, readonly "id"?: number, readonly "message"?: string, readonly "parentVersion"?: number, readonly "restoredFrom"?: number, readonly "uid"?: string, readonly "version"?: number } & { readonly [x: string]: Schema.Json }
+export const DashboardVersionMeta = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.String), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "data": Schema.optionalKey(Json), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "message": Schema.optionalKey(Schema.String), "parentVersion": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "restoredFrom": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "uid": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "DashboardVersionMeta extends the DashboardVersionDTO with the names\nassociated with the UserIds, overriding the field with the same name from\nthe DashboardVersionDTO model.", "identifier": "DashboardVersionMeta" })
+export type MetricRequest = { readonly "debug"?: boolean, readonly "from": string, readonly "queries": ReadonlyArray<Json>, readonly "to": string } & { readonly [x: string]: Schema.Json }
+export const MetricRequest = Schema.StructWithRest(Schema.Struct({ "debug": Schema.optionalKey(Schema.Boolean), "from": Schema.String.annotate({ "description": "From Start time in epoch timestamps in milliseconds or relative using Grafana time units.", "examples": ["now-1h"] }), "queries": Schema.Array(Json).annotate({ "description": "queries.refId – Specifies an identifier of the query. Is optional and default to “A”.\nqueries.datasourceId – Specifies the data source to be queried. Each query in the request must have an unique datasourceId.\nqueries.maxDataPoints - Species maximum amount of data points that dashboard panel can render. Is optional and default to 100.\nqueries.intervalMs - Specifies the time interval in milliseconds of time series. Is optional and defaults to 1000.", "examples": [[{ "datasource": { "uid": "PD8C576611E62080A" }, "format": "table", "intervalMs": 86400000, "maxDataPoints": 1092, "rawSql": "SELECT 1 as valueOne, 2 as valueTwo", "refId": "A" }]] }), "to": Schema.String.annotate({ "description": "To End time in epoch timestamps in milliseconds or relative using Grafana time units.", "examples": ["now"] }) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "MetricRequest" })
+export type QueryHistoryDTO = { readonly "comment"?: string, readonly "createdAt"?: number, readonly "createdBy"?: number, readonly "datasourceUid"?: string, readonly "queries"?: Json, readonly "starred"?: boolean, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const QueryHistoryDTO = Schema.StructWithRest(Schema.Struct({ "comment": Schema.optionalKey(Schema.String), "createdAt": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "createdBy": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "datasourceUid": Schema.optionalKey(Schema.String), "queries": Schema.optionalKey(Json), "starred": Schema.optionalKey(Schema.Boolean), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "QueryHistoryDTO" })
+export type EmbeddedContactPoint = { readonly "disableResolveMessage"?: boolean, readonly "name"?: string, readonly "provenance"?: string, readonly "settings": Json, readonly "type": "alertmanager" | "dingding" | "discord" | "email" | "googlechat" | "kafka" | "line" | "opsgenie" | "pagerduty" | "pushover" | "sensugo" | "slack" | "teams" | "telegram" | "threema" | "victorops" | "webhook" | "wecom", readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const EmbeddedContactPoint = Schema.StructWithRest(Schema.Struct({ "disableResolveMessage": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name is used as grouping key in the UI. Contact points with the\nsame name will be grouped in the UI.", "examples": ["webhook_1"] })), "provenance": Schema.optionalKey(Schema.String.annotate({ "readOnly": true })), "settings": Json, "type": Schema.Literals(["alertmanager", "dingding", "discord", "email", "googlechat", "kafka", "line", "opsgenie", "pagerduty", "pushover", "sensugo", "slack", "teams", "telegram", "threema", "victorops", "webhook", "wecom"]).annotate({ "examples": ["webhook"] }), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "UID is the unique identifier of the contact point. The UID can be\nset by the user.", "examples": ["my_external_reference"] }).check(Schema.isMinLength(1).annotate({ "expected": "a value with a length of at least 1" })).check(Schema.isMaxLength(40).annotate({ "expected": "a value with a length of at most 40" })).check(Schema.isPattern(new RegExp("^[a-zA-Z0-9\\-\\_]+$")).annotate({ "expected": "a string matching the RegExp ^[a-zA-Z0-9\\-\\_]+$" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "EmbeddedContactPoint is the contact point type that is used\nby grafanas embedded alertmanager implementation.", "identifier": "EmbeddedContactPoint" })
+export type FindTagsResult = { readonly "tags"?: ReadonlyArray<TagsDTO> } & { readonly [x: string]: Schema.Json }
+export const FindTagsResult = Schema.StructWithRest(Schema.Struct({ "tags": Schema.optionalKey(Schema.Array(TagsDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "FindTagsResult is the result of a tags search.", "identifier": "FindTagsResult" })
+export type SearchDeviceQueryResult = { readonly "devices"?: ReadonlyArray<DeviceSearchHitDTO>, readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const SearchDeviceQueryResult = Schema.StructWithRest(Schema.Struct({ "devices": Schema.optionalKey(Schema.Array(DeviceSearchHitDTO)), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SearchDeviceQueryResult" })
+export type CloudMigrationSessionListResponseDTO = { readonly "sessions"?: ReadonlyArray<CloudMigrationSessionResponseDTO> } & { readonly [x: string]: Schema.Json }
+export const CloudMigrationSessionListResponseDTO = Schema.StructWithRest(Schema.Struct({ "sessions": Schema.optionalKey(Schema.Array(CloudMigrationSessionResponseDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "CloudMigrationSessionListResponseDTO" })
+export type GetSnapshotResponseDTO = { readonly "created"?: string, readonly "finished"?: string, readonly "results"?: ReadonlyArray<MigrateDataResponseItemDTO>, readonly "sessionUid"?: string, readonly "stats"?: SnapshotResourceStats, readonly "status"?: "INITIALIZING" | "CREATING" | "PENDING_UPLOAD" | "UPLOADING" | "PENDING_PROCESSING" | "PROCESSING" | "FINISHED" | "CANCELED" | "ERROR" | "UNKNOWN", readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const GetSnapshotResponseDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "finished": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "results": Schema.optionalKey(Schema.Array(MigrateDataResponseItemDTO)), "sessionUid": Schema.optionalKey(Schema.String), "stats": Schema.optionalKey(SnapshotResourceStats), "status": Schema.optionalKey(Schema.Literals(["INITIALIZING", "CREATING", "PENDING_UPLOAD", "UPLOADING", "PENDING_PROCESSING", "PROCESSING", "FINISHED", "CANCELED", "ERROR", "UNKNOWN"])), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "GetSnapshotResponseDTO" })
+export type SnapshotListResponseDTO = { readonly "snapshots"?: ReadonlyArray<SnapshotDTO> } & { readonly [x: string]: Schema.Json }
+export const SnapshotListResponseDTO = Schema.StructWithRest(Schema.Struct({ "snapshots": Schema.optionalKey(Schema.Array(SnapshotDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SnapshotListResponseDTO" })
+export type ResourceDependenciesResponseDTO = { readonly "resourceDependencies"?: ReadonlyArray<ResourceDependencyDTO> } & { readonly [x: string]: Schema.Json }
+export const ResourceDependenciesResponseDTO = Schema.StructWithRest(Schema.Struct({ "resourceDependencies": Schema.optionalKey(Schema.Array(ResourceDependencyDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ResourceDependenciesResponseDTO" })
+export type AnnotationPermission = { readonly "dashboard"?: AnnotationActions } & { readonly [x: string]: Schema.Json }
+export const AnnotationPermission = Schema.StructWithRest(Schema.Struct({ "dashboard": Schema.optionalKey(AnnotationActions) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "+k8s:deepcopy-gen=true", "identifier": "AnnotationPermission" })
+export type PublicDashboardListResponseWithPagination = { readonly "page"?: number, readonly "perPage"?: number, readonly "publicDashboards"?: ReadonlyArray<PublicDashboardListResponse>, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const PublicDashboardListResponseWithPagination = Schema.StructWithRest(Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "publicDashboards": Schema.optionalKey(Schema.Array(PublicDashboardListResponse)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "PublicDashboardListResponseWithPagination" })
+export type PublicDashboard = { readonly "accessToken"?: string, readonly "annotationsEnabled"?: boolean, readonly "createdAt"?: string, readonly "createdBy"?: number, readonly "dashboardUid"?: string, readonly "isEnabled"?: boolean, readonly "recipients"?: ReadonlyArray<EmailDTO>, readonly "share"?: ShareType, readonly "timeSelectionEnabled"?: boolean, readonly "uid"?: string, readonly "updatedAt"?: string, readonly "updatedBy"?: number } & { readonly [x: string]: Schema.Json }
+export const PublicDashboard = Schema.StructWithRest(Schema.Struct({ "accessToken": Schema.optionalKey(Schema.String), "annotationsEnabled": Schema.optionalKey(Schema.Boolean), "createdAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dashboardUid": Schema.optionalKey(Schema.String), "isEnabled": Schema.optionalKey(Schema.Boolean), "recipients": Schema.optionalKey(Schema.Array(EmailDTO)), "share": Schema.optionalKey(ShareType), "timeSelectionEnabled": Schema.optionalKey(Schema.Boolean), "uid": Schema.optionalKey(Schema.String), "updatedAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "PublicDashboard" })
+export type DashboardACLInfoDTO = { readonly "created"?: string, readonly "dashboardId"?: number, readonly "folderId"?: number, readonly "folderUid"?: string, readonly "inherited"?: boolean, readonly "isFolder"?: boolean, readonly "permission"?: PermissionType, readonly "permissionName"?: string, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin", readonly "slug"?: string, readonly "team"?: string, readonly "teamAvatarUrl"?: string, readonly "teamEmail"?: string, readonly "teamId"?: number, readonly "teamUid"?: string, readonly "title"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "url"?: string, readonly "userAvatarUrl"?: string, readonly "userEmail"?: string, readonly "userId"?: number, readonly "userLogin"?: string, readonly "userUid"?: string } & { readonly [x: string]: Schema.Json }
+export const DashboardACLInfoDTO = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "folderId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use FolderUID instead", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "folderUid": Schema.optionalKey(Schema.String), "inherited": Schema.optionalKey(Schema.Boolean), "isFolder": Schema.optionalKey(Schema.Boolean), "permission": Schema.optionalKey(PermissionType), "permissionName": Schema.optionalKey(Schema.String), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])), "slug": Schema.optionalKey(Schema.String), "team": Schema.optionalKey(Schema.String), "teamAvatarUrl": Schema.optionalKey(Schema.String), "teamEmail": Schema.optionalKey(Schema.String), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teamUid": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "url": Schema.optionalKey(Schema.String), "userAvatarUrl": Schema.optionalKey(Schema.String), "userEmail": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userLogin": Schema.optionalKey(Schema.String), "userUid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DashboardACLInfoDTO" })
+export type TeamDTO = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "avatarUrl"?: string, readonly "email"?: string, readonly "externalUID"?: string, readonly "id": number, readonly "isProvisioned": boolean, readonly "memberCount": number, readonly "name": string, readonly "orgId": number, readonly "permission"?: PermissionType, readonly "uid": string } & { readonly [x: string]: Schema.Json }
+export const TeamDTO = Schema.StructWithRest(Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "avatarUrl": Schema.optionalKey(Schema.String), "email": Schema.optionalKey(Schema.String), "externalUID": Schema.optionalKey(Schema.String), "id": Schema.Number.annotate({ "description": "@deprecated Use UID instead", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })), "isProvisioned": Schema.Boolean, "memberCount": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })), "name": Schema.String, "orgId": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })), "permission": Schema.optionalKey(PermissionType), "uid": Schema.String }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TeamDTO" })
+export type TeamMemberDTO = { readonly "auth_module"?: string, readonly "avatarUrl"?: string, readonly "email"?: string, readonly "labels"?: ReadonlyArray<string>, readonly "login"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "permission"?: PermissionType, readonly "teamId"?: number, readonly "teamUID"?: string, readonly "uid"?: string, readonly "userId"?: number, readonly "userUID"?: string } & { readonly [x: string]: Schema.Json }
+export const TeamMemberDTO = Schema.StructWithRest(Schema.Struct({ "auth_module": Schema.optionalKey(Schema.String), "avatarUrl": Schema.optionalKey(Schema.String), "email": Schema.optionalKey(Schema.String), "labels": Schema.optionalKey(Schema.Array(Schema.String)), "login": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "permission": Schema.optionalKey(PermissionType), "teamId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teamUID": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userUID": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TeamMemberDTO" })
+export type DataSourceListItemDTO = { readonly "access"?: DsAccess, readonly "basicAuth"?: boolean, readonly "database"?: string, readonly "id"?: number, readonly "isDefault"?: boolean, readonly "jsonData"?: Json, readonly "name"?: string, readonly "orgId"?: number, readonly "readOnly"?: boolean, readonly "type"?: string, readonly "typeLogoUrl"?: string, readonly "typeName"?: string, readonly "uid"?: string, readonly "url"?: string, readonly "user"?: string } & { readonly [x: string]: Schema.Json }
+export const DataSourceListItemDTO = Schema.StructWithRest(Schema.Struct({ "access": Schema.optionalKey(DsAccess), "basicAuth": Schema.optionalKey(Schema.Boolean), "database": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isDefault": Schema.optionalKey(Schema.Boolean), "jsonData": Schema.optionalKey(Json), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "readOnly": Schema.optionalKey(Schema.Boolean), "type": Schema.optionalKey(Schema.String), "typeLogoUrl": Schema.optionalKey(Schema.String), "typeName": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "user": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DataSourceListItemDTO" })
 export type Transformations = ReadonlyArray<Transformation>
-export const Transformations = Schema.Array(Transformation)
-export type SecretURL = URL
-export const SecretURL = URL
-export type SearchUserQueryResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number, readonly "users"?: ReadonlyArray<UserSearchHitDTO> }
-export const SearchUserQueryResult = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "users": Schema.optionalKey(Schema.Array(UserSearchHitDTO)) })
+export const Transformations = Schema.Array(Transformation).annotate({ "identifier": "Transformations" })
+export type DataSource = { readonly "access"?: DsAccess, readonly "accessControl"?: Metadata, readonly "basicAuth"?: boolean, readonly "basicAuthUser"?: string, readonly "database"?: string, readonly "id"?: number, readonly "isDefault"?: boolean, readonly "jsonData"?: Json, readonly "name"?: string, readonly "orgId"?: number, readonly "readOnly"?: boolean, readonly "secureJsonFields"?: { readonly [x: string]: boolean }, readonly "type"?: string, readonly "typeLogoUrl"?: string, readonly "uid"?: string, readonly "url"?: string, readonly "user"?: string, readonly "version"?: number, readonly "withCredentials"?: boolean } & { readonly [x: string]: Schema.Json }
+export const DataSource = Schema.StructWithRest(Schema.Struct({ "access": Schema.optionalKey(DsAccess), "accessControl": Schema.optionalKey(Metadata), "basicAuth": Schema.optionalKey(Schema.Boolean), "basicAuthUser": Schema.optionalKey(Schema.String), "database": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isDefault": Schema.optionalKey(Schema.Boolean), "jsonData": Schema.optionalKey(Json), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "readOnly": Schema.optionalKey(Schema.Boolean), "secureJsonFields": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean)), "type": Schema.optionalKey(Schema.String), "typeLogoUrl": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "user": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "withCredentials": Schema.optionalKey(Schema.Boolean) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DataSource" })
+export type TeamLBACRules = { readonly "rules"?: ReadonlyArray<TeamLBACRule> } & { readonly [x: string]: Schema.Json }
+export const TeamLBACRules = Schema.StructWithRest(Schema.Struct({ "rules": Schema.optionalKey(Schema.Array(TeamLBACRule)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TeamLBACRules" })
+export type LinkTransformationConfig = { readonly "expression"?: string, readonly "field"?: string, readonly "mapValue"?: string, readonly "type"?: SupportedTransformationTypes } & { readonly [x: string]: Schema.Json }
+export const LinkTransformationConfig = Schema.StructWithRest(Schema.Struct({ "expression": Schema.optionalKey(Schema.String), "field": Schema.optionalKey(Schema.String), "mapValue": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(SupportedTransformationTypes) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "LinkTransformationConfig" })
 export type ValueMappings = ReadonlyArray<ValueMapping>
-export const ValueMappings = Schema.Array(ValueMapping)
-export type PostableAlert = { readonly "annotations"?: LabelSet, readonly "endsAt"?: string, readonly "generatorURL"?: string, readonly "labels": LabelSet, readonly "startsAt"?: string }
-export const PostableAlert = Schema.Struct({ "annotations": Schema.optionalKey(LabelSet), "endsAt": Schema.optionalKey(Schema.String.annotate({ "description": "ends at\nFormat: date-time", "format": "date-time" })), "generatorURL": Schema.optionalKey(Schema.String.annotate({ "description": "generator URL\nFormat: uri", "format": "uri" })), "labels": LabelSet, "startsAt": Schema.optionalKey(Schema.String.annotate({ "description": "starts at\nFormat: date-time", "format": "date-time" })) }).annotate({ "description": "PostableAlert postable alert" })
-export type Matchers = ReadonlyArray<Matcher>
-export const Matchers = Schema.Array(Matcher).annotate({ "description": "Matchers matchers" })
-export type ClusterStatus = { readonly "name"?: string, readonly "peers"?: ReadonlyArray<PeerStatus>, readonly "status": "[ready settling disabled]" }
-export const ClusterStatus = Schema.Struct({ "name": Schema.optionalKey(Schema.String.annotate({ "description": "name" })), "peers": Schema.optionalKey(Schema.Array(PeerStatus).annotate({ "description": "peers" })), "status": Schema.Literal("[ready settling disabled]").annotate({ "description": "status" }) }).annotate({ "description": "ClusterStatus cluster status" })
-export type GettableAlert = { readonly "annotations": LabelSet, readonly "endsAt": string, readonly "fingerprint": string, readonly "generatorURL"?: string, readonly "labels": LabelSet, readonly "receivers": ReadonlyArray<Receiver>, readonly "startsAt": string, readonly "status": AlertStatus, readonly "updatedAt": string }
-export const GettableAlert = Schema.Struct({ "annotations": LabelSet, "endsAt": Schema.String.annotate({ "description": "ends at", "format": "date-time" }), "fingerprint": Schema.String.annotate({ "description": "fingerprint" }), "generatorURL": Schema.optionalKey(Schema.String.annotate({ "description": "generator URL\nFormat: uri", "format": "uri" })), "labels": LabelSet, "receivers": Schema.Array(Receiver).annotate({ "description": "receivers" }), "startsAt": Schema.String.annotate({ "description": "starts at", "format": "date-time" }), "status": AlertStatus, "updatedAt": Schema.String.annotate({ "description": "updated at", "format": "date-time" }) }).annotate({ "description": "GettableAlert gettable alert" })
-export type DashboardMeta = { readonly "annotationsPermissions"?: AnnotationPermission, readonly "apiVersion"?: string, readonly "canAdmin"?: boolean, readonly "canDelete"?: boolean, readonly "canEdit"?: boolean, readonly "canSave"?: boolean, readonly "canStar"?: boolean, readonly "created"?: string, readonly "createdBy"?: string, readonly "expires"?: string, readonly "folderId"?: number, readonly "folderTitle"?: string, readonly "folderUid"?: string, readonly "folderUrl"?: string, readonly "hasAcl"?: boolean, readonly "isFolder"?: boolean, readonly "isSnapshot"?: boolean, readonly "provisioned"?: boolean, readonly "provisionedExternalId"?: string, readonly "publicDashboardEnabled"?: boolean, readonly "slug"?: string, readonly "type"?: string, readonly "updated"?: string, readonly "updatedBy"?: string, readonly "url"?: string, readonly "version"?: number }
-export const DashboardMeta = Schema.Struct({ "annotationsPermissions": Schema.optionalKey(AnnotationPermission), "apiVersion": Schema.optionalKey(Schema.String), "canAdmin": Schema.optionalKey(Schema.Boolean), "canDelete": Schema.optionalKey(Schema.Boolean), "canEdit": Schema.optionalKey(Schema.Boolean), "canSave": Schema.optionalKey(Schema.Boolean), "canStar": Schema.optionalKey(Schema.Boolean), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.String), "expires": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "folderId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use FolderUID instead", "format": "int64" }).check(Schema.isInt())), "folderTitle": Schema.optionalKey(Schema.String), "folderUid": Schema.optionalKey(Schema.String), "folderUrl": Schema.optionalKey(Schema.String), "hasAcl": Schema.optionalKey(Schema.Boolean), "isFolder": Schema.optionalKey(Schema.Boolean), "isSnapshot": Schema.optionalKey(Schema.Boolean), "provisioned": Schema.optionalKey(Schema.Boolean), "provisionedExternalId": Schema.optionalKey(Schema.String), "publicDashboardEnabled": Schema.optionalKey(Schema.Boolean), "slug": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type ThresholdsConfig = { readonly "mode"?: ThresholdsMode, readonly "steps"?: ReadonlyArray<Threshold> }
-export const ThresholdsConfig = Schema.Struct({ "mode": Schema.optionalKey(ThresholdsMode), "steps": Schema.optionalKey(Schema.Array(Threshold).annotate({ "description": "Must be sorted by 'value', first value is always -Infinity" })) }).annotate({ "description": "ThresholdsConfig setup thresholds" })
-export type AnnotationEvent = { readonly "color"?: string, readonly "dashboardId"?: number, readonly "dashboardUID"?: string, readonly "id"?: number, readonly "isRegion"?: boolean, readonly "panelId"?: number, readonly "source"?: AnnotationQuery, readonly "tags"?: ReadonlyArray<string>, readonly "text"?: string, readonly "time"?: number, readonly "timeEnd"?: number }
-export const AnnotationEvent = Schema.Struct({ "color": Schema.optionalKey(Schema.String), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dashboardUID": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isRegion": Schema.optionalKey(Schema.Boolean), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "source": Schema.optionalKey(AnnotationQuery), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "text": Schema.optionalKey(Schema.String), "time": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "timeEnd": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type AlertQuery = { readonly "datasourceUid"?: string, readonly "model"?: {  }, readonly "queryType"?: string, readonly "refId"?: string, readonly "relativeTimeRange"?: RelativeTimeRange }
-export const AlertQuery = Schema.Struct({ "datasourceUid": Schema.optionalKey(Schema.String.annotate({ "description": "Grafana data source unique identifier; it should be '__expr__' for a Server Side Expression operation." })), "model": Schema.optionalKey(Schema.Struct({  }).annotate({ "description": "JSON is the raw JSON query and includes the above properties as well as custom properties." })), "queryType": Schema.optionalKey(Schema.String.annotate({ "description": "QueryType is an optional identifier for the type of query.\nIt can be used to distinguish different types of queries." })), "refId": Schema.optionalKey(Schema.String.annotate({ "description": "RefID is the unique identifier of the query, set by the frontend call." })), "relativeTimeRange": Schema.optionalKey(RelativeTimeRange) }).annotate({ "title": "AlertQuery represents a single query associated with an alert definition." })
-export type ActiveSyncStatusDTO = { readonly "enabled"?: boolean, readonly "nextSync"?: string, readonly "prevSync"?: SyncResult, readonly "schedule"?: string }
-export const ActiveSyncStatusDTO = Schema.Struct({ "enabled": Schema.optionalKey(Schema.Boolean), "nextSync": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "prevSync": Schema.optionalKey(SyncResult), "schedule": Schema.optionalKey(Schema.String) }).annotate({ "description": "ActiveSyncStatusDTO holds the information for LDAP background Sync" })
-export type HitList = ReadonlyArray<Hit>
-export const HitList = Schema.Array(Hit)
-export type DashboardVersionResponseMeta = { readonly "continueToken"?: string, readonly "versions"?: ReadonlyArray<DashboardVersionMeta> }
-export const DashboardVersionResponseMeta = Schema.Struct({ "continueToken": Schema.optionalKey(Schema.String), "versions": Schema.optionalKey(Schema.Array(DashboardVersionMeta)) })
-export type DataSourceList = ReadonlyArray<DataSourceListItemDTO>
-export const DataSourceList = Schema.Array(DataSourceListItemDTO)
+export const ValueMappings = Schema.Array(ValueMapping).annotate({ "identifier": "ValueMappings" })
+export type Threshold = { readonly "color"?: string, readonly "state"?: string, readonly "value"?: ConfFloat64 } & { readonly [x: string]: Schema.Json }
+export const Threshold = Schema.StructWithRest(Schema.Struct({ "color": Schema.optionalKey(Schema.String), "state": Schema.optionalKey(Schema.String), "value": Schema.optionalKey(ConfFloat64) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Threshold a single step on the threshold list", "identifier": "Threshold" })
+export type FieldTypeConfig = { readonly "enum"?: EnumFieldConfig } & { readonly [x: string]: Schema.Json }
+export const FieldTypeConfig = Schema.StructWithRest(Schema.Struct({ "enum": Schema.optionalKey(EnumFieldConfig) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "FieldTypeConfig has type specific configs, only one should be active at a time", "identifier": "FieldTypeConfig" })
+export type Notice = { readonly "inspect"?: InspectType, readonly "link"?: string, readonly "severity"?: NoticeSeverity, readonly "text"?: string } & { readonly [x: string]: Schema.Json }
+export const Notice = Schema.StructWithRest(Schema.Struct({ "inspect": Schema.optionalKey(InspectType), "link": Schema.optionalKey(Schema.String.annotate({ "description": "Link is an optional link for display in the user interface and can be an\nabsolute URL or a path relative to Grafana's root url." })), "severity": Schema.optionalKey(NoticeSeverity), "text": Schema.optionalKey(Schema.String.annotate({ "description": "Text is freeform descriptive text for the notice." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "Notice provides a structure for presenting notifications in Grafana's user interface.", "identifier": "Notice" })
+export type FolderSearchHit = { readonly "id"?: number, readonly "managedBy"?: ManagerKind, readonly "parentUid"?: string, readonly "title"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const FolderSearchHit = Schema.StructWithRest(Schema.Struct({ "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "managedBy": Schema.optionalKey(ManagerKind), "parentUid": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "FolderSearchHit" })
+export type LibraryElementDTOMeta = { readonly "connectedDashboards"?: number, readonly "created"?: string, readonly "createdBy"?: LibraryElementDTOMetaUser, readonly "folderName"?: string, readonly "folderUid"?: string, readonly "updated"?: string, readonly "updatedBy"?: LibraryElementDTOMetaUser } & { readonly [x: string]: Schema.Json }
+export const LibraryElementDTOMeta = Schema.StructWithRest(Schema.Struct({ "connectedDashboards": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(LibraryElementDTOMetaUser), "folderName": Schema.optionalKey(Schema.String), "folderUid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(LibraryElementDTOMetaUser) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementDTOMeta is the meta information for LibraryElementDTO.", "identifier": "LibraryElementDTOMeta" })
+export type LibraryElementConnectionDTO = { readonly "connectionId"?: number, readonly "connectionUid"?: string, readonly "created"?: string, readonly "createdBy"?: LibraryElementDTOMetaUser, readonly "elementId"?: number, readonly "id"?: number, readonly "kind"?: number } & { readonly [x: string]: Schema.Json }
+export const LibraryElementConnectionDTO = Schema.StructWithRest(Schema.Struct({ "connectionId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "connectionUid": Schema.optionalKey(Schema.String), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(LibraryElementDTOMetaUser), "elementId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "id": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: this field will be removed in the future", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "kind": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementConnectionDTO is the frontend DTO for element connections.", "identifier": "LibraryElementConnectionDTO" })
+export type Token = { readonly "account"?: string, readonly "anonymousRatio"?: number, readonly "company"?: string, readonly "details_url"?: string, readonly "exp"?: number, readonly "iat"?: number, readonly "included_users"?: number, readonly "iss"?: string, readonly "jti"?: string, readonly "lexp"?: number, readonly "lic_exp_warn_days"?: number, readonly "lid"?: string, readonly "limit_by"?: string, readonly "max_concurrent_user_sessions"?: number, readonly "nbf"?: number, readonly "prod"?: ReadonlyArray<string>, readonly "slug"?: string, readonly "status"?: TokenStatus, readonly "sub"?: string, readonly "tok_exp_warn_days"?: number, readonly "trial"?: boolean, readonly "trial_exp"?: number, readonly "update_days"?: number, readonly "usage_billing"?: boolean } & { readonly [x: string]: Schema.Json }
+export const Token = Schema.StructWithRest(Schema.Struct({ "account": Schema.optionalKey(Schema.String), "anonymousRatio": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "company": Schema.optionalKey(Schema.String), "details_url": Schema.optionalKey(Schema.String), "exp": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "iat": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "included_users": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "iss": Schema.optionalKey(Schema.String), "jti": Schema.optionalKey(Schema.String), "lexp": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "lic_exp_warn_days": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "lid": Schema.optionalKey(Schema.String), "limit_by": Schema.optionalKey(Schema.String), "max_concurrent_user_sessions": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "nbf": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "prod": Schema.optionalKey(Schema.Array(Schema.String)), "slug": Schema.optionalKey(Schema.String), "status": Schema.optionalKey(TokenStatus), "sub": Schema.optionalKey(Schema.String), "tok_exp_warn_days": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "trial": Schema.optionalKey(Schema.Boolean), "trial_exp": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "update_days": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "usage_billing": Schema.optionalKey(Schema.Boolean) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Token" })
+export type OrgDetailsDTO = { readonly "address"?: Address, readonly "id"?: number, readonly "name"?: string } & { readonly [x: string]: Schema.Json }
+export const OrgDetailsDTO = Schema.StructWithRest(Schema.Struct({ "address": Schema.optionalKey(Address), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "OrgDetailsDTO" })
+export type TempUserDTO = { readonly "code"?: string, readonly "createdOn"?: string, readonly "email"?: string, readonly "emailSent"?: boolean, readonly "emailSentOn"?: string, readonly "id"?: number, readonly "invitedByEmail"?: string, readonly "invitedByLogin"?: string, readonly "invitedByName"?: string, readonly "name"?: string, readonly "orgId"?: number, readonly "role"?: "None" | "Viewer" | "Editor" | "Admin", readonly "status"?: TempUserStatus, readonly "url"?: string } & { readonly [x: string]: Schema.Json }
+export const TempUserDTO = Schema.StructWithRest(Schema.Struct({ "code": Schema.optionalKey(Schema.String), "createdOn": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "email": Schema.optionalKey(Schema.String), "emailSent": Schema.optionalKey(Schema.Boolean), "emailSentOn": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "invitedByEmail": Schema.optionalKey(Schema.String), "invitedByLogin": Schema.optionalKey(Schema.String), "invitedByName": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "role": Schema.optionalKey(Schema.Literals(["None", "Viewer", "Editor", "Admin"])), "status": Schema.optionalKey(TempUserStatus), "url": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "TempUserDTO" })
+export type PreferencesSpec = { readonly "homeDashboardUID"?: string, readonly "homeURL"?: string, readonly "language"?: string, readonly "navbar"?: PreferencesNavbarPreference, readonly "queryHistory"?: PreferencesQueryHistoryPreference, readonly "theme"?: string, readonly "timezone"?: string, readonly "weekStart"?: string } & { readonly [x: string]: Schema.Json }
+export const PreferencesSpec = Schema.StructWithRest(Schema.Struct({ "homeDashboardUID": Schema.optionalKey(Schema.String.annotate({ "description": "UID for the home dashboard" })), "homeURL": Schema.optionalKey(Schema.String.annotate({ "description": "Explicit home URL (NOTE: this can only be modified in the system settings)" })), "language": Schema.optionalKey(Schema.String.annotate({ "description": "Selected language" })), "navbar": Schema.optionalKey(PreferencesNavbarPreference), "queryHistory": Schema.optionalKey(PreferencesQueryHistoryPreference), "theme": Schema.optionalKey(Schema.String.annotate({ "description": "user interface theme" })), "timezone": Schema.optionalKey(Schema.String.annotate({ "description": "The timezone selection" })), "weekStart": Schema.optionalKey(Schema.String.annotate({ "description": "day of the week (sunday, monday, etc)" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "+k8s:openapi-gen=true", "identifier": "PreferencesSpec" })
+export type SearchOrgUsersQueryResult = { readonly "orgUsers"?: ReadonlyArray<OrgUserDTO>, readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const SearchOrgUsersQueryResult = Schema.StructWithRest(Schema.Struct({ "orgUsers": Schema.optionalKey(Schema.Array(OrgUserDTO)), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SearchOrgUsersQueryResult" })
+export type Playlists = ReadonlyArray<Playlist>
+export const Playlists = Schema.Array(Playlist).annotate({ "identifier": "Playlists" })
+export type PlaylistDTO = { readonly "interval"?: string, readonly "items"?: ReadonlyArray<PlaylistItemDTO>, readonly "name"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const PlaylistDTO = Schema.StructWithRest(Schema.Struct({ "interval": Schema.optionalKey(Schema.String.annotate({ "description": "Interval sets the time between switching views in a playlist." })), "items": Schema.optionalKey(Schema.Array(PlaylistItemDTO).annotate({ "description": "The ordered list of items that the playlist will iterate over." })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of the playlist." })), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Unique playlist identifier. Generated on creation, either by the\ncreator of the playlist of by the application." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "PlaylistDTO" })
+export type AnnotationQuery = { readonly "builtIn"?: number, readonly "datasource"?: DataSourceRef, readonly "enable"?: boolean, readonly "filter"?: AnnotationPanelFilter, readonly "hide"?: boolean, readonly "iconColor"?: string, readonly "name"?: string, readonly "placement"?: string, readonly "target"?: AnnotationTarget, readonly "type"?: string } & { readonly [x: string]: Schema.Json }
+export const AnnotationQuery = Schema.StructWithRest(Schema.Struct({ "builtIn": Schema.optionalKey(Schema.Number.annotate({ "description": "Set to 1 for the standard annotation query all dashboards have by default.", "format": "double" }).check(Schema.isFinite().annotate({ "expected": "a finite number" }))), "datasource": Schema.optionalKey(DataSourceRef), "enable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "When enabled the annotation query is issued with every dashboard refresh" })), "filter": Schema.optionalKey(AnnotationPanelFilter), "hide": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Annotation queries can be toggled on or off at the top of the dashboard.\nWhen hide is true, the toggle is not shown in the dashboard." })), "iconColor": Schema.optionalKey(Schema.String.annotate({ "description": "Color to use for the annotation event markers" })), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name of annotation." })), "placement": Schema.optionalKey(Schema.String.annotate({ "description": "Placement can be used to display the annotation query somewhere else on the dashboard other than the default location." })), "target": Schema.optionalKey(AnnotationTarget), "type": Schema.optionalKey(Schema.String.annotate({ "description": "TODO -- this should not exist here, it is based on the --grafana-- datasource" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "TODO docs\nFROM: AnnotationQuery in grafana-data/src/types/annotations.ts", "identifier": "AnnotationQuery" })
+export type ReportDashboard = { readonly "dashboard"?: ReportDashboardID, readonly "reportVariables"?: { readonly [x: string]: Schema.Json }, readonly "timeRange"?: ReportTimeRange } & { readonly [x: string]: Schema.Json }
+export const ReportDashboard = Schema.StructWithRest(Schema.Struct({ "dashboard": Schema.optionalKey(ReportDashboardID), "reportVariables": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))), "timeRange": Schema.optionalKey(ReportTimeRange) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportDashboard" })
+export type ReportOptions = { readonly "csvEncoding"?: string, readonly "layout"?: string, readonly "orientation"?: string, readonly "pdfCombineOneFile"?: boolean, readonly "pdfShowTemplateVariables"?: boolean, readonly "timeRange"?: ReportTimeRange } & { readonly [x: string]: Schema.Json }
+export const ReportOptions = Schema.StructWithRest(Schema.Struct({ "csvEncoding": Schema.optionalKey(Schema.String), "layout": Schema.optionalKey(Schema.String), "orientation": Schema.optionalKey(Schema.String), "pdfCombineOneFile": Schema.optionalKey(Schema.Boolean), "pdfShowTemplateVariables": Schema.optionalKey(Schema.Boolean), "timeRange": Schema.optionalKey(ReportTimeRange) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportOptions" })
+export type ReportSettings = { readonly "branding"?: ReportBrandingOptions, readonly "embeddedImageTheme"?: string, readonly "footerFontFamily"?: string, readonly "footerItems"?: ReadonlyArray<FooterItem>, readonly "id"?: number, readonly "orgId"?: number, readonly "pdfDashboardTitleEnabled"?: boolean, readonly "pdfHeaderEnabled"?: boolean, readonly "pdfTheme"?: string, readonly "pdfTimeRangeEnabled"?: boolean, readonly "userId"?: number } & { readonly [x: string]: Schema.Json }
+export const ReportSettings = Schema.StructWithRest(Schema.Struct({ "branding": Schema.optionalKey(ReportBrandingOptions), "embeddedImageTheme": Schema.optionalKey(Schema.String), "footerFontFamily": Schema.optionalKey(Schema.String), "footerItems": Schema.optionalKey(Schema.Array(FooterItem)), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "pdfDashboardTitleEnabled": Schema.optionalKey(Schema.Boolean), "pdfHeaderEnabled": Schema.optionalKey(Schema.Boolean), "pdfTheme": Schema.optionalKey(Schema.String), "pdfTimeRangeEnabled": Schema.optionalKey(Schema.Boolean), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ReportSettings" })
+export type Hit = { readonly "description"?: string, readonly "folderId"?: number, readonly "folderTitle"?: string, readonly "folderUid"?: string, readonly "folderUrl"?: string, readonly "id"?: number, readonly "isDeleted"?: boolean, readonly "isStarred"?: boolean, readonly "orgId"?: number, readonly "permanentlyDeleteDate"?: string, readonly "slug"?: string, readonly "sortMeta"?: number, readonly "sortMetaName"?: string, readonly "tags"?: ReadonlyArray<string>, readonly "title"?: string, readonly "type"?: HitType, readonly "uid"?: string, readonly "uri"?: string, readonly "url"?: string } & { readonly [x: string]: Schema.Json }
+export const Hit = Schema.StructWithRest(Schema.Struct({ "description": Schema.optionalKey(Schema.String), "folderId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "folderTitle": Schema.optionalKey(Schema.String), "folderUid": Schema.optionalKey(Schema.String), "folderUrl": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isDeleted": Schema.optionalKey(Schema.Boolean), "isStarred": Schema.optionalKey(Schema.Boolean), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "permanentlyDeleteDate": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "slug": Schema.optionalKey(Schema.String), "sortMeta": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "sortMetaName": Schema.optionalKey(Schema.String), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "title": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(HitType), "uid": Schema.optionalKey(Schema.String), "uri": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Hit" })
+export type SearchOrgServiceAccountsResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "serviceAccounts"?: ReadonlyArray<ServiceAccountDTO>, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const SearchOrgServiceAccountsResult = Schema.StructWithRest(Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "serviceAccounts": Schema.optionalKey(Schema.Array(ServiceAccountDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "description": "It can be used for pagination of the user list\nE.g. if totalCount is equal to 100 users and\nthe perpage parameter is set to 10 then there are 10 pages of users.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "swagger: model", "identifier": "SearchOrgServiceAccountsResult" })
+export type IPNet = { readonly "IP"?: string, readonly "Mask"?: IPMask } & { readonly [x: string]: Schema.Json }
+export const IPNet = Schema.StructWithRest(Schema.Struct({ "IP": Schema.optionalKey(Schema.String), "Mask": Schema.optionalKey(IPMask) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "An IPNet represents an IP network.", "identifier": "IPNet" })
+export type Extension = { readonly "Critical"?: boolean, readonly "Id"?: ObjectIdentifier, readonly "Value"?: ReadonlyArray<number> } & { readonly [x: string]: Schema.Json }
+export const Extension = Schema.StructWithRest(Schema.Struct({ "Critical": Schema.optionalKey(Schema.Boolean), "Id": Schema.optionalKey(ObjectIdentifier), "Value": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Extension represents the ASN.1 structure of the same name. See RFC\n5280, section 4.2.", "identifier": "Extension" })
+export type AttributeTypeAndValue = { readonly "Type"?: ObjectIdentifier, readonly "Value"?: Schema.Json } & { readonly [x: string]: Schema.Json }
+export const AttributeTypeAndValue = Schema.StructWithRest(Schema.Struct({ "Type": Schema.optionalKey(ObjectIdentifier), "Value": Schema.optionalKey(Schema.Json.annotate({ "expected": "JSON value" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "AttributeTypeAndValue mirrors the ASN.1 structure of the same name in\nRFC 5280, Section 4.1.2.4.", "identifier": "AttributeTypeAndValue" })
+export type SearchTeamGroupsQueryResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "teamGroups"?: ReadonlyArray<TeamGroupDTO>, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const SearchTeamGroupsQueryResult = Schema.StructWithRest(Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teamGroups": Schema.optionalKey(Schema.Array(TeamGroupDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SearchTeamGroupsQueryResult" })
+export type SearchUserQueryResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number, readonly "users"?: ReadonlyArray<UserSearchHitDTO> } & { readonly [x: string]: Schema.Json }
+export const SearchUserQueryResult = Schema.StructWithRest(Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "users": Schema.optionalKey(Schema.Array(UserSearchHitDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SearchUserQueryResult" })
+export type NotificationTemplate = { readonly "name"?: string, readonly "provenance"?: Provenance, readonly "template"?: string, readonly "version"?: string } & { readonly [x: string]: Schema.Json }
+export const NotificationTemplate = Schema.StructWithRest(Schema.Struct({ "name": Schema.optionalKey(Schema.String), "provenance": Schema.optionalKey(Provenance), "template": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "NotificationTemplate" })
+export type ForbiddenError = { readonly "body"?: PublicError1 } & { readonly [x: string]: Schema.Json }
+export const ForbiddenError = Schema.StructWithRest(Schema.Struct({ "body": Schema.optionalKey(PublicError1) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ForbiddenError" })
+export type ReceiverExport = { readonly "disableResolveMessage"?: boolean, readonly "settings"?: RawMessage, readonly "type"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const ReceiverExport = Schema.StructWithRest(Schema.Struct({ "disableResolveMessage": Schema.optionalKey(Schema.Boolean), "settings": Schema.optionalKey(RawMessage), "type": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "ReceiverExport is the provisioned file export of alerting.ReceiverV1.", "identifier": "ReceiverExport" })
+export type AlertQueryExport = { readonly "datasourceUid"?: string, readonly "model"?: { readonly [x: string]: Schema.Json }, readonly "queryType"?: string, readonly "refId"?: string, readonly "relativeTimeRange"?: RelativeTimeRangeExport } & { readonly [x: string]: Schema.Json }
+export const AlertQueryExport = Schema.StructWithRest(Schema.Struct({ "datasourceUid": Schema.optionalKey(Schema.String), "model": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))), "queryType": Schema.optionalKey(Schema.String), "refId": Schema.optionalKey(Schema.String), "relativeTimeRange": Schema.optionalKey(RelativeTimeRangeExport) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "AlertQueryExport is the provisioned export of models.AlertQuery.", "identifier": "AlertQueryExport" })
+export type Matcher = { readonly "Name"?: string, readonly "Type"?: MatchType, readonly "Value"?: string } & { readonly [x: string]: Schema.Json }
+export const Matcher = Schema.StructWithRest(Schema.Struct({ "Name": Schema.optionalKey(Schema.String), "Type": Schema.optionalKey(MatchType), "Value": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "Matcher models the matching of a label.", "identifier": "Matcher" })
+export type ObjectMatchers = ReadonlyArray<ObjectMatcher>
+export const ObjectMatchers = Schema.Array(ObjectMatcher).annotate({ "title": "ObjectMatchers is a list of matchers that can be used to filter alerts.", "identifier": "ObjectMatchers" })
+export type MuteTimings = ReadonlyArray<MuteTimeInterval>
+export const MuteTimings = Schema.Array(MuteTimeInterval).annotate({ "identifier": "MuteTimings" })
+export type AlertQuery = { readonly "datasourceUid"?: string, readonly "model"?: { readonly [x: string]: Schema.Json }, readonly "queryType"?: string, readonly "refId"?: string, readonly "relativeTimeRange"?: RelativeTimeRange } & { readonly [x: string]: Schema.Json }
+export const AlertQuery = Schema.StructWithRest(Schema.Struct({ "datasourceUid": Schema.optionalKey(Schema.String.annotate({ "description": "Grafana data source unique identifier; it should be '__expr__' for a Server Side Expression operation." })), "model": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "JSON is the raw JSON query and includes the above properties as well as custom properties." })), "queryType": Schema.optionalKey(Schema.String.annotate({ "description": "QueryType is an optional identifier for the type of query.\nIt can be used to distinguish different types of queries." })), "refId": Schema.optionalKey(Schema.String.annotate({ "description": "RefID is the unique identifier of the query, set by the frontend call." })), "relativeTimeRange": Schema.optionalKey(RelativeTimeRange) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "AlertQuery represents a single query associated with an alert definition.", "identifier": "AlertQuery" })
+export type ActiveSyncStatusDTO = { readonly "enabled"?: boolean, readonly "nextSync"?: string, readonly "prevSync"?: SyncResult, readonly "schedule"?: string } & { readonly [x: string]: Schema.Json }
+export const ActiveSyncStatusDTO = Schema.StructWithRest(Schema.Struct({ "enabled": Schema.optionalKey(Schema.Boolean), "nextSync": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "prevSync": Schema.optionalKey(SyncResult), "schedule": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "ActiveSyncStatusDTO holds the information for LDAP background Sync", "identifier": "ActiveSyncStatusDTO" })
+export type DashboardVersionResponseMeta = { readonly "continueToken"?: string, readonly "versions"?: ReadonlyArray<DashboardVersionMeta> } & { readonly [x: string]: Schema.Json }
+export const DashboardVersionResponseMeta = Schema.StructWithRest(Schema.Struct({ "continueToken": Schema.optionalKey(Schema.String), "versions": Schema.optionalKey(Schema.Array(DashboardVersionMeta)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DashboardVersionResponseMeta" })
+export type QueryHistorySearchResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "queryHistory"?: ReadonlyArray<QueryHistoryDTO>, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const QueryHistorySearchResult = Schema.StructWithRest(Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "queryHistory": Schema.optionalKey(Schema.Array(QueryHistoryDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "QueryHistorySearchResult" })
 export type ContactPoints = ReadonlyArray<EmbeddedContactPoint>
-export const ContactPoints = Schema.Array(EmbeddedContactPoint)
-export type QueryHistorySearchResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "queryHistory"?: ReadonlyArray<QueryHistoryDTO>, readonly "totalCount"?: number }
-export const QueryHistorySearchResult = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "queryHistory": Schema.optionalKey(Schema.Array(QueryHistoryDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type Alert1 = { readonly "activeAt"?: string, readonly "annotations": Labels, readonly "labels": Labels, readonly "state": string, readonly "value": string }
-export const Alert1 = Schema.Struct({ "activeAt": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "annotations": Labels, "labels": Labels, "state": Schema.String, "value": Schema.String }).annotate({ "title": "Alert has info for an alert." })
-export type LibraryElementConnectionsResponse = { readonly "result"?: ReadonlyArray<LibraryElementConnectionDTO> }
-export const LibraryElementConnectionsResponse = Schema.Struct({ "result": Schema.optionalKey(Schema.Array(LibraryElementConnectionDTO)) }).annotate({ "title": "LibraryElementConnectionsResponse is a response struct for an array of LibraryElementConnectionDTO." })
-export type LibraryElementDTO = { readonly "description"?: string, readonly "folderId"?: number, readonly "folderUid"?: string, readonly "id"?: number, readonly "kind"?: number, readonly "meta"?: LibraryElementDTOMeta, readonly "model"?: {  }, readonly "name"?: string, readonly "orgId"?: number, readonly "schemaVersion"?: number, readonly "type"?: string, readonly "uid"?: string, readonly "version"?: number }
-export const LibraryElementDTO = Schema.Struct({ "description": Schema.optionalKey(Schema.String), "folderId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use FolderUID instead", "format": "int64" }).check(Schema.isInt())), "folderUid": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "kind": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "meta": Schema.optionalKey(LibraryElementDTOMeta), "model": Schema.optionalKey(Schema.Struct({  })), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "schemaVersion": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "type": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "title": "LibraryElementDTO is the frontend DTO for entities." })
-export type Matchers1 = ReadonlyArray<Matcher1>
-export const Matchers1 = Schema.Array(Matcher1).annotate({ "description": "Matchers is a slice of Matchers that is sortable, implements Stringer, and\nprovides a Matches method to match a LabelSet against all Matchers in the\nslice. Note that some users of Matchers might require it to be sorted." })
-export type Name = { readonly "Country"?: ReadonlyArray<string>, readonly "ExtraNames"?: ReadonlyArray<AttributeTypeAndValue>, readonly "Locality"?: ReadonlyArray<string>, readonly "Names"?: ReadonlyArray<AttributeTypeAndValue>, readonly "SerialNumber"?: string, readonly "StreetAddress"?: ReadonlyArray<string> }
-export const Name = Schema.Struct({ "Country": Schema.optionalKey(Schema.Array(Schema.String)), "ExtraNames": Schema.optionalKey(Schema.Array(AttributeTypeAndValue).annotate({ "description": "ExtraNames contains attributes to be copied, raw, into any marshaled\ndistinguished names. Values override any attributes with the same OID.\nThe ExtraNames field is not populated when parsing, see Names." })), "Locality": Schema.optionalKey(Schema.Array(Schema.String)), "Names": Schema.optionalKey(Schema.Array(AttributeTypeAndValue).annotate({ "description": "Names contains all parsed attributes. When parsing distinguished names,\nthis can be used to extract non-standard attributes that are not parsed\nby this package. When marshaling to RDNSequences, the Names field is\nignored, see ExtraNames." })), "SerialNumber": Schema.optionalKey(Schema.String), "StreetAddress": Schema.optionalKey(Schema.Array(Schema.String)) }).annotate({ "description": "Name represents an X.509 distinguished name. This only includes the common\nelements of a DN. Note that Name is only an approximation of the X.509\nstructure. If an accurate representation is needed, asn1.Unmarshal the raw\nsubject or issuer as an [RDNSequence]." })
-export type SearchTeamQueryResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "teams"?: ReadonlyArray<TeamDTO>, readonly "totalCount"?: number }
-export const SearchTeamQueryResult = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "teams": Schema.optionalKey(Schema.Array(TeamDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const ContactPoints = Schema.Array(EmbeddedContactPoint).annotate({ "identifier": "ContactPoints" })
+export type GetAnnotationTagsResponse = { readonly "result"?: FindTagsResult } & { readonly [x: string]: Schema.Json }
+export const GetAnnotationTagsResponse = Schema.StructWithRest(Schema.Struct({ "result": Schema.optionalKey(FindTagsResult) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "GetAnnotationTagsResponse is a response struct for FindTagsResult.", "identifier": "GetAnnotationTagsResponse" })
+export type DashboardMeta = { readonly "annotationsPermissions"?: AnnotationPermission, readonly "apiVersion"?: string, readonly "canAdmin"?: boolean, readonly "canDelete"?: boolean, readonly "canEdit"?: boolean, readonly "canSave"?: boolean, readonly "canStar"?: boolean, readonly "created"?: string, readonly "createdBy"?: string, readonly "expires"?: string, readonly "folderId"?: number, readonly "folderTitle"?: string, readonly "folderUid"?: string, readonly "folderUrl"?: string, readonly "hasAcl"?: boolean, readonly "isFolder"?: boolean, readonly "isSnapshot"?: boolean, readonly "provisioned"?: boolean, readonly "provisionedExternalId"?: string, readonly "publicDashboardEnabled"?: boolean, readonly "slug"?: string, readonly "type"?: string, readonly "updated"?: string, readonly "updatedBy"?: string, readonly "url"?: string, readonly "version"?: number } & { readonly [x: string]: Schema.Json }
+export const DashboardMeta = Schema.StructWithRest(Schema.Struct({ "annotationsPermissions": Schema.optionalKey(AnnotationPermission), "apiVersion": Schema.optionalKey(Schema.String), "canAdmin": Schema.optionalKey(Schema.Boolean), "canDelete": Schema.optionalKey(Schema.Boolean), "canEdit": Schema.optionalKey(Schema.Boolean), "canSave": Schema.optionalKey(Schema.Boolean), "canStar": Schema.optionalKey(Schema.Boolean), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.String), "expires": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "folderId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use FolderUID instead", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "folderTitle": Schema.optionalKey(Schema.String), "folderUid": Schema.optionalKey(Schema.String), "folderUrl": Schema.optionalKey(Schema.String), "hasAcl": Schema.optionalKey(Schema.Boolean), "isFolder": Schema.optionalKey(Schema.Boolean), "isSnapshot": Schema.optionalKey(Schema.Boolean), "provisioned": Schema.optionalKey(Schema.Boolean), "provisionedExternalId": Schema.optionalKey(Schema.String), "publicDashboardEnabled": Schema.optionalKey(Schema.Boolean), "slug": Schema.optionalKey(Schema.String), "type": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DashboardMeta" })
+export type SearchTeamQueryResult = { readonly "page"?: number, readonly "perPage"?: number, readonly "teams"?: ReadonlyArray<TeamDTO>, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const SearchTeamQueryResult = Schema.StructWithRest(Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "teams": Schema.optionalKey(Schema.Array(TeamDTO)), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "SearchTeamQueryResult" })
+export type DataSourceList = ReadonlyArray<DataSourceListItemDTO>
+export const DataSourceList = Schema.Array(DataSourceListItemDTO).annotate({ "identifier": "DataSourceList" })
+export type CorrelationConfig = { readonly "field": string, readonly "target": { readonly [x: string]: Schema.Json }, readonly "transformations"?: Transformations, readonly "type"?: CorrelationType } & { readonly [x: string]: Schema.Json }
+export const CorrelationConfig = Schema.StructWithRest(Schema.Struct({ "field": Schema.String.annotate({ "description": "Field used to attach the correlation link", "examples": ["message"] }), "target": Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "Target data query", "examples": [{ "prop1": "value1", "prop2": "value" }] }), "transformations": Schema.optionalKey(Transformations), "type": Schema.optionalKey(CorrelationType) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "CorrelationConfig" })
+export type InternalDataLink = { readonly "datasourceName"?: string, readonly "datasourceUid"?: string, readonly "panelsState"?: ExplorePanelsState, readonly "query"?: Schema.Json, readonly "timeRange"?: TimeRange, readonly "transformations"?: ReadonlyArray<LinkTransformationConfig> } & { readonly [x: string]: Schema.Json }
+export const InternalDataLink = Schema.StructWithRest(Schema.Struct({ "datasourceName": Schema.optionalKey(Schema.String), "datasourceUid": Schema.optionalKey(Schema.String), "panelsState": Schema.optionalKey(ExplorePanelsState), "query": Schema.optionalKey(Schema.Json.annotate({ "expected": "JSON value" })), "timeRange": Schema.optionalKey(TimeRange), "transformations": Schema.optionalKey(Schema.Array(LinkTransformationConfig)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "InternalDataLink definition to allow Explore links to be constructed in the backend", "identifier": "InternalDataLink" })
+export type ThresholdsConfig = { readonly "mode"?: ThresholdsMode, readonly "steps"?: ReadonlyArray<Threshold> } & { readonly [x: string]: Schema.Json }
+export const ThresholdsConfig = Schema.StructWithRest(Schema.Struct({ "mode": Schema.optionalKey(ThresholdsMode), "steps": Schema.optionalKey(Schema.Array(Threshold).annotate({ "description": "Must be sorted by 'value', first value is always -Infinity" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "ThresholdsConfig setup thresholds", "identifier": "ThresholdsConfig" })
+export type LibraryElementDTO = { readonly "description"?: string, readonly "folderId"?: number, readonly "folderUid"?: string, readonly "id"?: number, readonly "kind"?: number, readonly "meta"?: LibraryElementDTOMeta, readonly "model"?: { readonly [x: string]: Schema.Json }, readonly "name"?: string, readonly "orgId"?: number, readonly "schemaVersion"?: number, readonly "type"?: string, readonly "uid"?: string, readonly "version"?: number } & { readonly [x: string]: Schema.Json }
+export const LibraryElementDTO = Schema.StructWithRest(Schema.Struct({ "description": Schema.optionalKey(Schema.String), "folderId": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use FolderUID instead", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "folderUid": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "kind": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "meta": Schema.optionalKey(LibraryElementDTOMeta), "model": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "schemaVersion": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "type": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementDTO is the frontend DTO for entities.", "identifier": "LibraryElementDTO" })
+export type LibraryElementConnectionsResponse = { readonly "result"?: ReadonlyArray<LibraryElementConnectionDTO> } & { readonly [x: string]: Schema.Json }
+export const LibraryElementConnectionsResponse = Schema.StructWithRest(Schema.Struct({ "result": Schema.optionalKey(Schema.Array(LibraryElementConnectionDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementConnectionsResponse is a response struct for an array of LibraryElementConnectionDTO.", "identifier": "LibraryElementConnectionsResponse" })
+export type AnnotationEvent = { readonly "color"?: string, readonly "dashboardId"?: number, readonly "dashboardUID"?: string, readonly "id"?: number, readonly "isRegion"?: boolean, readonly "panelId"?: number, readonly "source"?: AnnotationQuery, readonly "tags"?: ReadonlyArray<string>, readonly "text"?: string, readonly "time"?: number, readonly "timeEnd"?: number } & { readonly [x: string]: Schema.Json }
+export const AnnotationEvent = Schema.StructWithRest(Schema.Struct({ "color": Schema.optionalKey(Schema.String), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dashboardUID": Schema.optionalKey(Schema.String), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isRegion": Schema.optionalKey(Schema.Boolean), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "source": Schema.optionalKey(AnnotationQuery), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "text": Schema.optionalKey(Schema.String), "time": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "timeEnd": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "AnnotationEvent" })
+export type Report = { readonly "created"?: string, readonly "dashboards"?: ReadonlyArray<ReportDashboard>, readonly "enableCsv"?: boolean, readonly "enableDashboardUrl"?: boolean, readonly "formats"?: ReadonlyArray<Type>, readonly "id"?: number, readonly "message"?: string, readonly "name"?: string, readonly "options"?: ReportOptions, readonly "orgId"?: number, readonly "recipients"?: string, readonly "replyTo"?: string, readonly "scaleFactor"?: number, readonly "schedule"?: ReportSchedule, readonly "state"?: State, readonly "subject"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "urls"?: ReadonlyArray<ReportURLItem>, readonly "userId"?: number } & { readonly [x: string]: Schema.Json }
+export const Report = Schema.StructWithRest(Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "dashboards": Schema.optionalKey(Schema.Array(ReportDashboard)), "enableCsv": Schema.optionalKey(Schema.Boolean), "enableDashboardUrl": Schema.optionalKey(Schema.Boolean), "formats": Schema.optionalKey(Schema.Array(Type)), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "message": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "options": Schema.optionalKey(ReportOptions), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "recipients": Schema.optionalKey(Schema.String), "replyTo": Schema.optionalKey(Schema.String), "scaleFactor": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "schedule": Schema.optionalKey(ReportSchedule), "state": Schema.optionalKey(State), "subject": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "urls": Schema.optionalKey(Schema.Array(ReportURLItem)), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Report" })
+export type HitList = ReadonlyArray<Hit>
+export const HitList = Schema.Array(Hit).annotate({ "identifier": "HitList" })
+export type Name = { readonly "Country"?: ReadonlyArray<string>, readonly "ExtraNames"?: ReadonlyArray<AttributeTypeAndValue>, readonly "Locality"?: ReadonlyArray<string>, readonly "Names"?: ReadonlyArray<AttributeTypeAndValue>, readonly "SerialNumber"?: string, readonly "StreetAddress"?: ReadonlyArray<string> } & { readonly [x: string]: Schema.Json }
+export const Name = Schema.StructWithRest(Schema.Struct({ "Country": Schema.optionalKey(Schema.Array(Schema.String)), "ExtraNames": Schema.optionalKey(Schema.Array(AttributeTypeAndValue).annotate({ "description": "ExtraNames contains attributes to be copied, raw, into any marshaled\ndistinguished names. Values override any attributes with the same OID.\nThe ExtraNames field is not populated when parsing, see Names." })), "Locality": Schema.optionalKey(Schema.Array(Schema.String)), "Names": Schema.optionalKey(Schema.Array(AttributeTypeAndValue).annotate({ "description": "Names contains all parsed attributes. When parsing distinguished names,\nthis can be used to extract non-standard attributes that are not parsed\nby this package. When marshaling to RDNSequences, the Names field is\nignored, see ExtraNames." })), "SerialNumber": Schema.optionalKey(Schema.String), "StreetAddress": Schema.optionalKey(Schema.Array(Schema.String)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Name represents an X.509 distinguished name. This only includes the common\nelements of a DN. Note that Name is only an approximation of the X.509\nstructure. If an accurate representation is needed, asn1.Unmarshal the raw\nsubject or issuer as an [RDNSequence].", "identifier": "Name" })
 export type NotificationTemplates = ReadonlyArray<NotificationTemplate>
-export const NotificationTemplates = Schema.Array(NotificationTemplate)
-export type ContactPointExport = { readonly "name"?: string, readonly "orgId"?: number, readonly "receivers"?: ReadonlyArray<ReceiverExport> }
-export const ContactPointExport = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "receivers": Schema.optionalKey(Schema.Array(ReceiverExport)) }).annotate({ "title": "ContactPointExport is the provisioned file export of alerting.ContactPointV1." })
-export type AlertRuleExport = { readonly "annotations"?: { readonly [x: string]: string }, readonly "condition"?: string, readonly "dashboardUid"?: string, readonly "data"?: ReadonlyArray<AlertQueryExport>, readonly "execErrState"?: "OK" | "Alerting" | "Error", readonly "for"?: Duration, readonly "isPaused"?: boolean, readonly "keepFiringFor"?: Duration, readonly "labels"?: { readonly [x: string]: string }, readonly "missing_series_evals_to_resolve"?: number, readonly "noDataState"?: "Alerting" | "NoData" | "OK", readonly "notification_settings"?: AlertRuleNotificationSettingsExport, readonly "panelId"?: number, readonly "record"?: AlertRuleRecordExport, readonly "title"?: string, readonly "uid"?: string }
-export const AlertRuleExport = Schema.Struct({ "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "condition": Schema.optionalKey(Schema.String), "dashboardUid": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Schema.Array(AlertQueryExport)), "execErrState": Schema.optionalKey(Schema.Literals(["OK", "Alerting", "Error"])), "for": Schema.optionalKey(Duration), "isPaused": Schema.optionalKey(Schema.Boolean), "keepFiringFor": Schema.optionalKey(Duration), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "missing_series_evals_to_resolve": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "noDataState": Schema.optionalKey(Schema.Literals(["Alerting", "NoData", "OK"])), "notification_settings": Schema.optionalKey(AlertRuleNotificationSettingsExport), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "record": Schema.optionalKey(AlertRuleRecordExport), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }).annotate({ "title": "AlertRuleExport is the provisioned file export of models.AlertRule." })
-export type Report = { readonly "created"?: string, readonly "dashboards"?: ReadonlyArray<ReportDashboard>, readonly "enableCsv"?: boolean, readonly "enableDashboardUrl"?: boolean, readonly "formats"?: ReadonlyArray<Type>, readonly "id"?: number, readonly "message"?: string, readonly "name"?: string, readonly "options"?: ReportOptions, readonly "orgId"?: number, readonly "recipients"?: string, readonly "replyTo"?: string, readonly "scaleFactor"?: number, readonly "schedule"?: ReportSchedule, readonly "state"?: State, readonly "subject"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "urls"?: ReadonlyArray<ReportURLItem>, readonly "userId"?: number }
-export const Report = Schema.Struct({ "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "dashboards": Schema.optionalKey(Schema.Array(ReportDashboard)), "enableCsv": Schema.optionalKey(Schema.Boolean), "enableDashboardUrl": Schema.optionalKey(Schema.Boolean), "formats": Schema.optionalKey(Schema.Array(Type)), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "message": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String), "options": Schema.optionalKey(ReportOptions), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "recipients": Schema.optionalKey(Schema.String), "replyTo": Schema.optionalKey(Schema.String), "scaleFactor": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "schedule": Schema.optionalKey(ReportSchedule), "state": Schema.optionalKey(State), "subject": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "urls": Schema.optionalKey(Schema.Array(ReportURLItem)), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type Headers = { readonly "Headers"?: { readonly [x: string]: Header } }
-export const Headers = Schema.Struct({ "Headers": Schema.optionalKey(Schema.Record(Schema.String, Header)) }).annotate({ "title": "Headers represents the configuration for HTTP headers." })
-export type Sample = { readonly "DropName"?: boolean, readonly "F"?: number, readonly "H"?: FloatHistogram, readonly "Metric"?: Labels, readonly "T"?: number }
-export const Sample = Schema.Struct({ "DropName": Schema.optionalKey(Schema.Boolean.annotate({ "description": "DropName is used to indicate whether the __name__ label should be dropped\nas part of the query evaluation." })), "F": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())), "H": Schema.optionalKey(FloatHistogram), "Metric": Schema.optionalKey(Labels), "T": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "description": "Sample is a single sample belonging to a metric. It represents either a float\nsample or a histogram sample. If H is nil, it is a float sample. Otherwise,\nit is a histogram sample." })
-export type InternalDataLink = { readonly "datasourceName"?: string, readonly "datasourceUid"?: string, readonly "panelsState"?: ExplorePanelsState, readonly "query"?: Schema.Json, readonly "timeRange"?: TimeRange, readonly "transformations"?: ReadonlyArray<LinkTransformationConfig> }
-export const InternalDataLink = Schema.Struct({ "datasourceName": Schema.optionalKey(Schema.String), "datasourceUid": Schema.optionalKey(Schema.String), "panelsState": Schema.optionalKey(ExplorePanelsState), "query": Schema.optionalKey(Schema.Json), "timeRange": Schema.optionalKey(TimeRange), "transformations": Schema.optionalKey(Schema.Array(LinkTransformationConfig)) }).annotate({ "description": "InternalDataLink definition to allow Explore links to be constructed in the backend" })
-export type EmailConfig = { readonly "auth_identity"?: string, readonly "auth_password"?: Secret, readonly "auth_password_file"?: string, readonly "auth_secret"?: Secret, readonly "auth_username"?: string, readonly "from"?: string, readonly "headers"?: { readonly [x: string]: string }, readonly "hello"?: string, readonly "html"?: string, readonly "require_tls"?: boolean, readonly "send_resolved"?: boolean, readonly "smarthost"?: HostPort, readonly "text"?: string, readonly "tls_config"?: TLSConfig, readonly "to"?: string }
-export const EmailConfig = Schema.Struct({ "auth_identity": Schema.optionalKey(Schema.String), "auth_password": Schema.optionalKey(Secret), "auth_password_file": Schema.optionalKey(Schema.String), "auth_secret": Schema.optionalKey(Secret), "auth_username": Schema.optionalKey(Schema.String), "from": Schema.optionalKey(Schema.String), "headers": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "hello": Schema.optionalKey(Schema.String), "html": Schema.optionalKey(Schema.String), "require_tls": Schema.optionalKey(Schema.Boolean), "send_resolved": Schema.optionalKey(Schema.Boolean), "smarthost": Schema.optionalKey(HostPort), "text": Schema.optionalKey(Schema.String), "tls_config": Schema.optionalKey(TLSConfig), "to": Schema.optionalKey(Schema.String.annotate({ "description": "Email address to notify." })) }).annotate({ "title": "EmailConfig configures notifications via mail." })
-export type OAuth2 = { readonly "TLSConfig"?: TLSConfig, readonly "audience"?: string, readonly "claims"?: { readonly [x: string]: Schema.Json }, readonly "client_certificate_key"?: Secret, readonly "client_certificate_key_file"?: string, readonly "client_certificate_key_id"?: string, readonly "client_certificate_key_ref"?: string, readonly "client_id"?: string, readonly "client_secret"?: Secret, readonly "client_secret_file"?: string, readonly "client_secret_ref"?: string, readonly "endpoint_params"?: { readonly [x: string]: string }, readonly "grant_type"?: string, readonly "iss"?: string, readonly "no_proxy"?: string, readonly "proxy_connect_header"?: ProxyHeader, readonly "proxy_from_environment"?: boolean, readonly "proxy_url"?: URL, readonly "scopes"?: ReadonlyArray<string>, readonly "signature_algorithm"?: string, readonly "token_url"?: string }
-export const OAuth2 = Schema.Struct({ "TLSConfig": Schema.optionalKey(TLSConfig), "audience": Schema.optionalKey(Schema.String.annotate({ "description": "Audience optionally specifies the intended audience of the\nrequest.  If empty, the value of TokenURL is used as the\nintended audience. Only used if\nGrantType is set to \"urn:ietf:params:oauth:grant-type:jwt-bearer\"." })), "claims": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Claims is a map of claims to be added to the JWT token. Only used if\nGrantType is set to \"urn:ietf:params:oauth:grant-type:jwt-bearer\"." })), "client_certificate_key": Schema.optionalKey(Secret), "client_certificate_key_file": Schema.optionalKey(Schema.String), "client_certificate_key_id": Schema.optionalKey(Schema.String), "client_certificate_key_ref": Schema.optionalKey(Schema.String.annotate({ "description": "ClientCertificateKeyRef is the name of the secret within the secret manager to use as the client\nsecret." })), "client_id": Schema.optionalKey(Schema.String), "client_secret": Schema.optionalKey(Secret), "client_secret_file": Schema.optionalKey(Schema.String), "client_secret_ref": Schema.optionalKey(Schema.String.annotate({ "description": "ClientSecretRef is the name of the secret within the secret manager to use as the client\nsecret." })), "endpoint_params": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "grant_type": Schema.optionalKey(Schema.String.annotate({ "description": "GrantType is the OAuth2 grant type to use. It can be one of\n\"client_credentials\" or \"urn:ietf:params:oauth:grant-type:jwt-bearer\" (RFC 7523).\nDefault value is \"client_credentials\"" })), "iss": Schema.optionalKey(Schema.String.annotate({ "description": "Iss is the OAuth client identifier used when communicating with\nthe configured OAuth provider. Default value is client_id. Only used if\nGrantType is set to \"urn:ietf:params:oauth:grant-type:jwt-bearer\"." })), "no_proxy": Schema.optionalKey(Schema.String.annotate({ "description": "NoProxy contains addresses that should not use a proxy." })), "proxy_connect_header": Schema.optionalKey(ProxyHeader), "proxy_from_environment": Schema.optionalKey(Schema.Boolean.annotate({ "description": "ProxyFromEnvironment makes use of net/http ProxyFromEnvironment function\nto determine proxies." })), "proxy_url": Schema.optionalKey(URL), "scopes": Schema.optionalKey(Schema.Array(Schema.String)), "signature_algorithm": Schema.optionalKey(Schema.String.annotate({ "description": "SignatureAlgorithm is the RSA algorithm used to sign JWT token. Only used if\nGrantType is set to \"urn:ietf:params:oauth:grant-type:jwt-bearer\".\nDefault value is RS256 and valid values RS256, RS384, RS512" })), "token_url": Schema.optionalKey(Schema.String) }).annotate({ "title": "OAuth2 is the oauth2 client configuration." })
-export type GetAnnotationTagsResponse = { readonly "result"?: FindTagsResult }
-export const GetAnnotationTagsResponse = Schema.Struct({ "result": Schema.optionalKey(FindTagsResult) }).annotate({ "title": "GetAnnotationTagsResponse is a response struct for FindTagsResult." })
-export type CorrelationConfig = { readonly "field": string, readonly "target": { readonly [x: string]: Schema.Json }, readonly "transformations"?: Transformations, readonly "type"?: CorrelationType }
-export const CorrelationConfig = Schema.Struct({ "field": Schema.String.annotate({ "description": "Field used to attach the correlation link", "examples": ["message"] }), "target": Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Target data query", "examples": [{"prop1":"value1","prop2":"value"}] }), "transformations": Schema.optionalKey(Transformations), "type": Schema.optionalKey(CorrelationType) })
-export type GettableGrafanaSilence = { readonly "accessControl"?: { readonly [x: string]: boolean }, readonly "comment": string, readonly "createdBy": string, readonly "endsAt": string, readonly "id": string, readonly "matchers": Matchers, readonly "metadata"?: SilenceMetadata, readonly "startsAt": string, readonly "status": SilenceStatus, readonly "updatedAt": string }
-export const GettableGrafanaSilence = Schema.Struct({ "accessControl": Schema.optionalKey(Schema.Record(Schema.String, Schema.Boolean).annotate({ "examples": [{"create":false,"read":true,"write":false}] })), "comment": Schema.String.annotate({ "description": "comment" }), "createdBy": Schema.String.annotate({ "description": "created by" }), "endsAt": Schema.String.annotate({ "description": "ends at", "format": "date-time" }), "id": Schema.String.annotate({ "description": "id" }), "matchers": Matchers, "metadata": Schema.optionalKey(SilenceMetadata), "startsAt": Schema.String.annotate({ "description": "starts at", "format": "date-time" }), "status": SilenceStatus, "updatedAt": Schema.String.annotate({ "description": "updated at", "format": "date-time" }) })
-export type GettableSilence = { readonly "comment": string, readonly "createdBy": string, readonly "endsAt": string, readonly "id": string, readonly "matchers": Matchers, readonly "startsAt": string, readonly "status": SilenceStatus, readonly "updatedAt": string }
-export const GettableSilence = Schema.Struct({ "comment": Schema.String.annotate({ "description": "comment" }), "createdBy": Schema.String.annotate({ "description": "created by" }), "endsAt": Schema.String.annotate({ "description": "ends at", "format": "date-time" }), "id": Schema.String.annotate({ "description": "id" }), "matchers": Matchers, "startsAt": Schema.String.annotate({ "description": "starts at", "format": "date-time" }), "status": SilenceStatus, "updatedAt": Schema.String.annotate({ "description": "updated at", "format": "date-time" }) }).annotate({ "description": "GettableSilence gettable silence" })
-export type AlertGroup = { readonly "alerts": ReadonlyArray<GettableAlert>, readonly "labels": LabelSet, readonly "receiver": Receiver }
-export const AlertGroup = Schema.Struct({ "alerts": Schema.Array(GettableAlert).annotate({ "description": "alerts" }), "labels": LabelSet, "receiver": Receiver }).annotate({ "description": "AlertGroup alert group" })
-export type DashboardFullWithMeta = { readonly "dashboard"?: Json, readonly "meta"?: DashboardMeta }
-export const DashboardFullWithMeta = Schema.Struct({ "dashboard": Schema.optionalKey(Json), "meta": Schema.optionalKey(DashboardMeta) })
-export type GetHomeDashboardResponse = { readonly "dashboard"?: Json, readonly "meta"?: DashboardMeta, readonly "redirectUri"?: string }
-export const GetHomeDashboardResponse = Schema.Struct({ "dashboard": Schema.optionalKey(Json), "meta": Schema.optionalKey(DashboardMeta), "redirectUri": Schema.optionalKey(Schema.String) }).annotate({ "title": "Get home dashboard response." })
-export type EvalAlertConditionCommand = { readonly "condition"?: string, readonly "data"?: ReadonlyArray<AlertQuery>, readonly "now"?: string }
-export const EvalAlertConditionCommand = Schema.Struct({ "condition": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Schema.Array(AlertQuery)), "now": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })) }).annotate({ "description": "EvalAlertConditionCommand is the command for evaluating a condition" })
-export type GettableGrafanaRule = { readonly "condition"?: string, readonly "data"?: ReadonlyArray<AlertQuery>, readonly "exec_err_state"?: "OK" | "Alerting" | "Error", readonly "guid"?: string, readonly "intervalSeconds"?: number, readonly "is_paused"?: boolean, readonly "message"?: string, readonly "metadata"?: AlertRuleMetadata, readonly "missing_series_evals_to_resolve"?: number, readonly "namespace_uid"?: string, readonly "no_data_state"?: "Alerting" | "NoData" | "OK", readonly "notification_settings"?: AlertRuleNotificationSettings, readonly "provenance"?: Provenance, readonly "record"?: Record, readonly "rule_group"?: string, readonly "title"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "updated_by"?: UserInfo, readonly "version"?: number }
-export const GettableGrafanaRule = Schema.Struct({ "condition": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Schema.Array(AlertQuery)), "exec_err_state": Schema.optionalKey(Schema.Literals(["OK", "Alerting", "Error"])), "guid": Schema.optionalKey(Schema.String), "intervalSeconds": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "is_paused": Schema.optionalKey(Schema.Boolean), "message": Schema.optionalKey(Schema.String.annotate({ "description": "Field is only populated when listing alert rule versions." })), "metadata": Schema.optionalKey(AlertRuleMetadata), "missing_series_evals_to_resolve": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "namespace_uid": Schema.optionalKey(Schema.String), "no_data_state": Schema.optionalKey(Schema.Literals(["Alerting", "NoData", "OK"])), "notification_settings": Schema.optionalKey(AlertRuleNotificationSettings), "provenance": Schema.optionalKey(Provenance), "record": Schema.optionalKey(Record), "rule_group": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updated_by": Schema.optionalKey(UserInfo), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
-export type PostableGrafanaRule = { readonly "condition"?: string, readonly "data"?: ReadonlyArray<AlertQuery>, readonly "exec_err_state"?: "OK" | "Alerting" | "Error", readonly "is_paused"?: boolean, readonly "metadata"?: AlertRuleMetadata, readonly "missing_series_evals_to_resolve"?: number, readonly "no_data_state"?: "Alerting" | "NoData" | "OK", readonly "notification_settings"?: AlertRuleNotificationSettings, readonly "record"?: Record, readonly "title"?: string, readonly "uid"?: string }
-export const PostableGrafanaRule = Schema.Struct({ "condition": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Schema.Array(AlertQuery)), "exec_err_state": Schema.optionalKey(Schema.Literals(["OK", "Alerting", "Error"])), "is_paused": Schema.optionalKey(Schema.Boolean), "metadata": Schema.optionalKey(AlertRuleMetadata), "missing_series_evals_to_resolve": Schema.optionalKey(Schema.Number.annotate({ "description": "Number of consecutive evaluation intervals with no data for a dimension must pass\nbefore the alert state is considered stale and automatically resolved.\nIf set to 0, the value is reset to the default.", "examples": [3], "format": "int64" }).check(Schema.isInt())), "no_data_state": Schema.optionalKey(Schema.Literals(["Alerting", "NoData", "OK"])), "notification_settings": Schema.optionalKey(AlertRuleNotificationSettings), "record": Schema.optionalKey(Record), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) })
-export type ProvisionedAlertRule = { readonly "annotations"?: { readonly [x: string]: string }, readonly "condition": string, readonly "data": ReadonlyArray<AlertQuery>, readonly "execErrState": "OK" | "Alerting" | "Error", readonly "folderUID": string, readonly "for": string, readonly "id"?: number, readonly "isPaused"?: boolean, readonly "keep_firing_for"?: string, readonly "labels"?: { readonly [x: string]: string }, readonly "missingSeriesEvalsToResolve"?: number, readonly "noDataState": "Alerting" | "NoData" | "OK", readonly "notification_settings"?: AlertRuleNotificationSettings, readonly "orgID": number, readonly "provenance"?: Provenance, readonly "record"?: Record, readonly "ruleGroup": string, readonly "title": string, readonly "uid"?: string, readonly "updated"?: string }
-export const ProvisionedAlertRule = Schema.Struct({ "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "examples": [{"runbook_url":"https://supercoolrunbook.com/page/13"}] })), "condition": Schema.String.annotate({ "examples": ["A"] }), "data": Schema.Array(AlertQuery).annotate({ "examples": [[{"datasourceUid":"__expr__","model":{"conditions":[{"evaluator":{"params":[0,0],"type":"gt"},"operator":{"type":"and"},"query":{"params":[]},"reducer":{"params":[],"type":"avg"},"type":"query"}],"datasource":{"type":"__expr__","uid":"__expr__"},"expression":"1 == 1","hide":false,"intervalMs":1000,"maxDataPoints":43200,"refId":"A","type":"math"},"queryType":"","refId":"A","relativeTimeRange":{"from":0,"to":0}}]] }), "execErrState": Schema.Literals(["OK", "Alerting", "Error"]), "folderUID": Schema.String.annotate({ "examples": ["project_x"] }), "for": Schema.String.annotate({ "format": "duration" }), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "isPaused": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "keep_firing_for": Schema.optionalKey(Schema.String.annotate({ "format": "duration" })), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "examples": [{"team":"sre-team-1"}] })), "missingSeriesEvalsToResolve": Schema.optionalKey(Schema.Number.annotate({ "examples": [2], "format": "int64" }).check(Schema.isInt())), "noDataState": Schema.Literals(["Alerting", "NoData", "OK"]), "notification_settings": Schema.optionalKey(AlertRuleNotificationSettings), "orgID": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()), "provenance": Schema.optionalKey(Provenance), "record": Schema.optionalKey(Record), "ruleGroup": Schema.String.annotate({ "examples": ["eval_group_1"] }).check(Schema.isMinLength(1)).check(Schema.isMaxLength(190)), "title": Schema.String.annotate({ "examples": ["Always firing"] }).check(Schema.isMinLength(1)).check(Schema.isMaxLength(190)), "uid": Schema.optionalKey(Schema.String.check(Schema.isMinLength(1)).check(Schema.isMaxLength(40)).check(Schema.isPattern(new RegExp("^[a-zA-Z0-9-_]+$")))), "updated": Schema.optionalKey(Schema.String.annotate({ "readOnly": true, "format": "date-time" })) })
-export type QueryHistorySearchResponse = { readonly "result"?: QueryHistorySearchResult }
-export const QueryHistorySearchResponse = Schema.Struct({ "result": Schema.optionalKey(QueryHistorySearchResult) })
-export type AlertDiscovery = { readonly "alerts": ReadonlyArray<Alert1> }
-export const AlertDiscovery = Schema.Struct({ "alerts": Schema.Array(Alert1) }).annotate({ "title": "AlertDiscovery has info for all active alerts." })
-export type AlertingRule = { readonly "activeAt": string, readonly "alerts"?: ReadonlyArray<Alert1>, readonly "annotations": Labels, readonly "duration"?: number, readonly "evaluationTime"?: number, readonly "folderUid"?: string, readonly "health": string, readonly "isPaused"?: boolean, readonly "keepFiringFor"?: number, readonly "labels"?: Labels, readonly "lastError"?: string, readonly "lastEvaluation"?: string, readonly "name": string, readonly "notificationSettings"?: AlertRuleNotificationSettings, readonly "provenance"?: Provenance, readonly "queriedDatasourceUIDs"?: ReadonlyArray<string>, readonly "query": string, readonly "state": string, readonly "totals"?: { readonly [x: string]: number }, readonly "totalsFiltered"?: { readonly [x: string]: number }, readonly "type": string, readonly "uid"?: string }
-export const AlertingRule = Schema.Struct({ "activeAt": Schema.String.annotate({ "format": "date-time" }), "alerts": Schema.optionalKey(Schema.Array(Alert1)), "annotations": Labels, "duration": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())), "evaluationTime": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())), "folderUid": Schema.optionalKey(Schema.String), "health": Schema.String, "isPaused": Schema.optionalKey(Schema.Boolean), "keepFiringFor": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())), "labels": Schema.optionalKey(Labels), "lastError": Schema.optionalKey(Schema.String), "lastEvaluation": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "name": Schema.String, "notificationSettings": Schema.optionalKey(AlertRuleNotificationSettings), "provenance": Schema.optionalKey(Provenance), "queriedDatasourceUIDs": Schema.optionalKey(Schema.Array(Schema.String)), "query": Schema.String, "state": Schema.String.annotate({ "description": "State can be \"pending\", \"firing\", \"inactive\"." }), "totals": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "totalsFiltered": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "type": Schema.String, "uid": Schema.optionalKey(Schema.String) }).annotate({ "description": "adapted from cortex" })
-export type LibraryElementArrayResponse = { readonly "result"?: ReadonlyArray<LibraryElementDTO> }
-export const LibraryElementArrayResponse = Schema.Struct({ "result": Schema.optionalKey(Schema.Array(LibraryElementDTO)) }).annotate({ "title": "LibraryElementArrayResponse is a response struct for an array of LibraryElementDTO." })
-export type LibraryElementResponse = { readonly "result"?: LibraryElementDTO }
-export const LibraryElementResponse = Schema.Struct({ "result": Schema.optionalKey(LibraryElementDTO) }).annotate({ "title": "LibraryElementResponse is a response struct for LibraryElementDTO." })
-export type LibraryElementSearchResult = { readonly "elements"?: ReadonlyArray<LibraryElementDTO>, readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number }
-export const LibraryElementSearchResult = Schema.Struct({ "elements": Schema.optionalKey(Schema.Array(LibraryElementDTO)), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "title": "LibraryElementSearchResult is the search result for entities." })
-export type ExtraConfiguration = { readonly "alertmanager_config"?: string, readonly "identifier"?: string, readonly "merge_matchers"?: Matchers1, readonly "template_files"?: { readonly [x: string]: string } }
-export const ExtraConfiguration = Schema.Struct({ "alertmanager_config": Schema.optionalKey(Schema.String), "identifier": Schema.optionalKey(Schema.String), "merge_matchers": Schema.optionalKey(Matchers1), "template_files": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)) })
-export type InhibitRule = { readonly "equal"?: ReadonlyArray<string>, readonly "source_match"?: { readonly [x: string]: string }, readonly "source_match_re"?: MatchRegexps, readonly "source_matchers"?: Matchers1, readonly "target_match"?: { readonly [x: string]: string }, readonly "target_match_re"?: MatchRegexps, readonly "target_matchers"?: Matchers1 }
-export const InhibitRule = Schema.Struct({ "equal": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "A set of labels that must be equal between the source and target alert\nfor them to be a match." })), "source_match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "SourceMatch defines a set of labels that have to equal the given\nvalue for source alerts. Deprecated. Remove before v1.0 release." })), "source_match_re": Schema.optionalKey(MatchRegexps), "source_matchers": Schema.optionalKey(Matchers1), "target_match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "TargetMatch defines a set of labels that have to equal the given\nvalue for target alerts. Deprecated. Remove before v1.0 release." })), "target_match_re": Schema.optionalKey(MatchRegexps), "target_matchers": Schema.optionalKey(Matchers1) }).annotate({ "description": "InhibitRule defines an inhibition rule that mutes alerts that match the\ntarget labels if an alert matching the source labels exists.\nBoth alerts have to have a set of labels being equal." })
-export type NotificationPolicyExport = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "continue"?: boolean, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "match"?: { readonly [x: string]: string }, readonly "match_re"?: MatchRegexps, readonly "matchers"?: Matchers1, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "object_matchers"?: ObjectMatchers, readonly "orgId"?: number, readonly "receiver"?: string, readonly "repeat_interval"?: string, readonly "routes"?: ReadonlyArray<RouteExport> }
-export const NotificationPolicyExport = Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "continue": Schema.optionalKey(Schema.Boolean), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "Deprecated. Remove before v1.0 release." })), "match_re": Schema.optionalKey(MatchRegexps), "matchers": Schema.optionalKey(Matchers1), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "object_matchers": Schema.optionalKey(ObjectMatchers), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String), "routes": Schema.optionalKey(Schema.Array(RouteExport)) }).annotate({ "title": "NotificationPolicyExport is the provisioned file export of alerting.NotificiationPolicyV1." })
-export type Certificate = { readonly "AuthorityKeyId"?: ReadonlyArray<number>, readonly "BasicConstraintsValid"?: boolean, readonly "CRLDistributionPoints"?: ReadonlyArray<string>, readonly "DNSNames"?: ReadonlyArray<string>, readonly "EmailAddresses"?: ReadonlyArray<string>, readonly "ExcludedDNSDomains"?: ReadonlyArray<string>, readonly "ExcludedEmailAddresses"?: ReadonlyArray<string>, readonly "ExcludedIPRanges"?: ReadonlyArray<IPNet>, readonly "ExcludedURIDomains"?: ReadonlyArray<string>, readonly "ExtKeyUsage"?: ReadonlyArray<ExtKeyUsage>, readonly "Extensions"?: ReadonlyArray<Extension>, readonly "ExtraExtensions"?: ReadonlyArray<Extension>, readonly "IPAddresses"?: ReadonlyArray<string>, readonly "InhibitAnyPolicy"?: number, readonly "InhibitAnyPolicyZero"?: boolean, readonly "InhibitPolicyMapping"?: number, readonly "InhibitPolicyMappingZero"?: boolean, readonly "IsCA"?: boolean, readonly "Issuer"?: Name, readonly "IssuingCertificateURL"?: ReadonlyArray<string>, readonly "KeyUsage"?: KeyUsage, readonly "MaxPathLen"?: number, readonly "MaxPathLenZero"?: boolean, readonly "NotBefore"?: string, readonly "OCSPServer"?: ReadonlyArray<string>, readonly "PermittedDNSDomains"?: ReadonlyArray<string>, readonly "PermittedDNSDomainsCritical"?: boolean, readonly "PermittedEmailAddresses"?: ReadonlyArray<string>, readonly "PermittedIPRanges"?: ReadonlyArray<IPNet>, readonly "PermittedURIDomains"?: ReadonlyArray<string>, readonly "Policies"?: ReadonlyArray<string>, readonly "PolicyIdentifiers"?: ReadonlyArray<ObjectIdentifier>, readonly "PolicyMappings"?: ReadonlyArray<PolicyMapping>, readonly "PublicKey"?: Schema.Json, readonly "PublicKeyAlgorithm"?: PublicKeyAlgorithm, readonly "Raw"?: ReadonlyArray<number>, readonly "RawIssuer"?: ReadonlyArray<number>, readonly "RawSubject"?: ReadonlyArray<number>, readonly "RawSubjectPublicKeyInfo"?: ReadonlyArray<number>, readonly "RawTBSCertificate"?: ReadonlyArray<number>, readonly "RequireExplicitPolicy"?: number, readonly "RequireExplicitPolicyZero"?: boolean, readonly "SerialNumber"?: string, readonly "Signature"?: ReadonlyArray<number>, readonly "SignatureAlgorithm"?: SignatureAlgorithm, readonly "Subject"?: Name, readonly "SubjectKeyId"?: ReadonlyArray<number>, readonly "URIs"?: ReadonlyArray<URL>, readonly "UnhandledCriticalExtensions"?: ReadonlyArray<ObjectIdentifier>, readonly "UnknownExtKeyUsage"?: ReadonlyArray<ObjectIdentifier>, readonly "Version"?: number }
-export const Certificate = Schema.Struct({ "AuthorityKeyId": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "BasicConstraintsValid": Schema.optionalKey(Schema.Boolean.annotate({ "description": "BasicConstraintsValid indicates whether IsCA, MaxPathLen,\nand MaxPathLenZero are valid." })), "CRLDistributionPoints": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "CRL Distribution Points" })), "DNSNames": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Subject Alternate Name values. (Note that these values may not be valid\nif invalid values were contained within a parsed certificate. For\nexample, an element of DNSNames may not be a valid DNS domain name.)" })), "EmailAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "ExcludedDNSDomains": Schema.optionalKey(Schema.Array(Schema.String)), "ExcludedEmailAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "ExcludedIPRanges": Schema.optionalKey(Schema.Array(IPNet)), "ExcludedURIDomains": Schema.optionalKey(Schema.Array(Schema.String)), "ExtKeyUsage": Schema.optionalKey(Schema.Array(ExtKeyUsage)), "Extensions": Schema.optionalKey(Schema.Array(Extension).annotate({ "description": "Extensions contains raw X.509 extensions. When parsing certificates,\nthis can be used to extract non-critical extensions that are not\nparsed by this package. When marshaling certificates, the Extensions\nfield is ignored, see ExtraExtensions." })), "ExtraExtensions": Schema.optionalKey(Schema.Array(Extension).annotate({ "description": "ExtraExtensions contains extensions to be copied, raw, into any\nmarshaled certificates. Values override any extensions that would\notherwise be produced based on the other fields. The ExtraExtensions\nfield is not populated when parsing certificates, see Extensions." })), "IPAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "InhibitAnyPolicy": Schema.optionalKey(Schema.Number.annotate({ "description": "InhibitAnyPolicy and InhibitAnyPolicyZero indicate the presence and value\nof the inhibitAnyPolicy extension.\n\nThe value of InhibitAnyPolicy indicates the number of additional\ncertificates in the path after this certificate that may use the\nanyPolicy policy OID to indicate a match with any other policy.\n\nWhen parsing a certificate, a positive non-zero InhibitAnyPolicy means\nthat the field was specified, -1 means it was unset, and\nInhibitAnyPolicyZero being true mean that the field was explicitly set to\nzero. The case of InhibitAnyPolicy==0 with InhibitAnyPolicyZero==false\nshould be treated equivalent to -1 (unset).", "format": "int64" }).check(Schema.isInt())), "InhibitAnyPolicyZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "InhibitAnyPolicyZero indicates that InhibitAnyPolicy==0 should be\ninterpreted as an actual maximum path length of zero. Otherwise, that\ncombination is interpreted as InhibitAnyPolicy not being set." })), "InhibitPolicyMapping": Schema.optionalKey(Schema.Number.annotate({ "description": "InhibitPolicyMapping and InhibitPolicyMappingZero indicate the presence\nand value of the inhibitPolicyMapping field of the policyConstraints\nextension.\n\nThe value of InhibitPolicyMapping indicates the number of additional\ncertificates in the path after this certificate that may use policy\nmapping.\n\nWhen parsing a certificate, a positive non-zero InhibitPolicyMapping\nmeans that the field was specified, -1 means it was unset, and\nInhibitPolicyMappingZero being true mean that the field was explicitly\nset to zero. The case of InhibitPolicyMapping==0 with\nInhibitPolicyMappingZero==false should be treated equivalent to -1\n(unset).", "format": "int64" }).check(Schema.isInt())), "InhibitPolicyMappingZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "InhibitPolicyMappingZero indicates that InhibitPolicyMapping==0 should be\ninterpreted as an actual maximum path length of zero. Otherwise, that\ncombination is interpreted as InhibitAnyPolicy not being set." })), "IsCA": Schema.optionalKey(Schema.Boolean), "Issuer": Schema.optionalKey(Name), "IssuingCertificateURL": Schema.optionalKey(Schema.Array(Schema.String)), "KeyUsage": Schema.optionalKey(KeyUsage), "MaxPathLen": Schema.optionalKey(Schema.Number.annotate({ "description": "MaxPathLen and MaxPathLenZero indicate the presence and\nvalue of the BasicConstraints' \"pathLenConstraint\".\n\nWhen parsing a certificate, a positive non-zero MaxPathLen\nmeans that the field was specified, -1 means it was unset,\nand MaxPathLenZero being true mean that the field was\nexplicitly set to zero. The case of MaxPathLen==0 with MaxPathLenZero==false\nshould be treated equivalent to -1 (unset).\n\nWhen generating a certificate, an unset pathLenConstraint\ncan be requested with either MaxPathLen == -1 or using the\nzero value for both MaxPathLen and MaxPathLenZero.", "format": "int64" }).check(Schema.isInt())), "MaxPathLenZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "MaxPathLenZero indicates that BasicConstraintsValid==true\nand MaxPathLen==0 should be interpreted as an actual\nmaximum path length of zero. Otherwise, that combination is\ninterpreted as MaxPathLen not being set." })), "NotBefore": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "OCSPServer": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "RFC 5280, 4.2.2.1 (Authority Information Access)" })), "PermittedDNSDomains": Schema.optionalKey(Schema.Array(Schema.String)), "PermittedDNSDomainsCritical": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Name constraints" })), "PermittedEmailAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "PermittedIPRanges": Schema.optionalKey(Schema.Array(IPNet)), "PermittedURIDomains": Schema.optionalKey(Schema.Array(Schema.String)), "Policies": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Policies contains all policy identifiers included in the certificate.\nSee CreateCertificate for context about how this field and the PolicyIdentifiers field\ninteract.\nIn Go 1.22, encoding/gob cannot handle and ignores this field." })), "PolicyIdentifiers": Schema.optionalKey(Schema.Array(ObjectIdentifier).annotate({ "description": "PolicyIdentifiers contains asn1.ObjectIdentifiers, the components\nof which are limited to int32. If a certificate contains a policy which\ncannot be represented by asn1.ObjectIdentifier, it will not be included in\nPolicyIdentifiers, but will be present in Policies, which contains all parsed\npolicy OIDs.\nSee CreateCertificate for context about how this field and the Policies field\ninteract." })), "PolicyMappings": Schema.optionalKey(Schema.Array(PolicyMapping).annotate({ "description": "PolicyMappings contains a list of policy mappings included in the certificate." })), "PublicKey": Schema.optionalKey(Schema.Json), "PublicKeyAlgorithm": Schema.optionalKey(PublicKeyAlgorithm), "Raw": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "RawIssuer": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "RawSubject": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "RawSubjectPublicKeyInfo": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "RawTBSCertificate": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "RequireExplicitPolicy": Schema.optionalKey(Schema.Number.annotate({ "description": "RequireExplicitPolicy and RequireExplicitPolicyZero indicate the presence\nand value of the requireExplicitPolicy field of the policyConstraints\nextension.\n\nThe value of RequireExplicitPolicy indicates the number of additional\ncertificates in the path after this certificate before an explicit policy\nis required for the rest of the path. When an explicit policy is required,\neach subsequent certificate in the path must contain a required policy OID,\nor a policy OID which has been declared as equivalent through the policy\nmapping extension.\n\nWhen parsing a certificate, a positive non-zero RequireExplicitPolicy\nmeans that the field was specified, -1 means it was unset, and\nRequireExplicitPolicyZero being true mean that the field was explicitly\nset to zero. The case of RequireExplicitPolicy==0 with\nRequireExplicitPolicyZero==false should be treated equivalent to -1\n(unset).", "format": "int64" }).check(Schema.isInt())), "RequireExplicitPolicyZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "RequireExplicitPolicyZero indicates that RequireExplicitPolicy==0 should be\ninterpreted as an actual maximum path length of zero. Otherwise, that\ncombination is interpreted as InhibitAnyPolicy not being set." })), "SerialNumber": Schema.optionalKey(Schema.String), "Signature": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "SignatureAlgorithm": Schema.optionalKey(SignatureAlgorithm), "Subject": Schema.optionalKey(Name), "SubjectKeyId": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))), "URIs": Schema.optionalKey(Schema.Array(URL)), "UnhandledCriticalExtensions": Schema.optionalKey(Schema.Array(ObjectIdentifier).annotate({ "description": "UnhandledCriticalExtensions contains a list of extension IDs that\nwere not (fully) processed when parsing. Verify will fail if this\nslice is non-empty, unless verification is delegated to an OS\nlibrary which understands all the critical extensions.\n\nUsers can access these extensions using Extensions and can remove\nelements from this slice if they believe that they have been\nhandled." })), "UnknownExtKeyUsage": Schema.optionalKey(Schema.Array(ObjectIdentifier)), "Version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) }).annotate({ "title": "A Certificate represents an X.509 certificate." })
-export type AlertRuleGroupExport = { readonly "folder"?: string, readonly "interval"?: Duration, readonly "name"?: string, readonly "orgId"?: number, readonly "rules"?: ReadonlyArray<AlertRuleExport> }
-export const AlertRuleGroupExport = Schema.Struct({ "folder": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Duration), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "rules": Schema.optionalKey(Schema.Array(AlertRuleExport)) }).annotate({ "title": "AlertRuleGroupExport is the provisioned file export of AlertRuleGroupV1." })
-export type Vector = ReadonlyArray<Sample>
-export const Vector = Schema.Array(Sample).annotate({ "description": "Vector is basically only an alias for []Sample, but the contract is that\nin a Vector, all Samples have the same timestamp." })
-export type DataLink = { readonly "internal"?: InternalDataLink, readonly "targetBlank"?: boolean, readonly "title"?: string, readonly "url"?: string }
-export const DataLink = Schema.Struct({ "internal": Schema.optionalKey(InternalDataLink), "targetBlank": Schema.optionalKey(Schema.Boolean), "title": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) }).annotate({ "description": "DataLink define what" })
-export type HTTPClientConfig = { readonly "authorization"?: Authorization, readonly "basic_auth"?: BasicAuth, readonly "bearer_token"?: Secret, readonly "bearer_token_file"?: string, readonly "enable_http2"?: boolean, readonly "follow_redirects"?: boolean, readonly "http_headers"?: Headers, readonly "no_proxy"?: string, readonly "oauth2"?: OAuth2, readonly "proxy_connect_header"?: ProxyHeader, readonly "proxy_from_environment"?: boolean, readonly "proxy_url"?: URL, readonly "tls_config"?: TLSConfig }
-export const HTTPClientConfig = Schema.Struct({ "authorization": Schema.optionalKey(Authorization), "basic_auth": Schema.optionalKey(BasicAuth), "bearer_token": Schema.optionalKey(Secret), "bearer_token_file": Schema.optionalKey(Schema.String.annotate({ "description": "The bearer token file for the targets. Deprecated in favour of\nAuthorization.CredentialsFile." })), "enable_http2": Schema.optionalKey(Schema.Boolean.annotate({ "description": "EnableHTTP2 specifies whether the client should configure HTTP2.\nThe omitempty flag is not set, because it would be hidden from the\nmarshalled configuration when set to false." })), "follow_redirects": Schema.optionalKey(Schema.Boolean.annotate({ "description": "FollowRedirects specifies whether the client should follow HTTP 3xx redirects.\nThe omitempty flag is not set, because it would be hidden from the\nmarshalled configuration when set to false." })), "http_headers": Schema.optionalKey(Headers), "no_proxy": Schema.optionalKey(Schema.String.annotate({ "description": "NoProxy contains addresses that should not use a proxy." })), "oauth2": Schema.optionalKey(OAuth2), "proxy_connect_header": Schema.optionalKey(ProxyHeader), "proxy_from_environment": Schema.optionalKey(Schema.Boolean.annotate({ "description": "ProxyFromEnvironment makes use of net/http ProxyFromEnvironment function\nto determine proxies." })), "proxy_url": Schema.optionalKey(URL), "tls_config": Schema.optionalKey(TLSConfig) }).annotate({ "title": "HTTPClientConfig configures an HTTP client." })
-export type Correlation = { readonly "config"?: CorrelationConfig, readonly "description"?: string, readonly "label"?: string, readonly "orgId"?: number, readonly "provisioned"?: boolean, readonly "sourceUID"?: string, readonly "targetUID"?: string, readonly "type"?: CorrelationType, readonly "uid"?: string }
-export const Correlation = Schema.Struct({ "config": Schema.optionalKey(CorrelationConfig), "description": Schema.optionalKey(Schema.String.annotate({ "description": "Description of the correlation", "examples": ["Logs to Traces"] })), "label": Schema.optionalKey(Schema.String.annotate({ "description": "Label identifying the correlation", "examples": ["My Label"] })), "orgId": Schema.optionalKey(Schema.Number.annotate({ "description": "OrgID of the data source the correlation originates from", "examples": [1], "format": "int64" }).check(Schema.isInt())), "provisioned": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Provisioned True if the correlation was created during provisioning" })), "sourceUID": Schema.optionalKey(Schema.String.annotate({ "description": "UID of the data source the correlation originates from", "examples": ["d0oxYRg4z"] })), "targetUID": Schema.optionalKey(Schema.String.annotate({ "description": "UID of the data source the correlation points to", "examples": ["PE1C5CBDA0504A6A3"] })), "type": Schema.optionalKey(CorrelationType), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Unique identifier of the correlation", "examples": ["50xhMlg9k"] })) }).annotate({ "description": "Correlation is the model for correlations definitions" })
-export type GettableExtendedRuleNode = { readonly "alert"?: string, readonly "annotations"?: { readonly [x: string]: string }, readonly "expr"?: string, readonly "for"?: string, readonly "grafana_alert"?: GettableGrafanaRule, readonly "keep_firing_for"?: string, readonly "labels"?: { readonly [x: string]: string }, readonly "record"?: string }
-export const GettableExtendedRuleNode = Schema.Struct({ "alert": Schema.optionalKey(Schema.String), "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "expr": Schema.optionalKey(Schema.String), "for": Schema.optionalKey(Schema.String), "grafana_alert": Schema.optionalKey(GettableGrafanaRule), "keep_firing_for": Schema.optionalKey(Schema.String), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "record": Schema.optionalKey(Schema.String) })
-export type PostableExtendedRuleNode = { readonly "alert"?: string, readonly "annotations"?: { readonly [x: string]: string }, readonly "expr"?: string, readonly "for"?: string, readonly "grafana_alert"?: PostableGrafanaRule, readonly "keep_firing_for"?: string, readonly "labels"?: { readonly [x: string]: string }, readonly "record"?: string }
-export const PostableExtendedRuleNode = Schema.Struct({ "alert": Schema.optionalKey(Schema.String), "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "expr": Schema.optionalKey(Schema.String), "for": Schema.optionalKey(Schema.String), "grafana_alert": Schema.optionalKey(PostableGrafanaRule), "keep_firing_for": Schema.optionalKey(Schema.String), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "record": Schema.optionalKey(Schema.String) })
-export type AlertRuleGroup = { readonly "folderUid"?: string, readonly "interval"?: number, readonly "rules"?: ReadonlyArray<ProvisionedAlertRule>, readonly "title"?: string }
-export const AlertRuleGroup = Schema.Struct({ "folderUid": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "rules": Schema.optionalKey(Schema.Array(ProvisionedAlertRule)), "title": Schema.optionalKey(Schema.String) })
+export const NotificationTemplates = Schema.Array(NotificationTemplate).annotate({ "identifier": "NotificationTemplates" })
+export type ContactPointExport = { readonly "name"?: string, readonly "orgId"?: number, readonly "receivers"?: ReadonlyArray<ReceiverExport> } & { readonly [x: string]: Schema.Json }
+export const ContactPointExport = Schema.StructWithRest(Schema.Struct({ "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "receivers": Schema.optionalKey(Schema.Array(ReceiverExport)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "ContactPointExport is the provisioned file export of alerting.ContactPointV1.", "identifier": "ContactPointExport" })
+export type AlertRuleExport = { readonly "annotations"?: { readonly [x: string]: string }, readonly "condition"?: string, readonly "dashboardUid"?: string, readonly "data"?: ReadonlyArray<AlertQueryExport>, readonly "execErrState"?: "OK" | "Alerting" | "Error", readonly "for"?: Duration, readonly "isPaused"?: boolean, readonly "keepFiringFor"?: Duration, readonly "labels"?: { readonly [x: string]: string }, readonly "missing_series_evals_to_resolve"?: number, readonly "noDataState"?: "Alerting" | "NoData" | "OK", readonly "notification_settings"?: AlertRuleNotificationSettingsExport, readonly "panelId"?: number, readonly "record"?: AlertRuleRecordExport, readonly "title"?: string, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const AlertRuleExport = Schema.StructWithRest(Schema.Struct({ "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "condition": Schema.optionalKey(Schema.String), "dashboardUid": Schema.optionalKey(Schema.String), "data": Schema.optionalKey(Schema.Array(AlertQueryExport)), "execErrState": Schema.optionalKey(Schema.Literals(["OK", "Alerting", "Error"])), "for": Schema.optionalKey(Duration), "isPaused": Schema.optionalKey(Schema.Boolean), "keepFiringFor": Schema.optionalKey(Duration), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "missing_series_evals_to_resolve": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "noDataState": Schema.optionalKey(Schema.Literals(["Alerting", "NoData", "OK"])), "notification_settings": Schema.optionalKey(AlertRuleNotificationSettingsExport), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "record": Schema.optionalKey(AlertRuleRecordExport), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "AlertRuleExport is the provisioned file export of models.AlertRule.", "identifier": "AlertRuleExport" })
+export type Matchers = ReadonlyArray<Matcher>
+export const Matchers = Schema.Array(Matcher).annotate({ "description": "Matchers is a slice of Matchers that is sortable, implements Stringer, and\nprovides a Matches method to match a LabelSet against all Matchers in the\nslice. Note that some users of Matchers might require it to be sorted.", "identifier": "Matchers" })
+export type ProvisionedAlertRule = { readonly "annotations"?: { readonly [x: string]: string }, readonly "condition": string, readonly "data": ReadonlyArray<AlertQuery>, readonly "execErrState": "OK" | "Alerting" | "Error", readonly "folderUID": string, readonly "for": string, readonly "id"?: number, readonly "isPaused"?: boolean, readonly "keep_firing_for"?: string, readonly "labels"?: { readonly [x: string]: string }, readonly "missingSeriesEvalsToResolve"?: number, readonly "noDataState": "Alerting" | "NoData" | "OK", readonly "notification_settings"?: AlertRuleNotificationSettings, readonly "orgID": number, readonly "provenance"?: Provenance, readonly "record"?: Record, readonly "ruleGroup": string, readonly "title": string, readonly "uid"?: string, readonly "updated"?: string } & { readonly [x: string]: Schema.Json }
+export const ProvisionedAlertRule = Schema.StructWithRest(Schema.Struct({ "annotations": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "examples": [{ "runbook_url": "https://supercoolrunbook.com/page/13" }] })), "condition": Schema.String.annotate({ "examples": ["A"] }), "data": Schema.Array(AlertQuery).annotate({ "examples": [[{ "datasourceUid": "__expr__", "model": { "conditions": [{ "evaluator": { "params": [0, 0], "type": "gt" }, "operator": { "type": "and" }, "query": { "params": [] }, "reducer": { "params": [], "type": "avg" }, "type": "query" }], "datasource": { "type": "__expr__", "uid": "__expr__" }, "expression": "1 == 1", "hide": false, "intervalMs": 1000, "maxDataPoints": 43200, "refId": "A", "type": "math" }, "queryType": "", "refId": "A", "relativeTimeRange": { "from": 0, "to": 0 } }]] }), "execErrState": Schema.Literals(["OK", "Alerting", "Error"]), "folderUID": Schema.String.annotate({ "examples": ["project_x"] }), "for": Schema.String.annotate({ "format": "duration" }), "id": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "isPaused": Schema.optionalKey(Schema.Boolean.annotate({ "examples": [false] })), "keep_firing_for": Schema.optionalKey(Schema.String.annotate({ "format": "duration" })), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "examples": [{ "team": "sre-team-1" }] })), "missingSeriesEvalsToResolve": Schema.optionalKey(Schema.Number.annotate({ "examples": [2], "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "noDataState": Schema.Literals(["Alerting", "NoData", "OK"]), "notification_settings": Schema.optionalKey(AlertRuleNotificationSettings), "orgID": Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })), "provenance": Schema.optionalKey(Provenance), "record": Schema.optionalKey(Record), "ruleGroup": Schema.String.annotate({ "examples": ["eval_group_1"] }).check(Schema.isMinLength(1).annotate({ "expected": "a value with a length of at least 1" })).check(Schema.isMaxLength(190).annotate({ "expected": "a value with a length of at most 190" })), "title": Schema.String.annotate({ "examples": ["Always firing"] }).check(Schema.isMinLength(1).annotate({ "expected": "a value with a length of at least 1" })).check(Schema.isMaxLength(190).annotate({ "expected": "a value with a length of at most 190" })), "uid": Schema.optionalKey(Schema.String.check(Schema.isMinLength(1).annotate({ "expected": "a value with a length of at least 1" })).check(Schema.isMaxLength(40).annotate({ "expected": "a value with a length of at most 40" })).check(Schema.isPattern(new RegExp("^[a-zA-Z0-9-_]+$")).annotate({ "expected": "a string matching the RegExp ^[a-zA-Z0-9-_]+$" }))), "updated": Schema.optionalKey(Schema.String.annotate({ "readOnly": true, "format": "date-time" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "ProvisionedAlertRule" })
+export type QueryHistorySearchResponse = { readonly "result"?: QueryHistorySearchResult } & { readonly [x: string]: Schema.Json }
+export const QueryHistorySearchResponse = Schema.StructWithRest(Schema.Struct({ "result": Schema.optionalKey(QueryHistorySearchResult) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "QueryHistorySearchResponse" })
+export type GetHomeDashboardResponse = { readonly "dashboard"?: Json, readonly "meta"?: DashboardMeta, readonly "redirectUri"?: string } & { readonly [x: string]: Schema.Json }
+export const GetHomeDashboardResponse = Schema.StructWithRest(Schema.Struct({ "dashboard": Schema.optionalKey(Json), "meta": Schema.optionalKey(DashboardMeta), "redirectUri": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "Get home dashboard response.", "identifier": "GetHomeDashboardResponse" })
+export type DashboardFullWithMeta = { readonly "dashboard"?: Json, readonly "meta"?: DashboardMeta } & { readonly [x: string]: Schema.Json }
+export const DashboardFullWithMeta = Schema.StructWithRest(Schema.Struct({ "dashboard": Schema.optionalKey(Json), "meta": Schema.optionalKey(DashboardMeta) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "DashboardFullWithMeta" })
+export type Correlation = { readonly "config"?: CorrelationConfig, readonly "description"?: string, readonly "label"?: string, readonly "orgId"?: number, readonly "provisioned"?: boolean, readonly "sourceUID"?: string, readonly "targetUID"?: string, readonly "type"?: CorrelationType, readonly "uid"?: string } & { readonly [x: string]: Schema.Json }
+export const Correlation = Schema.StructWithRest(Schema.Struct({ "config": Schema.optionalKey(CorrelationConfig), "description": Schema.optionalKey(Schema.String.annotate({ "description": "Description of the correlation", "examples": ["Logs to Traces"] })), "label": Schema.optionalKey(Schema.String.annotate({ "description": "Label identifying the correlation", "examples": ["My Label"] })), "orgId": Schema.optionalKey(Schema.Number.annotate({ "description": "OrgID of the data source the correlation originates from", "examples": [1], "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "provisioned": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Provisioned True if the correlation was created during provisioning" })), "sourceUID": Schema.optionalKey(Schema.String.annotate({ "description": "UID of the data source the correlation originates from", "examples": ["d0oxYRg4z"] })), "targetUID": Schema.optionalKey(Schema.String.annotate({ "description": "UID of the data source the correlation points to", "examples": ["PE1C5CBDA0504A6A3"] })), "type": Schema.optionalKey(CorrelationType), "uid": Schema.optionalKey(Schema.String.annotate({ "description": "Unique identifier of the correlation", "examples": ["50xhMlg9k"] })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "Correlation is the model for correlations definitions", "identifier": "Correlation" })
+export type DataLink = { readonly "internal"?: InternalDataLink, readonly "targetBlank"?: boolean, readonly "title"?: string, readonly "url"?: string } & { readonly [x: string]: Schema.Json }
+export const DataLink = Schema.StructWithRest(Schema.Struct({ "internal": Schema.optionalKey(InternalDataLink), "targetBlank": Schema.optionalKey(Schema.Boolean), "title": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "DataLink define what", "identifier": "DataLink" })
+export type LibraryElementSearchResult = { readonly "elements"?: ReadonlyArray<LibraryElementDTO>, readonly "page"?: number, readonly "perPage"?: number, readonly "totalCount"?: number } & { readonly [x: string]: Schema.Json }
+export const LibraryElementSearchResult = Schema.StructWithRest(Schema.Struct({ "elements": Schema.optionalKey(Schema.Array(LibraryElementDTO)), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perPage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "totalCount": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementSearchResult is the search result for entities.", "identifier": "LibraryElementSearchResult" })
+export type LibraryElementArrayResponse = { readonly "result"?: ReadonlyArray<LibraryElementDTO> } & { readonly [x: string]: Schema.Json }
+export const LibraryElementArrayResponse = Schema.StructWithRest(Schema.Struct({ "result": Schema.optionalKey(Schema.Array(LibraryElementDTO)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementArrayResponse is a response struct for an array of LibraryElementDTO.", "identifier": "LibraryElementArrayResponse" })
+export type LibraryElementResponse = { readonly "result"?: LibraryElementDTO } & { readonly [x: string]: Schema.Json }
+export const LibraryElementResponse = Schema.StructWithRest(Schema.Struct({ "result": Schema.optionalKey(LibraryElementDTO) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementResponse is a response struct for LibraryElementDTO.", "identifier": "LibraryElementResponse" })
+export type Certificate = { readonly "AuthorityKeyId"?: ReadonlyArray<number>, readonly "BasicConstraintsValid"?: boolean, readonly "CRLDistributionPoints"?: ReadonlyArray<string>, readonly "DNSNames"?: ReadonlyArray<string>, readonly "EmailAddresses"?: ReadonlyArray<string>, readonly "ExcludedDNSDomains"?: ReadonlyArray<string>, readonly "ExcludedEmailAddresses"?: ReadonlyArray<string>, readonly "ExcludedIPRanges"?: ReadonlyArray<IPNet>, readonly "ExcludedURIDomains"?: ReadonlyArray<string>, readonly "ExtKeyUsage"?: ReadonlyArray<ExtKeyUsage>, readonly "Extensions"?: ReadonlyArray<Extension>, readonly "ExtraExtensions"?: ReadonlyArray<Extension>, readonly "IPAddresses"?: ReadonlyArray<string>, readonly "InhibitAnyPolicy"?: number, readonly "InhibitAnyPolicyZero"?: boolean, readonly "InhibitPolicyMapping"?: number, readonly "InhibitPolicyMappingZero"?: boolean, readonly "IsCA"?: boolean, readonly "Issuer"?: Name, readonly "IssuingCertificateURL"?: ReadonlyArray<string>, readonly "KeyUsage"?: KeyUsage, readonly "MaxPathLen"?: number, readonly "MaxPathLenZero"?: boolean, readonly "NotBefore"?: string, readonly "OCSPServer"?: ReadonlyArray<string>, readonly "PermittedDNSDomains"?: ReadonlyArray<string>, readonly "PermittedDNSDomainsCritical"?: boolean, readonly "PermittedEmailAddresses"?: ReadonlyArray<string>, readonly "PermittedIPRanges"?: ReadonlyArray<IPNet>, readonly "PermittedURIDomains"?: ReadonlyArray<string>, readonly "Policies"?: ReadonlyArray<string>, readonly "PolicyIdentifiers"?: ReadonlyArray<ObjectIdentifier>, readonly "PolicyMappings"?: ReadonlyArray<PolicyMapping>, readonly "PublicKey"?: Schema.Json, readonly "PublicKeyAlgorithm"?: PublicKeyAlgorithm, readonly "Raw"?: ReadonlyArray<number>, readonly "RawIssuer"?: ReadonlyArray<number>, readonly "RawSubject"?: ReadonlyArray<number>, readonly "RawSubjectPublicKeyInfo"?: ReadonlyArray<number>, readonly "RawTBSCertificate"?: ReadonlyArray<number>, readonly "RequireExplicitPolicy"?: number, readonly "RequireExplicitPolicyZero"?: boolean, readonly "SerialNumber"?: string, readonly "Signature"?: ReadonlyArray<number>, readonly "SignatureAlgorithm"?: SignatureAlgorithm, readonly "Subject"?: Name, readonly "SubjectKeyId"?: ReadonlyArray<number>, readonly "URIs"?: ReadonlyArray<URL>, readonly "UnhandledCriticalExtensions"?: ReadonlyArray<ObjectIdentifier>, readonly "UnknownExtKeyUsage"?: ReadonlyArray<ObjectIdentifier>, readonly "Version"?: number } & { readonly [x: string]: Schema.Json }
+export const Certificate = Schema.StructWithRest(Schema.Struct({ "AuthorityKeyId": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "BasicConstraintsValid": Schema.optionalKey(Schema.Boolean.annotate({ "description": "BasicConstraintsValid indicates whether IsCA, MaxPathLen,\nand MaxPathLenZero are valid." })), "CRLDistributionPoints": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "CRL Distribution Points" })), "DNSNames": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Subject Alternate Name values. (Note that these values may not be valid\nif invalid values were contained within a parsed certificate. For\nexample, an element of DNSNames may not be a valid DNS domain name.)" })), "EmailAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "ExcludedDNSDomains": Schema.optionalKey(Schema.Array(Schema.String)), "ExcludedEmailAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "ExcludedIPRanges": Schema.optionalKey(Schema.Array(IPNet)), "ExcludedURIDomains": Schema.optionalKey(Schema.Array(Schema.String)), "ExtKeyUsage": Schema.optionalKey(Schema.Array(ExtKeyUsage)), "Extensions": Schema.optionalKey(Schema.Array(Extension).annotate({ "description": "Extensions contains raw X.509 extensions. When parsing certificates,\nthis can be used to extract non-critical extensions that are not\nparsed by this package. When marshaling certificates, the Extensions\nfield is ignored, see ExtraExtensions." })), "ExtraExtensions": Schema.optionalKey(Schema.Array(Extension).annotate({ "description": "ExtraExtensions contains extensions to be copied, raw, into any\nmarshaled certificates. Values override any extensions that would\notherwise be produced based on the other fields. The ExtraExtensions\nfield is not populated when parsing certificates, see Extensions." })), "IPAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "InhibitAnyPolicy": Schema.optionalKey(Schema.Number.annotate({ "description": "InhibitAnyPolicy and InhibitAnyPolicyZero indicate the presence and value\nof the inhibitAnyPolicy extension.\n\nThe value of InhibitAnyPolicy indicates the number of additional\ncertificates in the path after this certificate that may use the\nanyPolicy policy OID to indicate a match with any other policy.\n\nWhen parsing a certificate, a positive non-zero InhibitAnyPolicy means\nthat the field was specified, -1 means it was unset, and\nInhibitAnyPolicyZero being true mean that the field was explicitly set to\nzero. The case of InhibitAnyPolicy==0 with InhibitAnyPolicyZero==false\nshould be treated equivalent to -1 (unset).", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "InhibitAnyPolicyZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "InhibitAnyPolicyZero indicates that InhibitAnyPolicy==0 should be\ninterpreted as an actual maximum path length of zero. Otherwise, that\ncombination is interpreted as InhibitAnyPolicy not being set." })), "InhibitPolicyMapping": Schema.optionalKey(Schema.Number.annotate({ "description": "InhibitPolicyMapping and InhibitPolicyMappingZero indicate the presence\nand value of the inhibitPolicyMapping field of the policyConstraints\nextension.\n\nThe value of InhibitPolicyMapping indicates the number of additional\ncertificates in the path after this certificate that may use policy\nmapping.\n\nWhen parsing a certificate, a positive non-zero InhibitPolicyMapping\nmeans that the field was specified, -1 means it was unset, and\nInhibitPolicyMappingZero being true mean that the field was explicitly\nset to zero. The case of InhibitPolicyMapping==0 with\nInhibitPolicyMappingZero==false should be treated equivalent to -1\n(unset).", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "InhibitPolicyMappingZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "InhibitPolicyMappingZero indicates that InhibitPolicyMapping==0 should be\ninterpreted as an actual maximum path length of zero. Otherwise, that\ncombination is interpreted as InhibitAnyPolicy not being set." })), "IsCA": Schema.optionalKey(Schema.Boolean), "Issuer": Schema.optionalKey(Name), "IssuingCertificateURL": Schema.optionalKey(Schema.Array(Schema.String)), "KeyUsage": Schema.optionalKey(KeyUsage), "MaxPathLen": Schema.optionalKey(Schema.Number.annotate({ "description": "MaxPathLen and MaxPathLenZero indicate the presence and\nvalue of the BasicConstraints' \"pathLenConstraint\".\n\nWhen parsing a certificate, a positive non-zero MaxPathLen\nmeans that the field was specified, -1 means it was unset,\nand MaxPathLenZero being true mean that the field was\nexplicitly set to zero. The case of MaxPathLen==0 with MaxPathLenZero==false\nshould be treated equivalent to -1 (unset).\n\nWhen generating a certificate, an unset pathLenConstraint\ncan be requested with either MaxPathLen == -1 or using the\nzero value for both MaxPathLen and MaxPathLenZero.", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "MaxPathLenZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "MaxPathLenZero indicates that BasicConstraintsValid==true\nand MaxPathLen==0 should be interpreted as an actual\nmaximum path length of zero. Otherwise, that combination is\ninterpreted as MaxPathLen not being set." })), "NotBefore": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "OCSPServer": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "RFC 5280, 4.2.2.1 (Authority Information Access)" })), "PermittedDNSDomains": Schema.optionalKey(Schema.Array(Schema.String)), "PermittedDNSDomainsCritical": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Name constraints" })), "PermittedEmailAddresses": Schema.optionalKey(Schema.Array(Schema.String)), "PermittedIPRanges": Schema.optionalKey(Schema.Array(IPNet)), "PermittedURIDomains": Schema.optionalKey(Schema.Array(Schema.String)), "Policies": Schema.optionalKey(Schema.Array(Schema.String).annotate({ "description": "Policies contains all policy identifiers included in the certificate.\nSee CreateCertificate for context about how this field and the PolicyIdentifiers field\ninteract.\nIn Go 1.22, encoding/gob cannot handle and ignores this field." })), "PolicyIdentifiers": Schema.optionalKey(Schema.Array(ObjectIdentifier).annotate({ "description": "PolicyIdentifiers contains asn1.ObjectIdentifiers, the components\nof which are limited to int32. If a certificate contains a policy which\ncannot be represented by asn1.ObjectIdentifier, it will not be included in\nPolicyIdentifiers, but will be present in Policies, which contains all parsed\npolicy OIDs.\nSee CreateCertificate for context about how this field and the Policies field\ninteract." })), "PolicyMappings": Schema.optionalKey(Schema.Array(PolicyMapping).annotate({ "description": "PolicyMappings contains a list of policy mappings included in the certificate." })), "PublicKey": Schema.optionalKey(Schema.Json.annotate({ "expected": "JSON value" })), "PublicKeyAlgorithm": Schema.optionalKey(PublicKeyAlgorithm), "Raw": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "RawIssuer": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "RawSubject": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "RawSubjectPublicKeyInfo": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "RawTBSCertificate": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "RequireExplicitPolicy": Schema.optionalKey(Schema.Number.annotate({ "description": "RequireExplicitPolicy and RequireExplicitPolicyZero indicate the presence\nand value of the requireExplicitPolicy field of the policyConstraints\nextension.\n\nThe value of RequireExplicitPolicy indicates the number of additional\ncertificates in the path after this certificate before an explicit policy\nis required for the rest of the path. When an explicit policy is required,\neach subsequent certificate in the path must contain a required policy OID,\nor a policy OID which has been declared as equivalent through the policy\nmapping extension.\n\nWhen parsing a certificate, a positive non-zero RequireExplicitPolicy\nmeans that the field was specified, -1 means it was unset, and\nRequireExplicitPolicyZero being true mean that the field was explicitly\nset to zero. The case of RequireExplicitPolicy==0 with\nRequireExplicitPolicyZero==false should be treated equivalent to -1\n(unset).", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "RequireExplicitPolicyZero": Schema.optionalKey(Schema.Boolean.annotate({ "description": "RequireExplicitPolicyZero indicates that RequireExplicitPolicy==0 should be\ninterpreted as an actual maximum path length of zero. Otherwise, that\ncombination is interpreted as InhibitAnyPolicy not being set." })), "SerialNumber": Schema.optionalKey(Schema.String), "Signature": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "SignatureAlgorithm": Schema.optionalKey(SignatureAlgorithm), "Subject": Schema.optionalKey(Name), "SubjectKeyId": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "URIs": Schema.optionalKey(Schema.Array(URL)), "UnhandledCriticalExtensions": Schema.optionalKey(Schema.Array(ObjectIdentifier).annotate({ "description": "UnhandledCriticalExtensions contains a list of extension IDs that\nwere not (fully) processed when parsing. Verify will fail if this\nslice is non-empty, unless verification is delegated to an OS\nlibrary which understands all the critical extensions.\n\nUsers can access these extensions using Extensions and can remove\nelements from this slice if they believe that they have been\nhandled." })), "UnknownExtKeyUsage": Schema.optionalKey(Schema.Array(ObjectIdentifier)), "Version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "A Certificate represents an X.509 certificate.", "identifier": "Certificate" })
+export type AlertRuleGroupExport = { readonly "folder"?: string, readonly "interval"?: Duration, readonly "name"?: string, readonly "orgId"?: number, readonly "rules"?: ReadonlyArray<AlertRuleExport> } & { readonly [x: string]: Schema.Json }
+export const AlertRuleGroupExport = Schema.StructWithRest(Schema.Struct({ "folder": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Duration), "name": Schema.optionalKey(Schema.String), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "rules": Schema.optionalKey(Schema.Array(AlertRuleExport)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "AlertRuleGroupExport is the provisioned file export of AlertRuleGroupV1.", "identifier": "AlertRuleGroupExport" })
+export type NotificationPolicyExport = { readonly "active_time_intervals"?: ReadonlyArray<string>, readonly "continue"?: boolean, readonly "group_by"?: ReadonlyArray<string>, readonly "group_interval"?: string, readonly "group_wait"?: string, readonly "match"?: { readonly [x: string]: string }, readonly "match_re"?: MatchRegexps, readonly "matchers"?: Matchers, readonly "mute_time_intervals"?: ReadonlyArray<string>, readonly "object_matchers"?: ObjectMatchers, readonly "orgId"?: number, readonly "receiver"?: string, readonly "repeat_interval"?: string, readonly "routes"?: ReadonlyArray<RouteExport> } & { readonly [x: string]: Schema.Json }
+export const NotificationPolicyExport = Schema.StructWithRest(Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "continue": Schema.optionalKey(Schema.Boolean), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "Deprecated. Remove before v1.0 release." })), "match_re": Schema.optionalKey(MatchRegexps), "matchers": Schema.optionalKey(Matchers), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "object_matchers": Schema.optionalKey(ObjectMatchers), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String), "routes": Schema.optionalKey(Schema.Array(RouteExport)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "NotificationPolicyExport is the provisioned file export of alerting.NotificiationPolicyV1.", "identifier": "NotificationPolicyExport" })
 export type ProvisionedAlertRules = ReadonlyArray<ProvisionedAlertRule>
-export const ProvisionedAlertRules = Schema.Array(ProvisionedAlertRule)
-export type RuleGroup = { readonly "evaluationTime"?: number, readonly "file": string, readonly "folderUid": string, readonly "interval": number, readonly "lastEvaluation"?: string, readonly "name": string, readonly "rules": ReadonlyArray<AlertingRule>, readonly "totals"?: { readonly [x: string]: number } }
-export const RuleGroup = Schema.Struct({ "evaluationTime": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())), "file": Schema.String, "folderUid": Schema.String, "interval": Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite()), "lastEvaluation": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "name": Schema.String, "rules": Schema.Array(AlertingRule).annotate({ "description": "In order to preserve rule ordering, while exposing type (alerting or recording)\nspecific properties, both alerting and recording rules are exposed in the\nsame array." }), "totals": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))) })
-export type LibraryElementSearchResponse = { readonly "result"?: LibraryElementSearchResult }
-export const LibraryElementSearchResponse = Schema.Struct({ "result": Schema.optionalKey(LibraryElementSearchResult) }).annotate({ "title": "LibraryElementSearchResponse is a response struct for LibraryElementSearchResult." })
-export type JSONWebKey = { readonly "Algorithm"?: string, readonly "CertificateThumbprintSHA1"?: ReadonlyArray<number>, readonly "CertificateThumbprintSHA256"?: ReadonlyArray<number>, readonly "Certificates"?: ReadonlyArray<Certificate>, readonly "CertificatesURL"?: URL, readonly "Key"?: Schema.Json, readonly "KeyID"?: string, readonly "Use"?: string }
-export const JSONWebKey = Schema.Struct({ "Algorithm": Schema.optionalKey(Schema.String.annotate({ "description": "Key algorithm, parsed from `alg` header." })), "CertificateThumbprintSHA1": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt())).annotate({ "description": "X.509 certificate thumbprint (SHA-1), parsed from `x5t` header." })), "CertificateThumbprintSHA256": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt())).annotate({ "description": "X.509 certificate thumbprint (SHA-256), parsed from `x5t#S256` header." })), "Certificates": Schema.optionalKey(Schema.Array(Certificate).annotate({ "description": "X.509 certificate chain, parsed from `x5c` header." })), "CertificatesURL": Schema.optionalKey(URL), "Key": Schema.optionalKey(Schema.Json.annotate({ "description": "Key is the Go in-memory representation of this key. It must have one\nof these types:\ned25519.PublicKey\ned25519.PrivateKey\necdsa.PublicKey\necdsa.PrivateKey\nrsa.PublicKey\nrsa.PrivateKey\n[]byte (a symmetric key)\n\nWhen marshaling this JSONWebKey into JSON, the \"kty\" header parameter\nwill be automatically set based on the type of this field." })), "KeyID": Schema.optionalKey(Schema.String.annotate({ "description": "Key identifier, parsed from `kid` header." })), "Use": Schema.optionalKey(Schema.String.annotate({ "description": "Key use, parsed from `use` header." })) }).annotate({ "description": "JSONWebKey represents a public or private key in JWK format. It can be\nmarshaled into JSON and unmarshaled from JSON." })
-export type AlertingFileExport = { readonly "apiVersion"?: number, readonly "contactPoints"?: ReadonlyArray<ContactPointExport>, readonly "groups"?: ReadonlyArray<AlertRuleGroupExport>, readonly "muteTimes"?: ReadonlyArray<MuteTimeIntervalExport>, readonly "policies"?: ReadonlyArray<NotificationPolicyExport> }
-export const AlertingFileExport = Schema.Struct({ "apiVersion": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "contactPoints": Schema.optionalKey(Schema.Array(ContactPointExport)), "groups": Schema.optionalKey(Schema.Array(AlertRuleGroupExport)), "muteTimes": Schema.optionalKey(Schema.Array(MuteTimeIntervalExport)), "policies": Schema.optionalKey(Schema.Array(NotificationPolicyExport)) }).annotate({ "title": "AlertingFileExport is the full provisioned file export." })
-export type FieldConfig = { readonly "color"?: { readonly [x: string]: Schema.Json }, readonly "custom"?: { readonly [x: string]: Schema.Json }, readonly "decimals"?: number, readonly "description"?: string, readonly "displayName"?: string, readonly "displayNameFromDS"?: string, readonly "filterable"?: boolean, readonly "interval"?: number, readonly "links"?: ReadonlyArray<DataLink>, readonly "mappings"?: ValueMappings, readonly "max"?: ConfFloat64, readonly "min"?: ConfFloat64, readonly "noValue"?: string, readonly "path"?: string, readonly "thresholds"?: ThresholdsConfig, readonly "type"?: FieldTypeConfig, readonly "unit"?: string, readonly "writeable"?: boolean }
-export const FieldConfig = Schema.Struct({ "color": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Map values to a display color\nNOTE: this interface is under development in the frontend... so simple map for now" })), "custom": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Panel Specific Values" })), "decimals": Schema.optionalKey(Schema.Number.annotate({ "format": "uint16" }).check(Schema.isInt())), "description": Schema.optionalKey(Schema.String.annotate({ "description": "Description is human readable field metadata" })), "displayName": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayName overrides Grafana default naming, should not be used from a data source" })), "displayNameFromDS": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayNameFromDS overrides Grafana default naming strategy." })), "filterable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Filterable indicates if the Field's data can be filtered by additional calls." })), "interval": Schema.optionalKey(Schema.Number.annotate({ "description": "Interval indicates the expected regular step between values in the series.\nWhen an interval exists, consumers can identify \"missing\" values when the expected value is not present.\nThe grafana timeseries visualization will render disconnected values when missing values are found it the time field.\nThe interval uses the same units as the values.  For time.Time, this is defined in milliseconds.", "format": "double" }).check(Schema.isFinite())), "links": Schema.optionalKey(Schema.Array(DataLink).annotate({ "description": "The behavior when clicking on a result" })), "mappings": Schema.optionalKey(ValueMappings), "max": Schema.optionalKey(ConfFloat64), "min": Schema.optionalKey(ConfFloat64), "noValue": Schema.optionalKey(Schema.String.annotate({ "description": "Alternative to empty string" })), "path": Schema.optionalKey(Schema.String.annotate({ "description": "Path is an explicit path to the field in the datasource. When the frame meta includes a path,\nthis will default to `${frame.meta.path}/${field.name}\n\nWhen defined, this value can be used as an identifier within the datasource scope, and\nmay be used as an identifier to update values in a subsequent request" })), "thresholds": Schema.optionalKey(ThresholdsConfig), "type": Schema.optionalKey(FieldTypeConfig), "unit": Schema.optionalKey(Schema.String.annotate({ "description": "Numeric Options" })), "writeable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Writeable indicates that the datasource knows how to update this value" })) }).annotate({ "title": "FieldConfig represents the display properties for a Field." })
-export type QueryStat = { readonly "color"?: { readonly [x: string]: Schema.Json }, readonly "custom"?: { readonly [x: string]: Schema.Json }, readonly "decimals"?: number, readonly "description"?: string, readonly "displayName"?: string, readonly "displayNameFromDS"?: string, readonly "filterable"?: boolean, readonly "interval"?: number, readonly "links"?: ReadonlyArray<DataLink>, readonly "mappings"?: ValueMappings, readonly "max"?: ConfFloat64, readonly "min"?: ConfFloat64, readonly "noValue"?: string, readonly "path"?: string, readonly "thresholds"?: ThresholdsConfig, readonly "type"?: FieldTypeConfig, readonly "unit"?: string, readonly "value"?: number, readonly "writeable"?: boolean }
-export const QueryStat = Schema.Struct({ "color": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Map values to a display color\nNOTE: this interface is under development in the frontend... so simple map for now" })), "custom": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json).annotate({ "description": "Panel Specific Values" })), "decimals": Schema.optionalKey(Schema.Number.annotate({ "format": "uint16" }).check(Schema.isInt())), "description": Schema.optionalKey(Schema.String.annotate({ "description": "Description is human readable field metadata" })), "displayName": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayName overrides Grafana default naming, should not be used from a data source" })), "displayNameFromDS": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayNameFromDS overrides Grafana default naming strategy." })), "filterable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Filterable indicates if the Field's data can be filtered by additional calls." })), "interval": Schema.optionalKey(Schema.Number.annotate({ "description": "Interval indicates the expected regular step between values in the series.\nWhen an interval exists, consumers can identify \"missing\" values when the expected value is not present.\nThe grafana timeseries visualization will render disconnected values when missing values are found it the time field.\nThe interval uses the same units as the values.  For time.Time, this is defined in milliseconds.", "format": "double" }).check(Schema.isFinite())), "links": Schema.optionalKey(Schema.Array(DataLink).annotate({ "description": "The behavior when clicking on a result" })), "mappings": Schema.optionalKey(ValueMappings), "max": Schema.optionalKey(ConfFloat64), "min": Schema.optionalKey(ConfFloat64), "noValue": Schema.optionalKey(Schema.String.annotate({ "description": "Alternative to empty string" })), "path": Schema.optionalKey(Schema.String.annotate({ "description": "Path is an explicit path to the field in the datasource. When the frame meta includes a path,\nthis will default to `${frame.meta.path}/${field.name}\n\nWhen defined, this value can be used as an identifier within the datasource scope, and\nmay be used as an identifier to update values in a subsequent request" })), "thresholds": Schema.optionalKey(ThresholdsConfig), "type": Schema.optionalKey(FieldTypeConfig), "unit": Schema.optionalKey(Schema.String.annotate({ "description": "Numeric Options" })), "value": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite())), "writeable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Writeable indicates that the datasource knows how to update this value" })) }).annotate({ "title": "QueryStat is used for storing arbitrary statistics metadata related to a query and its result, e.g. total request time, data processing time.", "description": "The embedded FieldConfig's display name must be set.\nIt corresponds to the QueryResultMetaStat on the frontend (https://github.com/grafana/grafana/blob/master/packages/grafana-data/src/types/data.ts#L53)." })
-export type DiscordConfig = { readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "send_resolved"?: boolean, readonly "title"?: string, readonly "webhook_url"?: SecretURL, readonly "webhook_url_file"?: string }
-export const DiscordConfig = Schema.Struct({ "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "title": Schema.optionalKey(Schema.String), "webhook_url": Schema.optionalKey(SecretURL), "webhook_url_file": Schema.optionalKey(Schema.String) }).annotate({ "title": "DiscordConfig configures notifications via Discord." })
-export type GlobalConfig = { readonly "http_config"?: HTTPClientConfig, readonly "jira_api_url"?: URL, readonly "opsgenie_api_key"?: Secret, readonly "opsgenie_api_key_file"?: string, readonly "opsgenie_api_url"?: URL, readonly "pagerduty_url"?: URL, readonly "resolve_timeout"?: Duration, readonly "slack_api_url"?: SecretURL, readonly "slack_api_url_file"?: string, readonly "smtp_auth_identity"?: string, readonly "smtp_auth_password"?: Secret, readonly "smtp_auth_password_file"?: string, readonly "smtp_auth_secret"?: Secret, readonly "smtp_auth_username"?: string, readonly "smtp_from"?: string, readonly "smtp_hello"?: string, readonly "smtp_require_tls"?: boolean, readonly "smtp_smarthost"?: HostPort, readonly "smtp_tls_config"?: TLSConfig, readonly "telegram_api_url"?: URL, readonly "victorops_api_key"?: Secret, readonly "victorops_api_key_file"?: string, readonly "victorops_api_url"?: URL, readonly "webex_api_url"?: URL, readonly "wechat_api_corp_id"?: string, readonly "wechat_api_secret"?: Secret, readonly "wechat_api_url"?: URL }
-export const GlobalConfig = Schema.Struct({ "http_config": Schema.optionalKey(HTTPClientConfig), "jira_api_url": Schema.optionalKey(URL), "opsgenie_api_key": Schema.optionalKey(Secret), "opsgenie_api_key_file": Schema.optionalKey(Schema.String), "opsgenie_api_url": Schema.optionalKey(URL), "pagerduty_url": Schema.optionalKey(URL), "resolve_timeout": Schema.optionalKey(Duration), "slack_api_url": Schema.optionalKey(SecretURL), "slack_api_url_file": Schema.optionalKey(Schema.String), "smtp_auth_identity": Schema.optionalKey(Schema.String), "smtp_auth_password": Schema.optionalKey(Secret), "smtp_auth_password_file": Schema.optionalKey(Schema.String), "smtp_auth_secret": Schema.optionalKey(Secret), "smtp_auth_username": Schema.optionalKey(Schema.String), "smtp_from": Schema.optionalKey(Schema.String), "smtp_hello": Schema.optionalKey(Schema.String), "smtp_require_tls": Schema.optionalKey(Schema.Boolean), "smtp_smarthost": Schema.optionalKey(HostPort), "smtp_tls_config": Schema.optionalKey(TLSConfig), "telegram_api_url": Schema.optionalKey(URL), "victorops_api_key": Schema.optionalKey(Secret), "victorops_api_key_file": Schema.optionalKey(Schema.String), "victorops_api_url": Schema.optionalKey(URL), "webex_api_url": Schema.optionalKey(URL), "wechat_api_corp_id": Schema.optionalKey(Schema.String), "wechat_api_secret": Schema.optionalKey(Secret), "wechat_api_url": Schema.optionalKey(URL) }).annotate({ "description": "GlobalConfig defines configuration parameters that are valid globally\nunless overwritten." })
-export type JiraConfig = { readonly "api_url"?: URL, readonly "custom_fields"?: { readonly [x: string]: Schema.Json }, readonly "description"?: string, readonly "http_config"?: HTTPClientConfig, readonly "issue_type"?: string, readonly "labels"?: ReadonlyArray<string>, readonly "priority"?: string, readonly "project"?: string, readonly "reopen_duration"?: Duration, readonly "reopen_transition"?: string, readonly "resolve_transition"?: string, readonly "send_resolved"?: boolean, readonly "summary"?: string, readonly "wont_fix_resolution"?: string }
-export const JiraConfig = Schema.Struct({ "api_url": Schema.optionalKey(URL), "custom_fields": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json)), "description": Schema.optionalKey(Schema.String), "http_config": Schema.optionalKey(HTTPClientConfig), "issue_type": Schema.optionalKey(Schema.String), "labels": Schema.optionalKey(Schema.Array(Schema.String)), "priority": Schema.optionalKey(Schema.String), "project": Schema.optionalKey(Schema.String), "reopen_duration": Schema.optionalKey(Duration), "reopen_transition": Schema.optionalKey(Schema.String), "resolve_transition": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "summary": Schema.optionalKey(Schema.String), "wont_fix_resolution": Schema.optionalKey(Schema.String) })
-export type MSTeamsConfig = { readonly "http_config"?: HTTPClientConfig, readonly "send_resolved"?: boolean, readonly "summary"?: string, readonly "text"?: string, readonly "title"?: string, readonly "webhook_url"?: SecretURL, readonly "webhook_url_file"?: string }
-export const MSTeamsConfig = Schema.Struct({ "http_config": Schema.optionalKey(HTTPClientConfig), "send_resolved": Schema.optionalKey(Schema.Boolean), "summary": Schema.optionalKey(Schema.String), "text": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "webhook_url": Schema.optionalKey(SecretURL), "webhook_url_file": Schema.optionalKey(Schema.String) })
-export type MSTeamsV2Config = { readonly "http_config"?: HTTPClientConfig, readonly "send_resolved"?: boolean, readonly "text"?: string, readonly "title"?: string, readonly "webhook_url"?: SecretURL, readonly "webhook_url_file"?: string }
-export const MSTeamsV2Config = Schema.Struct({ "http_config": Schema.optionalKey(HTTPClientConfig), "send_resolved": Schema.optionalKey(Schema.Boolean), "text": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "webhook_url": Schema.optionalKey(SecretURL), "webhook_url_file": Schema.optionalKey(Schema.String) })
-export type OpsGenieConfig = { readonly "actions"?: string, readonly "api_key"?: Secret, readonly "api_key_file"?: string, readonly "api_url"?: URL, readonly "description"?: string, readonly "details"?: { readonly [x: string]: string }, readonly "entity"?: string, readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "note"?: string, readonly "priority"?: string, readonly "responders"?: ReadonlyArray<OpsGenieConfigResponder>, readonly "send_resolved"?: boolean, readonly "source"?: string, readonly "tags"?: string, readonly "update_alerts"?: boolean }
-export const OpsGenieConfig = Schema.Struct({ "actions": Schema.optionalKey(Schema.String), "api_key": Schema.optionalKey(Secret), "api_key_file": Schema.optionalKey(Schema.String), "api_url": Schema.optionalKey(URL), "description": Schema.optionalKey(Schema.String), "details": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "entity": Schema.optionalKey(Schema.String), "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "note": Schema.optionalKey(Schema.String), "priority": Schema.optionalKey(Schema.String), "responders": Schema.optionalKey(Schema.Array(OpsGenieConfigResponder)), "send_resolved": Schema.optionalKey(Schema.Boolean), "source": Schema.optionalKey(Schema.String), "tags": Schema.optionalKey(Schema.String), "update_alerts": Schema.optionalKey(Schema.Boolean) }).annotate({ "title": "OpsGenieConfig configures notifications via OpsGenie." })
-export type PagerdutyConfig = { readonly "class"?: string, readonly "client"?: string, readonly "client_url"?: string, readonly "component"?: string, readonly "description"?: string, readonly "details"?: { readonly [x: string]: string }, readonly "group"?: string, readonly "http_config"?: HTTPClientConfig, readonly "images"?: ReadonlyArray<PagerdutyImage>, readonly "links"?: ReadonlyArray<PagerdutyLink>, readonly "routing_key"?: Secret, readonly "routing_key_file"?: string, readonly "send_resolved"?: boolean, readonly "service_key"?: Secret, readonly "service_key_file"?: string, readonly "severity"?: string, readonly "source"?: string, readonly "url"?: URL }
-export const PagerdutyConfig = Schema.Struct({ "class": Schema.optionalKey(Schema.String), "client": Schema.optionalKey(Schema.String), "client_url": Schema.optionalKey(Schema.String), "component": Schema.optionalKey(Schema.String), "description": Schema.optionalKey(Schema.String), "details": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "group": Schema.optionalKey(Schema.String), "http_config": Schema.optionalKey(HTTPClientConfig), "images": Schema.optionalKey(Schema.Array(PagerdutyImage)), "links": Schema.optionalKey(Schema.Array(PagerdutyLink)), "routing_key": Schema.optionalKey(Secret), "routing_key_file": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "service_key": Schema.optionalKey(Secret), "service_key_file": Schema.optionalKey(Schema.String), "severity": Schema.optionalKey(Schema.String), "source": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(URL) }).annotate({ "title": "PagerdutyConfig configures notifications via PagerDuty." })
-export type PushoverConfig = { readonly "device"?: string, readonly "expire"?: string, readonly "html"?: boolean, readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "priority"?: string, readonly "retry"?: string, readonly "send_resolved"?: boolean, readonly "sound"?: string, readonly "title"?: string, readonly "token"?: Secret, readonly "token_file"?: string, readonly "ttl"?: string, readonly "url"?: string, readonly "url_title"?: string, readonly "user_key"?: Secret, readonly "user_key_file"?: string }
-export const PushoverConfig = Schema.Struct({ "device": Schema.optionalKey(Schema.String), "expire": Schema.optionalKey(Schema.String), "html": Schema.optionalKey(Schema.Boolean), "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "priority": Schema.optionalKey(Schema.String), "retry": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "sound": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "token": Schema.optionalKey(Secret), "token_file": Schema.optionalKey(Schema.String), "ttl": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "url_title": Schema.optionalKey(Schema.String), "user_key": Schema.optionalKey(Secret), "user_key_file": Schema.optionalKey(Schema.String) })
-export type SNSConfig = { readonly "api_url"?: string, readonly "attributes"?: { readonly [x: string]: string }, readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "phone_number"?: string, readonly "send_resolved"?: boolean, readonly "sigv4"?: SigV4Config, readonly "subject"?: string, readonly "target_arn"?: string, readonly "topic_arn"?: string }
-export const SNSConfig = Schema.Struct({ "api_url": Schema.optionalKey(Schema.String), "attributes": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "phone_number": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "sigv4": Schema.optionalKey(SigV4Config), "subject": Schema.optionalKey(Schema.String), "target_arn": Schema.optionalKey(Schema.String), "topic_arn": Schema.optionalKey(Schema.String) })
-export type SlackConfig = { readonly "actions"?: ReadonlyArray<SlackAction>, readonly "api_url"?: SecretURL, readonly "api_url_file"?: string, readonly "callback_id"?: string, readonly "channel"?: string, readonly "color"?: string, readonly "fallback"?: string, readonly "fields"?: ReadonlyArray<SlackField>, readonly "footer"?: string, readonly "http_config"?: HTTPClientConfig, readonly "icon_emoji"?: string, readonly "icon_url"?: string, readonly "image_url"?: string, readonly "link_names"?: boolean, readonly "mrkdwn_in"?: ReadonlyArray<string>, readonly "pretext"?: string, readonly "send_resolved"?: boolean, readonly "short_fields"?: boolean, readonly "text"?: string, readonly "thumb_url"?: string, readonly "title"?: string, readonly "title_link"?: string, readonly "username"?: string }
-export const SlackConfig = Schema.Struct({ "actions": Schema.optionalKey(Schema.Array(SlackAction)), "api_url": Schema.optionalKey(SecretURL), "api_url_file": Schema.optionalKey(Schema.String), "callback_id": Schema.optionalKey(Schema.String), "channel": Schema.optionalKey(Schema.String.annotate({ "description": "Slack channel override, (like #other-channel or @username)." })), "color": Schema.optionalKey(Schema.String), "fallback": Schema.optionalKey(Schema.String), "fields": Schema.optionalKey(Schema.Array(SlackField)), "footer": Schema.optionalKey(Schema.String), "http_config": Schema.optionalKey(HTTPClientConfig), "icon_emoji": Schema.optionalKey(Schema.String), "icon_url": Schema.optionalKey(Schema.String), "image_url": Schema.optionalKey(Schema.String), "link_names": Schema.optionalKey(Schema.Boolean), "mrkdwn_in": Schema.optionalKey(Schema.Array(Schema.String)), "pretext": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "short_fields": Schema.optionalKey(Schema.Boolean), "text": Schema.optionalKey(Schema.String), "thumb_url": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "title_link": Schema.optionalKey(Schema.String), "username": Schema.optionalKey(Schema.String) }).annotate({ "title": "SlackConfig configures notifications via Slack." })
-export type TelegramConfig = { readonly "api_url"?: URL, readonly "chat"?: number, readonly "disable_notifications"?: boolean, readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "parse_mode"?: string, readonly "send_resolved"?: boolean, readonly "token"?: Secret, readonly "token_file"?: string }
-export const TelegramConfig = Schema.Struct({ "api_url": Schema.optionalKey(URL), "chat": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "disable_notifications": Schema.optionalKey(Schema.Boolean), "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "parse_mode": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "token": Schema.optionalKey(Secret), "token_file": Schema.optionalKey(Schema.String) }).annotate({ "title": "TelegramConfig configures notifications via Telegram." })
-export type VictorOpsConfig = { readonly "api_key"?: Secret, readonly "api_key_file"?: string, readonly "api_url"?: URL, readonly "custom_fields"?: { readonly [x: string]: string }, readonly "entity_display_name"?: string, readonly "http_config"?: HTTPClientConfig, readonly "message_type"?: string, readonly "monitoring_tool"?: string, readonly "routing_key"?: string, readonly "send_resolved"?: boolean, readonly "state_message"?: string }
-export const VictorOpsConfig = Schema.Struct({ "api_key": Schema.optionalKey(Secret), "api_key_file": Schema.optionalKey(Schema.String), "api_url": Schema.optionalKey(URL), "custom_fields": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "entity_display_name": Schema.optionalKey(Schema.String), "http_config": Schema.optionalKey(HTTPClientConfig), "message_type": Schema.optionalKey(Schema.String), "monitoring_tool": Schema.optionalKey(Schema.String), "routing_key": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "state_message": Schema.optionalKey(Schema.String) }).annotate({ "title": "VictorOpsConfig configures notifications via VictorOps." })
-export type WebexConfig = { readonly "api_url"?: URL, readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "room_id"?: string, readonly "send_resolved"?: boolean }
-export const WebexConfig = Schema.Struct({ "api_url": Schema.optionalKey(URL), "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "room_id": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean) }).annotate({ "title": "WebexConfig configures notifications via Webex." })
-export type WebhookConfig = { readonly "http_config"?: HTTPClientConfig, readonly "max_alerts"?: number, readonly "send_resolved"?: boolean, readonly "timeout"?: Duration, readonly "url"?: SecretURL, readonly "url_file"?: string }
-export const WebhookConfig = Schema.Struct({ "http_config": Schema.optionalKey(HTTPClientConfig), "max_alerts": Schema.optionalKey(Schema.Number.annotate({ "description": "MaxAlerts is the maximum number of alerts to be sent per webhook message.\nAlerts exceeding this threshold will be truncated. Setting this to 0\nallows an unlimited number of alerts.", "format": "uint64" }).check(Schema.isInt())), "send_resolved": Schema.optionalKey(Schema.Boolean), "timeout": Schema.optionalKey(Duration), "url": Schema.optionalKey(SecretURL), "url_file": Schema.optionalKey(Schema.String) }).annotate({ "title": "WebhookConfig configures notifications via a generic webhook." })
-export type WechatConfig = { readonly "agent_id"?: string, readonly "api_secret"?: Secret, readonly "api_url"?: URL, readonly "corp_id"?: string, readonly "http_config"?: HTTPClientConfig, readonly "message"?: string, readonly "message_type"?: string, readonly "send_resolved"?: boolean, readonly "to_party"?: string, readonly "to_tag"?: string, readonly "to_user"?: string }
-export const WechatConfig = Schema.Struct({ "agent_id": Schema.optionalKey(Schema.String), "api_secret": Schema.optionalKey(Secret), "api_url": Schema.optionalKey(URL), "corp_id": Schema.optionalKey(Schema.String), "http_config": Schema.optionalKey(HTTPClientConfig), "message": Schema.optionalKey(Schema.String), "message_type": Schema.optionalKey(Schema.String), "send_resolved": Schema.optionalKey(Schema.Boolean), "to_party": Schema.optionalKey(Schema.String), "to_tag": Schema.optionalKey(Schema.String), "to_user": Schema.optionalKey(Schema.String) }).annotate({ "title": "WechatConfig configures notifications via Wechat." })
-export type GettableRuleGroupConfig = { readonly "align_evaluation_time_on_interval"?: boolean, readonly "evaluation_delay"?: string, readonly "interval"?: Duration, readonly "labels"?: { readonly [x: string]: string }, readonly "limit"?: number, readonly "name"?: string, readonly "query_offset"?: string, readonly "remote_write"?: ReadonlyArray<RemoteWriteConfig>, readonly "rules"?: ReadonlyArray<GettableExtendedRuleNode>, readonly "source_tenants"?: ReadonlyArray<string> }
-export const GettableRuleGroupConfig = Schema.Struct({ "align_evaluation_time_on_interval": Schema.optionalKey(Schema.Boolean), "evaluation_delay": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Duration), "labels": Schema.optionalKey(Schema.Record(Schema.String, Schema.String)), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String), "query_offset": Schema.optionalKey(Schema.String), "remote_write": Schema.optionalKey(Schema.Array(RemoteWriteConfig)), "rules": Schema.optionalKey(Schema.Array(GettableExtendedRuleNode)), "source_tenants": Schema.optionalKey(Schema.Array(Schema.String)) })
-export type RuleDiscovery = { readonly "groupNextToken"?: string, readonly "groups": ReadonlyArray<RuleGroup>, readonly "totals"?: { readonly [x: string]: number } }
-export const RuleDiscovery = Schema.Struct({ "groupNextToken": Schema.optionalKey(Schema.String), "groups": Schema.Array(RuleGroup), "totals": Schema.optionalKey(Schema.Record(Schema.String, Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))) })
-export type Field = { readonly "config"?: FieldConfig, readonly "labels"?: FrameLabels, readonly "name"?: string }
-export const Field = Schema.Struct({ "config": Schema.optionalKey(FieldConfig), "labels": Schema.optionalKey(FrameLabels), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name is default identifier of the field. The name does not have to be unique, but the combination\nof name and Labels should be unique for proper behavior in all situations." })) }).annotate({ "title": "Field represents a typed column of data within a Frame.", "description": "A Field is essentially a slice of various types with extra properties and methods.\nSee NewField() for supported types.\n\nThe slice data in the Field is a not exported, so methods on the Field are used to to manipulate its data." })
-export type FrameMeta = { readonly "channel"?: string, readonly "custom"?: Schema.Json, readonly "dataTopic"?: DataTopic, readonly "executedQueryString"?: string, readonly "notices"?: ReadonlyArray<Notice>, readonly "path"?: string, readonly "pathSeparator"?: string, readonly "preferredVisualisationPluginId"?: string, readonly "preferredVisualisationType"?: VisType, readonly "stats"?: ReadonlyArray<QueryStat>, readonly "type"?: FrameType, readonly "typeVersion"?: FrameTypeVersion, readonly "uniqueRowIdFields"?: ReadonlyArray<number> }
-export const FrameMeta = Schema.Struct({ "channel": Schema.optionalKey(Schema.String.annotate({ "description": "Channel is the path to a stream in grafana live that has real-time updates for this data." })), "custom": Schema.optionalKey(Schema.Json.annotate({ "description": "Custom datasource specific values." })), "dataTopic": Schema.optionalKey(DataTopic), "executedQueryString": Schema.optionalKey(Schema.String.annotate({ "description": "ExecutedQueryString is the raw query sent to the underlying system. All macros and templating\nhave been applied.  When metadata contains this value, it will be shown in the query inspector." })), "notices": Schema.optionalKey(Schema.Array(Notice).annotate({ "description": "Notices provide additional information about the data in the Frame that\nGrafana can display to the user in the user interface." })), "path": Schema.optionalKey(Schema.String.annotate({ "description": "Path is a browsable path on the datasource." })), "pathSeparator": Schema.optionalKey(Schema.String.annotate({ "description": "PathSeparator defines the separator pattern to decode a hierarchy. The default separator is '/'." })), "preferredVisualisationPluginId": Schema.optionalKey(Schema.String.annotate({ "description": "PreferredVisualizationPluginId sets the panel plugin id to use to render the data when using Explore. If\nthe plugin cannot be found will fall back to PreferredVisualization." })), "preferredVisualisationType": Schema.optionalKey(VisType), "stats": Schema.optionalKey(Schema.Array(QueryStat).annotate({ "description": "Stats is an array of query result statistics." })), "type": Schema.optionalKey(FrameType), "typeVersion": Schema.optionalKey(FrameTypeVersion), "uniqueRowIdFields": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())).annotate({ "description": "Array of field indices which values create a unique id for each row. Ideally this should be globally unique ID\nbut that isn't guarantied. Should help with keeping track and deduplicating rows in visualizations, especially\nwith streaming data with frequent updates." })) }).annotate({ "title": "FrameMeta matches:", "description": "https://github.com/grafana/grafana/blob/master/packages/grafana-data/src/types/data.ts#L11\nNOTE -- in javascript this can accept any `[key: string]: any;` however\nthis interface only exposes the values we want to be exposed" })
-export type Config = { readonly "global"?: GlobalConfig, readonly "inhibit_rules"?: ReadonlyArray<InhibitRule>, readonly "mute_time_intervals"?: ReadonlyArray<MuteTimeInterval>, readonly "route"?: Route, readonly "templates"?: ReadonlyArray<string>, readonly "time_intervals"?: ReadonlyArray<TimeInterval> }
-export const Config = Schema.Struct({ "global": Schema.optionalKey(GlobalConfig), "inhibit_rules": Schema.optionalKey(Schema.Array(InhibitRule)), "mute_time_intervals": Schema.optionalKey(Schema.Array(MuteTimeInterval).annotate({ "description": "MuteTimeIntervals is deprecated and will be removed before Alertmanager 1.0." })), "route": Schema.optionalKey(Route), "templates": Schema.optionalKey(Schema.Array(Schema.String)), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) }).annotate({ "title": "Config is the top-level configuration for Alertmanager's config files." })
-export type GettableApiReceiver = { readonly "discord_configs"?: ReadonlyArray<DiscordConfig>, readonly "email_configs"?: ReadonlyArray<EmailConfig>, readonly "grafana_managed_receiver_configs"?: ReadonlyArray<GettableGrafanaReceiver>, readonly "jira_configs"?: ReadonlyArray<JiraConfig>, readonly "msteams_configs"?: ReadonlyArray<MSTeamsConfig>, readonly "msteamsv2_configs"?: ReadonlyArray<MSTeamsV2Config>, readonly "name"?: string, readonly "opsgenie_configs"?: ReadonlyArray<OpsGenieConfig>, readonly "pagerduty_configs"?: ReadonlyArray<PagerdutyConfig>, readonly "pushover_configs"?: ReadonlyArray<PushoverConfig>, readonly "slack_configs"?: ReadonlyArray<SlackConfig>, readonly "sns_configs"?: ReadonlyArray<SNSConfig>, readonly "telegram_configs"?: ReadonlyArray<TelegramConfig>, readonly "victorops_configs"?: ReadonlyArray<VictorOpsConfig>, readonly "webex_configs"?: ReadonlyArray<WebexConfig>, readonly "webhook_configs"?: ReadonlyArray<WebhookConfig>, readonly "wechat_configs"?: ReadonlyArray<WechatConfig> }
-export const GettableApiReceiver = Schema.Struct({ "discord_configs": Schema.optionalKey(Schema.Array(DiscordConfig)), "email_configs": Schema.optionalKey(Schema.Array(EmailConfig)), "grafana_managed_receiver_configs": Schema.optionalKey(Schema.Array(GettableGrafanaReceiver)), "jira_configs": Schema.optionalKey(Schema.Array(JiraConfig)), "msteams_configs": Schema.optionalKey(Schema.Array(MSTeamsConfig)), "msteamsv2_configs": Schema.optionalKey(Schema.Array(MSTeamsV2Config)), "name": Schema.optionalKey(Schema.String.annotate({ "description": "A unique identifier for this receiver." })), "opsgenie_configs": Schema.optionalKey(Schema.Array(OpsGenieConfig)), "pagerduty_configs": Schema.optionalKey(Schema.Array(PagerdutyConfig)), "pushover_configs": Schema.optionalKey(Schema.Array(PushoverConfig)), "slack_configs": Schema.optionalKey(Schema.Array(SlackConfig)), "sns_configs": Schema.optionalKey(Schema.Array(SNSConfig)), "telegram_configs": Schema.optionalKey(Schema.Array(TelegramConfig)), "victorops_configs": Schema.optionalKey(Schema.Array(VictorOpsConfig)), "webex_configs": Schema.optionalKey(Schema.Array(WebexConfig)), "webhook_configs": Schema.optionalKey(Schema.Array(WebhookConfig)), "wechat_configs": Schema.optionalKey(Schema.Array(WechatConfig)) })
-export type PostableApiReceiver = { readonly "discord_configs"?: ReadonlyArray<DiscordConfig>, readonly "email_configs"?: ReadonlyArray<EmailConfig>, readonly "grafana_managed_receiver_configs"?: ReadonlyArray<PostableGrafanaReceiver>, readonly "jira_configs"?: ReadonlyArray<JiraConfig>, readonly "msteams_configs"?: ReadonlyArray<MSTeamsConfig>, readonly "msteamsv2_configs"?: ReadonlyArray<MSTeamsV2Config>, readonly "name"?: string, readonly "opsgenie_configs"?: ReadonlyArray<OpsGenieConfig>, readonly "pagerduty_configs"?: ReadonlyArray<PagerdutyConfig>, readonly "pushover_configs"?: ReadonlyArray<PushoverConfig>, readonly "slack_configs"?: ReadonlyArray<SlackConfig>, readonly "sns_configs"?: ReadonlyArray<SNSConfig>, readonly "telegram_configs"?: ReadonlyArray<TelegramConfig>, readonly "victorops_configs"?: ReadonlyArray<VictorOpsConfig>, readonly "webex_configs"?: ReadonlyArray<WebexConfig>, readonly "webhook_configs"?: ReadonlyArray<WebhookConfig>, readonly "wechat_configs"?: ReadonlyArray<WechatConfig> }
-export const PostableApiReceiver = Schema.Struct({ "discord_configs": Schema.optionalKey(Schema.Array(DiscordConfig)), "email_configs": Schema.optionalKey(Schema.Array(EmailConfig)), "grafana_managed_receiver_configs": Schema.optionalKey(Schema.Array(PostableGrafanaReceiver)), "jira_configs": Schema.optionalKey(Schema.Array(JiraConfig)), "msteams_configs": Schema.optionalKey(Schema.Array(MSTeamsConfig)), "msteamsv2_configs": Schema.optionalKey(Schema.Array(MSTeamsV2Config)), "name": Schema.optionalKey(Schema.String.annotate({ "description": "A unique identifier for this receiver." })), "opsgenie_configs": Schema.optionalKey(Schema.Array(OpsGenieConfig)), "pagerduty_configs": Schema.optionalKey(Schema.Array(PagerdutyConfig)), "pushover_configs": Schema.optionalKey(Schema.Array(PushoverConfig)), "slack_configs": Schema.optionalKey(Schema.Array(SlackConfig)), "sns_configs": Schema.optionalKey(Schema.Array(SNSConfig)), "telegram_configs": Schema.optionalKey(Schema.Array(TelegramConfig)), "victorops_configs": Schema.optionalKey(Schema.Array(VictorOpsConfig)), "webex_configs": Schema.optionalKey(Schema.Array(WebexConfig)), "webhook_configs": Schema.optionalKey(Schema.Array(WebhookConfig)), "wechat_configs": Schema.optionalKey(Schema.Array(WechatConfig)) }).annotate({ "description": "nolint:revive" })
-export type Frame = { readonly "Fields"?: ReadonlyArray<Field>, readonly "Meta"?: FrameMeta, readonly "Name"?: string, readonly "RefID"?: string }
-export const Frame = Schema.Struct({ "Fields": Schema.optionalKey(Schema.Array(Field).annotate({ "description": "Fields are the columns of a frame.\nAll Fields must be of the same the length when marshalling the Frame for transmission.\nThere should be no `nil` entries in the Fields slice (making them pointers was a mistake)." })), "Meta": Schema.optionalKey(FrameMeta), "Name": Schema.optionalKey(Schema.String.annotate({ "description": "Name is used in some Grafana visualizations." })), "RefID": Schema.optionalKey(Schema.String.annotate({ "description": "RefID is a property that can be set to match a Frame to its originating query." })) }).annotate({ "title": "Frame is a columnar data structure where each column is a Field.", "description": "Each Field is well typed by its FieldType and supports optional Labels.\n\nA Frame is a general data container for Grafana. A Frame can be table data\nor time series data depending on its content and field types." })
-export type GettableApiAlertingConfig = { readonly "global"?: GlobalConfig, readonly "inhibit_rules"?: ReadonlyArray<InhibitRule>, readonly "muteTimeProvenances"?: { readonly [x: string]: Provenance }, readonly "mute_time_intervals"?: ReadonlyArray<MuteTimeInterval>, readonly "receivers"?: ReadonlyArray<GettableApiReceiver>, readonly "route"?: Route, readonly "templates"?: ReadonlyArray<string>, readonly "time_intervals"?: ReadonlyArray<TimeInterval> }
-export const GettableApiAlertingConfig = Schema.Struct({ "global": Schema.optionalKey(GlobalConfig), "inhibit_rules": Schema.optionalKey(Schema.Array(InhibitRule)), "muteTimeProvenances": Schema.optionalKey(Schema.Record(Schema.String, Provenance)), "mute_time_intervals": Schema.optionalKey(Schema.Array(MuteTimeInterval).annotate({ "description": "MuteTimeIntervals is deprecated and will be removed before Alertmanager 1.0." })), "receivers": Schema.optionalKey(Schema.Array(GettableApiReceiver).annotate({ "description": "Override with our superset receiver type" })), "route": Schema.optionalKey(Route), "templates": Schema.optionalKey(Schema.Array(Schema.String)), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) })
-export type PostableApiAlertingConfig = { readonly "global"?: GlobalConfig, readonly "inhibit_rules"?: ReadonlyArray<InhibitRule>, readonly "mute_time_intervals"?: ReadonlyArray<MuteTimeInterval>, readonly "receivers"?: ReadonlyArray<PostableApiReceiver>, readonly "route"?: Route, readonly "templates"?: ReadonlyArray<string>, readonly "time_intervals"?: ReadonlyArray<TimeInterval> }
-export const PostableApiAlertingConfig = Schema.Struct({ "global": Schema.optionalKey(GlobalConfig), "inhibit_rules": Schema.optionalKey(Schema.Array(InhibitRule)), "mute_time_intervals": Schema.optionalKey(Schema.Array(MuteTimeInterval).annotate({ "description": "MuteTimeIntervals is deprecated and will be removed before Alertmanager 1.0." })), "receivers": Schema.optionalKey(Schema.Array(PostableApiReceiver).annotate({ "description": "Override with our superset receiver type" })), "route": Schema.optionalKey(Route), "templates": Schema.optionalKey(Schema.Array(Schema.String)), "time_intervals": Schema.optionalKey(Schema.Array(TimeInterval)) }).annotate({ "description": "nolint:revive" })
+export const ProvisionedAlertRules = Schema.Array(ProvisionedAlertRule).annotate({ "identifier": "ProvisionedAlertRules" })
+export type AlertRuleGroup = { readonly "folderUid"?: string, readonly "interval"?: number, readonly "rules"?: ReadonlyArray<ProvisionedAlertRule>, readonly "title"?: string } & { readonly [x: string]: Schema.Json }
+export const AlertRuleGroup = Schema.StructWithRest(Schema.Struct({ "folderUid": Schema.optionalKey(Schema.String), "interval": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "rules": Schema.optionalKey(Schema.Array(ProvisionedAlertRule)), "title": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "AlertRuleGroup" })
+export type FieldConfig = { readonly "color"?: { readonly [x: string]: Schema.Json }, readonly "custom"?: { readonly [x: string]: Schema.Json }, readonly "decimals"?: number, readonly "description"?: string, readonly "displayName"?: string, readonly "displayNameFromDS"?: string, readonly "filterable"?: boolean, readonly "interval"?: number, readonly "links"?: ReadonlyArray<DataLink>, readonly "mappings"?: ValueMappings, readonly "max"?: ConfFloat64, readonly "min"?: ConfFloat64, readonly "noValue"?: string, readonly "path"?: string, readonly "thresholds"?: ThresholdsConfig, readonly "type"?: FieldTypeConfig, readonly "unit"?: string, readonly "writeable"?: boolean } & { readonly [x: string]: Schema.Json }
+export const FieldConfig = Schema.StructWithRest(Schema.Struct({ "color": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "Map values to a display color\nNOTE: this interface is under development in the frontend... so simple map for now" })), "custom": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "Panel Specific Values" })), "decimals": Schema.optionalKey(Schema.Number.annotate({ "format": "uint16" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "description": Schema.optionalKey(Schema.String.annotate({ "description": "Description is human readable field metadata" })), "displayName": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayName overrides Grafana default naming, should not be used from a data source" })), "displayNameFromDS": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayNameFromDS overrides Grafana default naming strategy." })), "filterable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Filterable indicates if the Field's data can be filtered by additional calls." })), "interval": Schema.optionalKey(Schema.Number.annotate({ "description": "Interval indicates the expected regular step between values in the series.\nWhen an interval exists, consumers can identify \"missing\" values when the expected value is not present.\nThe grafana timeseries visualization will render disconnected values when missing values are found it the time field.\nThe interval uses the same units as the values.  For time.Time, this is defined in milliseconds.", "format": "double" }).check(Schema.isFinite().annotate({ "expected": "a finite number" }))), "links": Schema.optionalKey(Schema.Array(DataLink).annotate({ "description": "The behavior when clicking on a result" })), "mappings": Schema.optionalKey(ValueMappings), "max": Schema.optionalKey(ConfFloat64), "min": Schema.optionalKey(ConfFloat64), "noValue": Schema.optionalKey(Schema.String.annotate({ "description": "Alternative to empty string" })), "path": Schema.optionalKey(Schema.String.annotate({ "description": "Path is an explicit path to the field in the datasource. When the frame meta includes a path,\nthis will default to `${frame.meta.path}/${field.name}\n\nWhen defined, this value can be used as an identifier within the datasource scope, and\nmay be used as an identifier to update values in a subsequent request" })), "thresholds": Schema.optionalKey(ThresholdsConfig), "type": Schema.optionalKey(FieldTypeConfig), "unit": Schema.optionalKey(Schema.String.annotate({ "description": "Numeric Options" })), "writeable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Writeable indicates that the datasource knows how to update this value" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "FieldConfig represents the display properties for a Field.", "identifier": "FieldConfig" })
+export type QueryStat = { readonly "color"?: { readonly [x: string]: Schema.Json }, readonly "custom"?: { readonly [x: string]: Schema.Json }, readonly "decimals"?: number, readonly "description"?: string, readonly "displayName"?: string, readonly "displayNameFromDS"?: string, readonly "filterable"?: boolean, readonly "interval"?: number, readonly "links"?: ReadonlyArray<DataLink>, readonly "mappings"?: ValueMappings, readonly "max"?: ConfFloat64, readonly "min"?: ConfFloat64, readonly "noValue"?: string, readonly "path"?: string, readonly "thresholds"?: ThresholdsConfig, readonly "type"?: FieldTypeConfig, readonly "unit"?: string, readonly "value"?: number, readonly "writeable"?: boolean } & { readonly [x: string]: Schema.Json }
+export const QueryStat = Schema.StructWithRest(Schema.Struct({ "color": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "Map values to a display color\nNOTE: this interface is under development in the frontend... so simple map for now" })), "custom": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" })).annotate({ "description": "Panel Specific Values" })), "decimals": Schema.optionalKey(Schema.Number.annotate({ "format": "uint16" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "description": Schema.optionalKey(Schema.String.annotate({ "description": "Description is human readable field metadata" })), "displayName": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayName overrides Grafana default naming, should not be used from a data source" })), "displayNameFromDS": Schema.optionalKey(Schema.String.annotate({ "description": "DisplayNameFromDS overrides Grafana default naming strategy." })), "filterable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Filterable indicates if the Field's data can be filtered by additional calls." })), "interval": Schema.optionalKey(Schema.Number.annotate({ "description": "Interval indicates the expected regular step between values in the series.\nWhen an interval exists, consumers can identify \"missing\" values when the expected value is not present.\nThe grafana timeseries visualization will render disconnected values when missing values are found it the time field.\nThe interval uses the same units as the values.  For time.Time, this is defined in milliseconds.", "format": "double" }).check(Schema.isFinite().annotate({ "expected": "a finite number" }))), "links": Schema.optionalKey(Schema.Array(DataLink).annotate({ "description": "The behavior when clicking on a result" })), "mappings": Schema.optionalKey(ValueMappings), "max": Schema.optionalKey(ConfFloat64), "min": Schema.optionalKey(ConfFloat64), "noValue": Schema.optionalKey(Schema.String.annotate({ "description": "Alternative to empty string" })), "path": Schema.optionalKey(Schema.String.annotate({ "description": "Path is an explicit path to the field in the datasource. When the frame meta includes a path,\nthis will default to `${frame.meta.path}/${field.name}\n\nWhen defined, this value can be used as an identifier within the datasource scope, and\nmay be used as an identifier to update values in a subsequent request" })), "thresholds": Schema.optionalKey(ThresholdsConfig), "type": Schema.optionalKey(FieldTypeConfig), "unit": Schema.optionalKey(Schema.String.annotate({ "description": "Numeric Options" })), "value": Schema.optionalKey(Schema.Number.annotate({ "format": "double" }).check(Schema.isFinite().annotate({ "expected": "a finite number" }))), "writeable": Schema.optionalKey(Schema.Boolean.annotate({ "description": "Writeable indicates that the datasource knows how to update this value" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "QueryStat is used for storing arbitrary statistics metadata related to a query and its result, e.g. total request time, data processing time.", "description": "The embedded FieldConfig's display name must be set.\nIt corresponds to the QueryResultMetaStat on the frontend (https://github.com/grafana/grafana/blob/master/packages/grafana-data/src/types/data.ts#L53).", "identifier": "QueryStat" })
+export type LibraryElementSearchResponse = { readonly "result"?: LibraryElementSearchResult } & { readonly [x: string]: Schema.Json }
+export const LibraryElementSearchResponse = Schema.StructWithRest(Schema.Struct({ "result": Schema.optionalKey(LibraryElementSearchResult) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "LibraryElementSearchResponse is a response struct for LibraryElementSearchResult.", "identifier": "LibraryElementSearchResponse" })
+export type JSONWebKey = { readonly "Algorithm"?: string, readonly "CertificateThumbprintSHA1"?: ReadonlyArray<number>, readonly "CertificateThumbprintSHA256"?: ReadonlyArray<number>, readonly "Certificates"?: ReadonlyArray<Certificate>, readonly "CertificatesURL"?: URL, readonly "Key"?: Schema.Json, readonly "KeyID"?: string, readonly "Use"?: string } & { readonly [x: string]: Schema.Json }
+export const JSONWebKey = Schema.StructWithRest(Schema.Struct({ "Algorithm": Schema.optionalKey(Schema.String.annotate({ "description": "Key algorithm, parsed from `alg` header." })), "CertificateThumbprintSHA1": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "description": "X.509 certificate thumbprint (SHA-1), parsed from `x5t` header." })), "CertificateThumbprintSHA256": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "description": "X.509 certificate thumbprint (SHA-256), parsed from `x5t#S256` header." })), "Certificates": Schema.optionalKey(Schema.Array(Certificate).annotate({ "description": "X.509 certificate chain, parsed from `x5c` header." })), "CertificatesURL": Schema.optionalKey(URL), "Key": Schema.optionalKey(Schema.Json.annotate({ "expected": "JSON value", "description": "Key is the Go in-memory representation of this key. It must have one\nof these types:\ned25519.PublicKey\ned25519.PrivateKey\necdsa.PublicKey\necdsa.PrivateKey\nrsa.PublicKey\nrsa.PrivateKey\n[]byte (a symmetric key)\n\nWhen marshaling this JSONWebKey into JSON, the \"kty\" header parameter\nwill be automatically set based on the type of this field." })), "KeyID": Schema.optionalKey(Schema.String.annotate({ "description": "Key identifier, parsed from `kid` header." })), "Use": Schema.optionalKey(Schema.String.annotate({ "description": "Key use, parsed from `use` header." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "JSONWebKey represents a public or private key in JWK format. It can be\nmarshaled into JSON and unmarshaled from JSON.", "identifier": "JSONWebKey" })
+export type AlertingFileExport = { readonly "apiVersion"?: number, readonly "contactPoints"?: ReadonlyArray<ContactPointExport>, readonly "groups"?: ReadonlyArray<AlertRuleGroupExport>, readonly "muteTimes"?: ReadonlyArray<MuteTimeIntervalExport>, readonly "policies"?: ReadonlyArray<NotificationPolicyExport> } & { readonly [x: string]: Schema.Json }
+export const AlertingFileExport = Schema.StructWithRest(Schema.Struct({ "apiVersion": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "contactPoints": Schema.optionalKey(Schema.Array(ContactPointExport)), "groups": Schema.optionalKey(Schema.Array(AlertRuleGroupExport)), "muteTimes": Schema.optionalKey(Schema.Array(MuteTimeIntervalExport)), "policies": Schema.optionalKey(Schema.Array(NotificationPolicyExport)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "AlertingFileExport is the full provisioned file export.", "identifier": "AlertingFileExport" })
+export type Field = { readonly "config"?: FieldConfig, readonly "labels"?: FrameLabels, readonly "name"?: string } & { readonly [x: string]: Schema.Json }
+export const Field = Schema.StructWithRest(Schema.Struct({ "config": Schema.optionalKey(FieldConfig), "labels": Schema.optionalKey(FrameLabels), "name": Schema.optionalKey(Schema.String.annotate({ "description": "Name is default identifier of the field. The name does not have to be unique, but the combination\nof name and Labels should be unique for proper behavior in all situations." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "Field represents a typed column of data within a Frame.", "description": "A Field is essentially a slice of various types with extra properties and methods.\nSee NewField() for supported types.\n\nThe slice data in the Field is a not exported, so methods on the Field are used to to manipulate its data.", "identifier": "Field" })
+export type FrameMeta = { readonly "channel"?: string, readonly "custom"?: Schema.Json, readonly "dataTopic"?: DataTopic, readonly "executedQueryString"?: string, readonly "notices"?: ReadonlyArray<Notice>, readonly "path"?: string, readonly "pathSeparator"?: string, readonly "preferredVisualisationPluginId"?: string, readonly "preferredVisualisationType"?: VisType, readonly "stats"?: ReadonlyArray<QueryStat>, readonly "type"?: FrameType, readonly "typeVersion"?: FrameTypeVersion, readonly "uniqueRowIdFields"?: ReadonlyArray<number> } & { readonly [x: string]: Schema.Json }
+export const FrameMeta = Schema.StructWithRest(Schema.Struct({ "channel": Schema.optionalKey(Schema.String.annotate({ "description": "Channel is the path to a stream in grafana live that has real-time updates for this data." })), "custom": Schema.optionalKey(Schema.Json.annotate({ "expected": "JSON value", "description": "Custom datasource specific values." })), "dataTopic": Schema.optionalKey(DataTopic), "executedQueryString": Schema.optionalKey(Schema.String.annotate({ "description": "ExecutedQueryString is the raw query sent to the underlying system. All macros and templating\nhave been applied.  When metadata contains this value, it will be shown in the query inspector." })), "notices": Schema.optionalKey(Schema.Array(Notice).annotate({ "description": "Notices provide additional information about the data in the Frame that\nGrafana can display to the user in the user interface." })), "path": Schema.optionalKey(Schema.String.annotate({ "description": "Path is a browsable path on the datasource." })), "pathSeparator": Schema.optionalKey(Schema.String.annotate({ "description": "PathSeparator defines the separator pattern to decode a hierarchy. The default separator is '/'." })), "preferredVisualisationPluginId": Schema.optionalKey(Schema.String.annotate({ "description": "PreferredVisualizationPluginId sets the panel plugin id to use to render the data when using Explore. If\nthe plugin cannot be found will fall back to PreferredVisualization." })), "preferredVisualisationType": Schema.optionalKey(VisType), "stats": Schema.optionalKey(Schema.Array(QueryStat).annotate({ "description": "Stats is an array of query result statistics." })), "type": Schema.optionalKey(FrameType), "typeVersion": Schema.optionalKey(FrameTypeVersion), "uniqueRowIdFields": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))).annotate({ "description": "Array of field indices which values create a unique id for each row. Ideally this should be globally unique ID\nbut that isn't guarantied. Should help with keeping track and deduplicating rows in visualizations, especially\nwith streaming data with frequent updates." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "FrameMeta matches:", "description": "https://github.com/grafana/grafana/blob/master/packages/grafana-data/src/types/data.ts#L11\nNOTE -- in javascript this can accept any `[key: string]: any;` however\nthis interface only exposes the values we want to be exposed", "identifier": "FrameMeta" })
+export type Frame = { readonly "Fields"?: ReadonlyArray<Field>, readonly "Meta"?: FrameMeta, readonly "Name"?: string, readonly "RefID"?: string } & { readonly [x: string]: Schema.Json }
+export const Frame = Schema.StructWithRest(Schema.Struct({ "Fields": Schema.optionalKey(Schema.Array(Field).annotate({ "description": "Fields are the columns of a frame.\nAll Fields must be of the same the length when marshalling the Frame for transmission.\nThere should be no `nil` entries in the Fields slice (making them pointers was a mistake)." })), "Meta": Schema.optionalKey(FrameMeta), "Name": Schema.optionalKey(Schema.String.annotate({ "description": "Name is used in some Grafana visualizations." })), "RefID": Schema.optionalKey(Schema.String.annotate({ "description": "RefID is a property that can be set to match a Frame to its originating query." })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "Frame is a columnar data structure where each column is a Field.", "description": "Each Field is well typed by its FieldType and supports optional Labels.\n\nA Frame is a general data container for Grafana. A Frame can be table data\nor time series data depending on its content and field types.", "identifier": "Frame" })
 export type Frames = ReadonlyArray<Frame>
-export const Frames = Schema.Array(Frame).annotate({ "title": "Frames is a slice of Frame pointers.", "description": "It is the main data container within a backend.DataResponse.\nThere should be no `nil` entries in the Frames slice (making them pointers was a mistake)." })
-export type DataResponse = { readonly "Error"?: string, readonly "ErrorSource"?: Source, readonly "Frames"?: Frames, readonly "Status"?: Status }
-export const DataResponse = Schema.Struct({ "Error": Schema.optionalKey(Schema.String.annotate({ "description": "Error is a property to be set if the corresponding DataQuery has an error." })), "ErrorSource": Schema.optionalKey(Source), "Frames": Schema.optionalKey(Frames), "Status": Schema.optionalKey(Status) }).annotate({ "title": "DataResponse contains the results from a DataQuery.", "description": "A map of RefIDs (unique query identifiers) to this type makes up the Responses property of a QueryDataResponse.\nThe Error property is used to allow for partial success responses from the containing QueryDataResponse." })
+export const Frames = Schema.Array(Frame).annotate({ "title": "Frames is a slice of Frame pointers.", "description": "It is the main data container within a backend.DataResponse.\nThere should be no `nil` entries in the Frames slice (making them pointers was a mistake).", "identifier": "Frames" })
+export type DataResponse = { readonly "Error"?: string, readonly "ErrorSource"?: Source, readonly "Frames"?: Frames, readonly "Status"?: Status } & { readonly [x: string]: Schema.Json }
+export const DataResponse = Schema.StructWithRest(Schema.Struct({ "Error": Schema.optionalKey(Schema.String.annotate({ "description": "Error is a property to be set if the corresponding DataQuery has an error." })), "ErrorSource": Schema.optionalKey(Source), "Frames": Schema.optionalKey(Frames), "Status": Schema.optionalKey(Status) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "DataResponse contains the results from a DataQuery.", "description": "A map of RefIDs (unique query identifiers) to this type makes up the Responses property of a QueryDataResponse.\nThe Error property is used to allow for partial success responses from the containing QueryDataResponse.", "identifier": "DataResponse" })
 export type Responses = { readonly [x: string]: DataResponse }
-export const Responses = Schema.Record(Schema.String, DataResponse).annotate({ "title": "Responses is a map of RefIDs (Unique Query ID) to DataResponses.", "description": "The QueryData method the QueryDataHandler method will set the RefId\nproperty on the DataResponses' frames based on these RefIDs." })
-export type QueryDataResponse = { readonly "results"?: Responses }
-export const QueryDataResponse = Schema.Struct({ "results": Schema.optionalKey(Responses) }).annotate({ "title": "QueryDataResponse contains the results from a QueryDataRequest.", "description": "It is the return type of a QueryData call." })
+export const Responses = Schema.Record(Schema.String, DataResponse).annotate({ "title": "Responses is a map of RefIDs (Unique Query ID) to DataResponses.", "description": "The QueryData method the QueryDataHandler method will set the RefId\nproperty on the DataResponses' frames based on these RefIDs.", "identifier": "Responses" })
+export type QueryDataResponse = { readonly "results"?: Responses } & { readonly [x: string]: Schema.Json }
+export const QueryDataResponse = Schema.StructWithRest(Schema.Struct({ "results": Schema.optionalKey(Responses) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "QueryDataResponse contains the results from a QueryDataRequest.", "description": "It is the return type of a QueryData call.", "identifier": "QueryDataResponse" })
 // recursive definitions
-const __recursive_RouteExport = Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "continue": Schema.optionalKey(Schema.Boolean), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "Deprecated. Remove before v1.0 release." })), "match_re": Schema.optionalKey(MatchRegexps), "matchers": Schema.optionalKey(Matchers1), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "object_matchers": Schema.optionalKey(ObjectMatchers), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String), "routes": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<RouteExport> => RouteExport))) }).annotate({ "description": "RouteExport is the provisioned file export of definitions.Route. This is needed to hide fields that aren't useable in\nprovisioning file format. An alternative would be to define a custom MarshalJSON and MarshalYAML that excludes them." })
-const __recursive_TimeInterval = Schema.Struct({ "name": Schema.optionalKey(Schema.String), "time_intervals": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<TimeInterval> => TimeInterval))) }).annotate({ "title": "TimeInterval represents a named set of time intervals for which a route should be muted." })
-const __recursive_Route = Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "continue": Schema.optionalKey(Schema.Boolean), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "Deprecated. Remove before v1.0 release." })), "match_re": Schema.optionalKey(MatchRegexps), "matchers": Schema.optionalKey(Matchers1), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "object_matchers": Schema.optionalKey(ObjectMatchers), "provenance": Schema.optionalKey(Provenance), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String), "routes": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<Route> => Route))) }).annotate({ "description": "A Route is a node that contains definitions of how to handle alerts. This is modified\nfrom the upstream alertmanager in that it adds the ObjectMatchers property." })
-export type Folder = { readonly "accessControl"?: Metadata, readonly "canAdmin"?: boolean, readonly "canDelete"?: boolean, readonly "canEdit"?: boolean, readonly "canSave"?: boolean, readonly "created"?: string, readonly "createdBy"?: string, readonly "hasAcl"?: boolean, readonly "id"?: number, readonly "managedBy"?: ManagerKind, readonly "orgId"?: number, readonly "parentUid"?: string, readonly "parents"?: ReadonlyArray<Folder>, readonly "title"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "updatedBy"?: string, readonly "url"?: string, readonly "version"?: number }
-export const Folder = Schema.Struct({ "accessControl": Schema.optionalKey(Metadata), "canAdmin": Schema.optionalKey(Schema.Boolean), "canDelete": Schema.optionalKey(Schema.Boolean), "canEdit": Schema.optionalKey(Schema.Boolean), "canSave": Schema.optionalKey(Schema.Boolean), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.String), "hasAcl": Schema.optionalKey(Schema.Boolean), "id": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use UID instead", "format": "int64" }).check(Schema.isInt())), "managedBy": Schema.optionalKey(ManagerKind), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "parentUid": Schema.optionalKey(Schema.String.annotate({ "description": "only used if nested folders are enabled" })), "parents": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<Folder> => Folder)).annotate({ "description": "the parent folders starting from the root going down" })), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export type Folder = { readonly "accessControl"?: Metadata, readonly "canAdmin"?: boolean, readonly "canDelete"?: boolean, readonly "canEdit"?: boolean, readonly "canSave"?: boolean, readonly "created"?: string, readonly "createdBy"?: string, readonly "hasAcl"?: boolean, readonly "id"?: number, readonly "managedBy"?: ManagerKind, readonly "orgId"?: number, readonly "parentUid"?: string, readonly "parents"?: ReadonlyArray<Folder>, readonly "title"?: string, readonly "uid"?: string, readonly "updated"?: string, readonly "updatedBy"?: string, readonly "url"?: string, readonly "version"?: number } & { readonly [x: string]: Schema.Json }
+export const Folder = Schema.StructWithRest(Schema.Struct({ "accessControl": Schema.optionalKey(Metadata), "canAdmin": Schema.optionalKey(Schema.Boolean), "canDelete": Schema.optionalKey(Schema.Boolean), "canEdit": Schema.optionalKey(Schema.Boolean), "canSave": Schema.optionalKey(Schema.Boolean), "created": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "createdBy": Schema.optionalKey(Schema.String), "hasAcl": Schema.optionalKey(Schema.Boolean), "id": Schema.optionalKey(Schema.Number.annotate({ "description": "Deprecated: use UID instead", "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "managedBy": Schema.optionalKey(ManagerKind), "orgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "parentUid": Schema.optionalKey(Schema.String.annotate({ "description": "only used if nested folders are enabled" })), "parents": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<Folder> => Folder)).annotate({ "description": "the parent folders starting from the root going down" })), "title": Schema.optionalKey(Schema.String), "uid": Schema.optionalKey(Schema.String), "updated": Schema.optionalKey(Schema.String.annotate({ "format": "date-time" })), "updatedBy": Schema.optionalKey(Schema.String), "url": Schema.optionalKey(Schema.String), "version": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "identifier": "Folder" })
+const __recursive_TimeInterval = Schema.StructWithRest(Schema.Struct({ "name": Schema.optionalKey(Schema.String), "time_intervals": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<TimeInterval> => TimeInterval))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "title": "TimeInterval represents a named set of time intervals for which a route should be muted.", "identifier": "TimeInterval" })
+const __recursive_RouteExport = Schema.StructWithRest(Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "continue": Schema.optionalKey(Schema.Boolean), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "Deprecated. Remove before v1.0 release." })), "match_re": Schema.optionalKey(MatchRegexps), "matchers": Schema.optionalKey(Matchers), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "object_matchers": Schema.optionalKey(ObjectMatchers), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String), "routes": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<RouteExport> => RouteExport))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "RouteExport is the provisioned file export of definitions.Route. This is needed to hide fields that aren't useable in\nprovisioning file format. An alternative would be to define a custom MarshalJSON and MarshalYAML that excludes them.", "identifier": "RouteExport" })
+const __recursive_Route = Schema.StructWithRest(Schema.Struct({ "active_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "continue": Schema.optionalKey(Schema.Boolean), "group_by": Schema.optionalKey(Schema.Array(Schema.String)), "group_interval": Schema.optionalKey(Schema.String), "group_wait": Schema.optionalKey(Schema.String), "match": Schema.optionalKey(Schema.Record(Schema.String, Schema.String).annotate({ "description": "Deprecated. Remove before v1.0 release." })), "match_re": Schema.optionalKey(MatchRegexps), "matchers": Schema.optionalKey(Matchers), "mute_time_intervals": Schema.optionalKey(Schema.Array(Schema.String)), "object_matchers": Schema.optionalKey(ObjectMatchers), "provenance": Schema.optionalKey(Provenance), "receiver": Schema.optionalKey(Schema.String), "repeat_interval": Schema.optionalKey(Schema.String), "routes": Schema.optionalKey(Schema.Array(Schema.suspend((): Schema.Codec<Route> => Route))) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]).annotate({ "description": "A Route is a node that contains definitions of how to handle alerts. This is modified\nfrom the upstream alertmanager in that it adds the ObjectMatchers property.", "identifier": "Route" })
 // schemas
 export type ListRolesParams = { readonly "delegatable"?: boolean, readonly "includeHidden"?: boolean, readonly "targetOrgId"?: number }
-export const ListRolesParams = Schema.Struct({ "delegatable": Schema.optionalKey(Schema.Boolean), "includeHidden": Schema.optionalKey(Schema.Boolean), "targetOrgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const ListRolesParams = Schema.Struct({ "delegatable": Schema.optionalKey(Schema.Boolean), "includeHidden": Schema.optionalKey(Schema.Boolean), "targetOrgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type ListRoles200 = ReadonlyArray<RoleDTO>
 export const ListRoles200 = Schema.Array(RoleDTO)
 export type ListRoles403 = ErrorResponseBody
@@ -692,7 +484,7 @@ export const GetAccessControlStatus404 = ErrorResponseBody
 export type GetAccessControlStatus500 = ErrorResponseBody
 export const GetAccessControlStatus500 = ErrorResponseBody
 export type ListTeamRolesParams = { readonly "targetOrgId"?: number }
-export const ListTeamRolesParams = Schema.Struct({ "targetOrgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const ListTeamRolesParams = Schema.Struct({ "targetOrgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type ListTeamRoles200 = SuccessResponseBody
 export const ListTeamRoles200 = SuccessResponseBody
 export type ListTeamRoles400 = ErrorResponseBody
@@ -702,7 +494,7 @@ export const ListTeamRoles403 = ErrorResponseBody
 export type ListTeamRoles500 = ErrorResponseBody
 export const ListTeamRoles500 = ErrorResponseBody
 export type ListUserRolesParams = { readonly "includeHidden"?: boolean, readonly "targetOrgId"?: number }
-export const ListUserRolesParams = Schema.Struct({ "includeHidden": Schema.optionalKey(Schema.Boolean), "targetOrgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const ListUserRolesParams = Schema.Struct({ "includeHidden": Schema.optionalKey(Schema.Boolean), "targetOrgId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type ListUserRoles200 = ReadonlyArray<RoleDTO>
 export const ListUserRoles200 = Schema.Array(RoleDTO)
 export type ListUserRoles400 = ErrorResponseBody
@@ -782,7 +574,7 @@ export const GetUserQuota404 = ErrorResponseBody
 export type GetUserQuota500 = ErrorResponseBody
 export const GetUserQuota500 = ErrorResponseBody
 export type GetAnnotationsParams = { readonly "from"?: number, readonly "to"?: number, readonly "userId"?: number, readonly "userUID"?: string, readonly "alertId"?: number, readonly "alertUID"?: string, readonly "dashboardId"?: number, readonly "dashboardUID"?: string, readonly "panelId"?: number, readonly "limit"?: number, readonly "tags"?: ReadonlyArray<string>, readonly "type"?: "alert" | "annotation", readonly "matchAny"?: boolean }
-export const GetAnnotationsParams = Schema.Struct({ "from": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "to": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "userUID": Schema.optionalKey(Schema.String), "alertId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "alertUID": Schema.optionalKey(Schema.String), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "dashboardUID": Schema.optionalKey(Schema.String), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "type": Schema.optionalKey(Schema.Literals(["alert", "annotation"])), "matchAny": Schema.optionalKey(Schema.Boolean) })
+export const GetAnnotationsParams = Schema.Struct({ "from": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "to": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "userUID": Schema.optionalKey(Schema.String), "alertId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "alertUID": Schema.optionalKey(Schema.String), "dashboardId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "dashboardUID": Schema.optionalKey(Schema.String), "panelId": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "tags": Schema.optionalKey(Schema.Array(Schema.String)), "type": Schema.optionalKey(Schema.Literals(["alert", "annotation"])), "matchAny": Schema.optionalKey(Schema.Boolean) })
 export type GetAnnotations200 = ReadonlyArray<Annotation>
 export const GetAnnotations200 = Schema.Array(Annotation)
 export type GetAnnotations401 = ErrorResponseBody
@@ -842,7 +634,7 @@ export const GetSession403 = ErrorResponseBody
 export type GetSession500 = ErrorResponseBody
 export const GetSession500 = ErrorResponseBody
 export type GetSnapshotParams = { readonly "resultPage"?: number, readonly "resultLimit"?: number, readonly "resultSortColumn"?: string, readonly "resultSortOrder"?: string, readonly "errorsOnly"?: boolean }
-export const GetSnapshotParams = Schema.Struct({ "resultPage": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "resultLimit": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt())), "resultSortColumn": Schema.optionalKey(Schema.String.annotate({ "default": "default" })), "resultSortOrder": Schema.optionalKey(Schema.String.annotate({ "default": "ASC" })), "errorsOnly": Schema.optionalKey(Schema.Boolean.annotate({ "default": false })) })
+export const GetSnapshotParams = Schema.Struct({ "resultPage": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "resultLimit": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "resultSortColumn": Schema.optionalKey(Schema.String.annotate({ "default": "default" })), "resultSortOrder": Schema.optionalKey(Schema.String.annotate({ "default": "ASC" })), "errorsOnly": Schema.optionalKey(Schema.Boolean.annotate({ "default": false })) })
 export type GetSnapshot200 = GetSnapshotResponseDTO
 export const GetSnapshot200 = GetSnapshotResponseDTO
 export type GetSnapshot400 = ErrorResponseBody
@@ -854,7 +646,7 @@ export const GetSnapshot403 = ErrorResponseBody
 export type GetSnapshot500 = ErrorResponseBody
 export const GetSnapshot500 = ErrorResponseBody
 export type GetShapshotListParams = { readonly "page"?: number, readonly "limit"?: number, readonly "sort"?: string }
-export const GetShapshotListParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt())), "sort": Schema.optionalKey(Schema.String) })
+export const GetShapshotListParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "sort": Schema.optionalKey(Schema.String) })
 export type GetShapshotList200 = SnapshotListResponseDTO
 export const GetShapshotList200 = SnapshotListResponseDTO
 export type GetShapshotList400 = ErrorResponseBody
@@ -878,7 +670,7 @@ export const GetCloudMigrationToken404 = ErrorResponseBody
 export type GetCloudMigrationToken500 = ErrorResponseBody
 export const GetCloudMigrationToken500 = ErrorResponseBody
 export type SearchDashboardSnapshotsParams = { readonly "query"?: string, readonly "limit"?: number }
-export const SearchDashboardSnapshotsParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt())) })
+export const SearchDashboardSnapshotsParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type SearchDashboardSnapshots200 = ReadonlyArray<DashboardSnapshotDTO>
 export const SearchDashboardSnapshots200 = Schema.Array(DashboardSnapshotDTO)
 export type SearchDashboardSnapshots500 = ErrorResponseBody
@@ -891,12 +683,12 @@ export type GetHomeDashboard500 = ErrorResponseBody
 export const GetHomeDashboard500 = ErrorResponseBody
 export type ListPublicDashboards200 = PublicDashboardListResponseWithPagination
 export const ListPublicDashboards200 = PublicDashboardListResponseWithPagination
-export type ListPublicDashboards401 = PublicError1
-export const ListPublicDashboards401 = PublicError1
-export type ListPublicDashboards403 = PublicError1
-export const ListPublicDashboards403 = PublicError1
-export type ListPublicDashboards500 = PublicError1
-export const ListPublicDashboards500 = PublicError1
+export type ListPublicDashboards401 = PublicError
+export const ListPublicDashboards401 = PublicError
+export type ListPublicDashboards403 = PublicError
+export const ListPublicDashboards403 = PublicError
+export type ListPublicDashboards500 = PublicError
+export const ListPublicDashboards500 = PublicError
 export type GetDashboardTags200 = ReadonlyArray<DashboardTagCloudItem>
 export const GetDashboardTags200 = Schema.Array(DashboardTagCloudItem)
 export type GetDashboardTags401 = ErrorResponseBody
@@ -905,16 +697,16 @@ export type GetDashboardTags500 = ErrorResponseBody
 export const GetDashboardTags500 = ErrorResponseBody
 export type GetPublicDashboard200 = PublicDashboard
 export const GetPublicDashboard200 = PublicDashboard
-export type GetPublicDashboard400 = PublicError1
-export const GetPublicDashboard400 = PublicError1
-export type GetPublicDashboard401 = PublicError1
-export const GetPublicDashboard401 = PublicError1
-export type GetPublicDashboard403 = PublicError1
-export const GetPublicDashboard403 = PublicError1
-export type GetPublicDashboard404 = PublicError1
-export const GetPublicDashboard404 = PublicError1
-export type GetPublicDashboard500 = PublicError1
-export const GetPublicDashboard500 = PublicError1
+export type GetPublicDashboard400 = PublicError
+export const GetPublicDashboard400 = PublicError
+export type GetPublicDashboard401 = PublicError
+export const GetPublicDashboard401 = PublicError
+export type GetPublicDashboard403 = PublicError
+export const GetPublicDashboard403 = PublicError
+export type GetPublicDashboard404 = PublicError
+export const GetPublicDashboard404 = PublicError
+export type GetPublicDashboard500 = PublicError
+export const GetPublicDashboard500 = PublicError
 export type GetDashboardByUID200 = DashboardFullWithMeta
 export const GetDashboardByUID200 = DashboardFullWithMeta
 export type GetDashboardByUID401 = ErrorResponseBody
@@ -938,7 +730,7 @@ export const GetDashboardPermissionsListByUID404 = ErrorResponseBody
 export type GetDashboardPermissionsListByUID500 = ErrorResponseBody
 export const GetDashboardPermissionsListByUID500 = ErrorResponseBody
 export type GetDashboardVersionsByUIDParams = { readonly "limit"?: number, readonly "start"?: number }
-export const GetDashboardVersionsByUIDParams = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 0, "format": "int64" }).check(Schema.isInt())), "start": Schema.optionalKey(Schema.Number.annotate({ "default": 0, "format": "int64" }).check(Schema.isInt())) })
+export const GetDashboardVersionsByUIDParams = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 0, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "start": Schema.optionalKey(Schema.Number.annotate({ "default": 0, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type GetDashboardVersionsByUID200 = DashboardVersionResponseMeta
 export const GetDashboardVersionsByUID200 = DashboardVersionResponseMeta
 export type GetDashboardVersionsByUID401 = ErrorResponseBody
@@ -968,7 +760,7 @@ export const GetDataSources403 = ErrorResponseBody
 export type GetDataSources500 = ErrorResponseBody
 export const GetDataSources500 = ErrorResponseBody
 export type GetCorrelationsParams = { readonly "limit"?: number, readonly "page"?: number, readonly "sourceUID"?: ReadonlyArray<string> }
-export const GetCorrelationsParams = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt()).check(Schema.isLessThanOrEqualTo(1000))), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "sourceUID": Schema.optionalKey(Schema.Array(Schema.String)) })
+export const GetCorrelationsParams = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })).check(Schema.isLessThanOrEqualTo(1000).annotate({ "expected": "a value less than or equal to 1000" }))), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "sourceUID": Schema.optionalKey(Schema.Array(Schema.String)) })
 export type GetCorrelations200 = ReadonlyArray<Correlation>
 export const GetCorrelations200 = Schema.Array(Correlation)
 export type GetCorrelations401 = ErrorResponseBody
@@ -977,8 +769,8 @@ export type GetCorrelations404 = ErrorResponseBody
 export const GetCorrelations404 = ErrorResponseBody
 export type GetCorrelations500 = ErrorResponseBody
 export const GetCorrelations500 = ErrorResponseBody
-export type GetDataSourceIdByName200 = { readonly "id": number }
-export const GetDataSourceIdByName200 = Schema.Struct({ "id": Schema.Number.annotate({ "description": "ID Identifier of the data source.", "examples": [65], "format": "int64" }).check(Schema.isInt()) })
+export type GetDataSourceIdByName200 = { readonly "id": number } & { readonly [x: string]: Schema.Json }
+export const GetDataSourceIdByName200 = Schema.StructWithRest(Schema.Struct({ "id": Schema.Number.annotate({ "description": "ID Identifier of the data source.", "examples": [65], "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))])
 export type GetDataSourceIdByName401 = ErrorResponseBody
 export const GetDataSourceIdByName401 = ErrorResponseBody
 export type GetDataSourceIdByName403 = ErrorResponseBody
@@ -1088,7 +880,7 @@ export const QueryMetricsWithExpressions403 = ErrorResponseBody
 export type QueryMetricsWithExpressions500 = ErrorResponseBody
 export const QueryMetricsWithExpressions500 = ErrorResponseBody
 export type GetFoldersParams = { readonly "limit"?: number, readonly "page"?: number, readonly "parentUid"?: string, readonly "permission"?: "Edit" | "View" }
-export const GetFoldersParams = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt())), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "parentUid": Schema.optionalKey(Schema.String), "permission": Schema.optionalKey(Schema.Literals(["Edit", "View"]).annotate({ "default": "View" })) })
+export const GetFoldersParams = Schema.Struct({ "limit": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "parentUid": Schema.optionalKey(Schema.String), "permission": Schema.optionalKey(Schema.Literals(["Edit", "View"]).annotate({ "default": "View" })) })
 export type GetFolders200 = ReadonlyArray<FolderSearchHit>
 export const GetFolders200 = Schema.Array(FolderSearchHit)
 export type GetFolders401 = ErrorResponseBody
@@ -1132,7 +924,7 @@ export const GetHealth200 = HealthResponse
 export type GetHealth503 = ErrorResponseBody
 export const GetHealth503 = ErrorResponseBody
 export type GetLibraryElementsParams = { readonly "searchString"?: string, readonly "kind"?: 1, readonly "sortDirection"?: "alpha-asc" | "alpha-desc", readonly "typeFilter"?: string, readonly "excludeUid"?: string, readonly "folderFilter"?: string, readonly "folderFilterUIDs"?: string, readonly "perPage"?: number, readonly "page"?: number }
-export const GetLibraryElementsParams = Schema.Struct({ "searchString": Schema.optionalKey(Schema.String), "kind": Schema.optionalKey(Schema.Literal(1).annotate({ "format": "int64" })), "sortDirection": Schema.optionalKey(Schema.Literals(["alpha-asc", "alpha-desc"])), "typeFilter": Schema.optionalKey(Schema.String), "excludeUid": Schema.optionalKey(Schema.String), "folderFilter": Schema.optionalKey(Schema.String), "folderFilterUIDs": Schema.optionalKey(Schema.String), "perPage": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt())), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())) })
+export const GetLibraryElementsParams = Schema.Struct({ "searchString": Schema.optionalKey(Schema.String), "kind": Schema.optionalKey(Schema.Literal(1).annotate({ "format": "int64" })), "sortDirection": Schema.optionalKey(Schema.Literals(["alpha-asc", "alpha-desc"])), "typeFilter": Schema.optionalKey(Schema.String), "excludeUid": Schema.optionalKey(Schema.String), "folderFilter": Schema.optionalKey(Schema.String), "folderFilterUIDs": Schema.optionalKey(Schema.String), "perPage": Schema.optionalKey(Schema.Number.annotate({ "default": 100, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type GetLibraryElements200 = LibraryElementSearchResponse
 export const GetLibraryElements200 = LibraryElementSearchResponse
 export type GetLibraryElements401 = ErrorResponseBody
@@ -1216,7 +1008,7 @@ export const GetCurrentOrgQuota404 = ErrorResponseBody
 export type GetCurrentOrgQuota500 = ErrorResponseBody
 export const GetCurrentOrgQuota500 = ErrorResponseBody
 export type GetOrgUsersForCurrentOrgParams = { readonly "query"?: string, readonly "limit"?: number }
-export const GetOrgUsersForCurrentOrgParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const GetOrgUsersForCurrentOrgParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type GetOrgUsersForCurrentOrg200 = ReadonlyArray<OrgUserDTO>
 export const GetOrgUsersForCurrentOrg200 = Schema.Array(OrgUserDTO)
 export type GetOrgUsersForCurrentOrg401 = ErrorResponseBody
@@ -1226,7 +1018,7 @@ export const GetOrgUsersForCurrentOrg403 = ErrorResponseBody
 export type GetOrgUsersForCurrentOrg500 = ErrorResponseBody
 export const GetOrgUsersForCurrentOrg500 = ErrorResponseBody
 export type GetOrgUsersForCurrentOrgLookupParams = { readonly "query"?: string, readonly "limit"?: number }
-export const GetOrgUsersForCurrentOrgLookupParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const GetOrgUsersForCurrentOrgLookupParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type GetOrgUsersForCurrentOrgLookup200 = ReadonlyArray<UserLookupDTO>
 export const GetOrgUsersForCurrentOrgLookup200 = Schema.Array(UserLookupDTO)
 export type GetOrgUsersForCurrentOrgLookup401 = ErrorResponseBody
@@ -1236,7 +1028,7 @@ export const GetOrgUsersForCurrentOrgLookup403 = ErrorResponseBody
 export type GetOrgUsersForCurrentOrgLookup500 = ErrorResponseBody
 export const GetOrgUsersForCurrentOrgLookup500 = ErrorResponseBody
 export type SearchOrgsParams = { readonly "page"?: number, readonly "perpage"?: number, readonly "name"?: string, readonly "query"?: string }
-export const SearchOrgsParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String), "query": Schema.optionalKey(Schema.String) })
+export const SearchOrgsParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String), "query": Schema.optionalKey(Schema.String) })
 export type SearchOrgs200 = ReadonlyArray<OrgDTO>
 export const SearchOrgs200 = Schema.Array(OrgDTO)
 export type SearchOrgs401 = ErrorResponseBody
@@ -1290,7 +1082,7 @@ export const SearchOrgUsers403 = ErrorResponseBody
 export type SearchOrgUsers500 = ErrorResponseBody
 export const SearchOrgUsers500 = ErrorResponseBody
 export type SearchPlaylistsParams = { readonly "query"?: string, readonly "limit"?: number }
-export const SearchPlaylistsParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const SearchPlaylistsParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type SearchPlaylists200 = Playlists
 export const SearchPlaylists200 = Playlists
 export type SearchPlaylists500 = ErrorResponseBody
@@ -1317,30 +1109,30 @@ export type GetPlaylistItems500 = ErrorResponseBody
 export const GetPlaylistItems500 = ErrorResponseBody
 export type ViewPublicDashboard200 = DashboardFullWithMeta
 export const ViewPublicDashboard200 = DashboardFullWithMeta
-export type ViewPublicDashboard400 = PublicError1
-export const ViewPublicDashboard400 = PublicError1
-export type ViewPublicDashboard401 = PublicError1
-export const ViewPublicDashboard401 = PublicError1
-export type ViewPublicDashboard403 = PublicError1
-export const ViewPublicDashboard403 = PublicError1
-export type ViewPublicDashboard404 = PublicError1
-export const ViewPublicDashboard404 = PublicError1
-export type ViewPublicDashboard500 = PublicError1
-export const ViewPublicDashboard500 = PublicError1
+export type ViewPublicDashboard400 = PublicError
+export const ViewPublicDashboard400 = PublicError
+export type ViewPublicDashboard401 = PublicError
+export const ViewPublicDashboard401 = PublicError
+export type ViewPublicDashboard403 = PublicError
+export const ViewPublicDashboard403 = PublicError
+export type ViewPublicDashboard404 = PublicError
+export const ViewPublicDashboard404 = PublicError
+export type ViewPublicDashboard500 = PublicError
+export const ViewPublicDashboard500 = PublicError
 export type GetPublicAnnotations200 = ReadonlyArray<AnnotationEvent>
 export const GetPublicAnnotations200 = Schema.Array(AnnotationEvent)
-export type GetPublicAnnotations400 = PublicError1
-export const GetPublicAnnotations400 = PublicError1
-export type GetPublicAnnotations401 = PublicError1
-export const GetPublicAnnotations401 = PublicError1
-export type GetPublicAnnotations403 = PublicError1
-export const GetPublicAnnotations403 = PublicError1
-export type GetPublicAnnotations404 = PublicError1
-export const GetPublicAnnotations404 = PublicError1
-export type GetPublicAnnotations500 = PublicError1
-export const GetPublicAnnotations500 = PublicError1
+export type GetPublicAnnotations400 = PublicError
+export const GetPublicAnnotations400 = PublicError
+export type GetPublicAnnotations401 = PublicError
+export const GetPublicAnnotations401 = PublicError
+export type GetPublicAnnotations403 = PublicError
+export const GetPublicAnnotations403 = PublicError
+export type GetPublicAnnotations404 = PublicError
+export const GetPublicAnnotations404 = PublicError
+export type GetPublicAnnotations500 = PublicError
+export const GetPublicAnnotations500 = PublicError
 export type SearchQueriesParams = { readonly "datasourceUid"?: ReadonlyArray<string>, readonly "searchString"?: string, readonly "onlyStarred"?: boolean, readonly "sort"?: "time-desc" | "time-asc", readonly "page"?: number, readonly "limit"?: number, readonly "from"?: number, readonly "to"?: number }
-export const SearchQueriesParams = Schema.Struct({ "datasourceUid": Schema.optionalKey(Schema.Array(Schema.String)), "searchString": Schema.optionalKey(Schema.String), "onlyStarred": Schema.optionalKey(Schema.Boolean), "sort": Schema.optionalKey(Schema.Literals(["time-desc", "time-asc"]).annotate({ "default": "time-desc" })), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "from": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "to": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const SearchQueriesParams = Schema.Struct({ "datasourceUid": Schema.optionalKey(Schema.Array(Schema.String)), "searchString": Schema.optionalKey(Schema.String), "onlyStarred": Schema.optionalKey(Schema.Boolean), "sort": Schema.optionalKey(Schema.Literals(["time-desc", "time-asc"]).annotate({ "default": "time-desc" })), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "from": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "to": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type SearchQueries200 = QueryHistorySearchResponse
 export const SearchQueries200 = QueryHistorySearchResponse
 export type SearchQueries401 = ErrorResponseBody
@@ -1384,7 +1176,7 @@ export const GetReportsByDashboardUID403 = ErrorResponseBody
 export type GetReportsByDashboardUID500 = ErrorResponseBody
 export const GetReportsByDashboardUID500 = ErrorResponseBody
 export type GetSettingsImage200 = ReadonlyArray<number>
-export const GetSettingsImage200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))
+export const GetSettingsImage200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))
 export type GetSettingsImage401 = ErrorResponseBody
 export const GetSettingsImage401 = ErrorResponseBody
 export type GetSettingsImage403 = ErrorResponseBody
@@ -1396,9 +1188,9 @@ export const GetSettingsImage500 = ErrorResponseBody
 export type RenderReportCSVsParams = { readonly "dashboards"?: string, readonly "title"?: string }
 export const RenderReportCSVsParams = Schema.Struct({ "dashboards": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String) })
 export type RenderReportCSVs200 = ReadonlyArray<number>
-export const RenderReportCSVs200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))
-export type RenderReportCSVs204 = {  }
-export const RenderReportCSVs204 = Schema.Struct({  })
+export const RenderReportCSVs200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))
+export type RenderReportCSVs204 = { readonly [x: string]: Schema.Json }
+export const RenderReportCSVs204 = Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))
 export type RenderReportCSVs400 = ErrorResponseBody
 export const RenderReportCSVs400 = ErrorResponseBody
 export type RenderReportCSVs401 = ErrorResponseBody
@@ -1408,7 +1200,7 @@ export const RenderReportCSVs500 = ErrorResponseBody
 export type RenderReportPDFsParams = { readonly "dashboards"?: string, readonly "orientation"?: string, readonly "layout"?: string, readonly "title"?: string, readonly "scaleFactor"?: string, readonly "includeTables"?: string }
 export const RenderReportPDFsParams = Schema.Struct({ "dashboards": Schema.optionalKey(Schema.String), "orientation": Schema.optionalKey(Schema.String), "layout": Schema.optionalKey(Schema.String), "title": Schema.optionalKey(Schema.String), "scaleFactor": Schema.optionalKey(Schema.String), "includeTables": Schema.optionalKey(Schema.String) })
 export type RenderReportPDFs200 = ReadonlyArray<number>
-export const RenderReportPDFs200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))
+export const RenderReportPDFs200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))
 export type RenderReportPDFs400 = ErrorResponseBody
 export const RenderReportPDFs400 = ErrorResponseBody
 export type RenderReportPDFs401 = ErrorResponseBody
@@ -1436,7 +1228,7 @@ export const GetReport404 = ErrorResponseBody
 export type GetReport500 = ErrorResponseBody
 export const GetReport500 = ErrorResponseBody
 export type GetMetadata200 = ReadonlyArray<number>
-export const GetMetadata200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt()))
+export const GetMetadata200 = Schema.Array(Schema.Number.annotate({ "format": "uint8" }).check(Schema.isInt().annotate({ "expected": "an integer" })))
 export type GetSLO400 = ErrorResponseBody
 export const GetSLO400 = ErrorResponseBody
 export type GetSLO403 = ErrorResponseBody
@@ -1444,7 +1236,7 @@ export const GetSLO403 = ErrorResponseBody
 export type GetSLO500 = ErrorResponseBody
 export const GetSLO500 = ErrorResponseBody
 export type SearchParams = { readonly "query"?: string, readonly "tag"?: ReadonlyArray<string>, readonly "type"?: "dash-folder" | "dash-db", readonly "dashboardIds"?: ReadonlyArray<number>, readonly "dashboardUIDs"?: ReadonlyArray<string>, readonly "folderIds"?: ReadonlyArray<number>, readonly "folderUIDs"?: ReadonlyArray<string>, readonly "starred"?: boolean, readonly "limit"?: number, readonly "page"?: number, readonly "permission"?: "Edit" | "View", readonly "sort"?: "alpha-asc" | "alpha-desc", readonly "deleted"?: boolean }
-export const SearchParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "tag": Schema.optionalKey(Schema.Array(Schema.String)), "type": Schema.optionalKey(Schema.Literals(["dash-folder", "dash-db"])), "dashboardIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "dashboardUIDs": Schema.optionalKey(Schema.Array(Schema.String)), "folderIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt()))), "folderUIDs": Schema.optionalKey(Schema.Array(Schema.String)), "starred": Schema.optionalKey(Schema.Boolean), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "permission": Schema.optionalKey(Schema.Literals(["Edit", "View"]).annotate({ "default": "View" })), "sort": Schema.optionalKey(Schema.Literals(["alpha-asc", "alpha-desc"]).annotate({ "default": "alpha-asc" })), "deleted": Schema.optionalKey(Schema.Boolean) })
+export const SearchParams = Schema.Struct({ "query": Schema.optionalKey(Schema.String), "tag": Schema.optionalKey(Schema.Array(Schema.String)), "type": Schema.optionalKey(Schema.Literals(["dash-folder", "dash-db"])), "dashboardIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "dashboardUIDs": Schema.optionalKey(Schema.Array(Schema.String)), "folderIds": Schema.optionalKey(Schema.Array(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" })))), "folderUIDs": Schema.optionalKey(Schema.Array(Schema.String)), "starred": Schema.optionalKey(Schema.Boolean), "limit": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "permission": Schema.optionalKey(Schema.Literals(["Edit", "View"]).annotate({ "default": "View" })), "sort": Schema.optionalKey(Schema.Literals(["alpha-asc", "alpha-desc"]).annotate({ "default": "alpha-asc" })), "deleted": Schema.optionalKey(Schema.Boolean) })
 export type Search200 = HitList
 export const Search200 = HitList
 export type Search401 = ErrorResponseBody
@@ -1453,12 +1245,12 @@ export type Search422 = ErrorResponseBody
 export const Search422 = ErrorResponseBody
 export type Search500 = ErrorResponseBody
 export const Search500 = ErrorResponseBody
-export type ListSortOptions200 = { readonly "description"?: string, readonly "displayName"?: string, readonly "meta"?: string, readonly "name"?: string }
-export const ListSortOptions200 = Schema.Struct({ "description": Schema.optionalKey(Schema.String), "displayName": Schema.optionalKey(Schema.String), "meta": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String) })
+export type ListSortOptions200 = { readonly "description"?: string, readonly "displayName"?: string, readonly "meta"?: string, readonly "name"?: string } & { readonly [x: string]: Schema.Json }
+export const ListSortOptions200 = Schema.StructWithRest(Schema.Struct({ "description": Schema.optionalKey(Schema.String), "displayName": Schema.optionalKey(Schema.String), "meta": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))])
 export type ListSortOptions401 = ErrorResponseBody
 export const ListSortOptions401 = ErrorResponseBody
 export type SearchOrgServiceAccountsWithPagingParams = { readonly "Disabled"?: boolean, readonly "expiredTokens"?: boolean, readonly "query"?: string, readonly "perpage"?: number, readonly "page"?: number }
-export const SearchOrgServiceAccountsWithPagingParams = Schema.Struct({ "Disabled": Schema.optionalKey(Schema.Boolean), "expiredTokens": Schema.optionalKey(Schema.Boolean), "query": Schema.optionalKey(Schema.String), "perpage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt())) })
+export const SearchOrgServiceAccountsWithPagingParams = Schema.Struct({ "Disabled": Schema.optionalKey(Schema.Boolean), "expiredTokens": Schema.optionalKey(Schema.Boolean), "query": Schema.optionalKey(Schema.String), "perpage": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "page": Schema.optionalKey(Schema.Number.annotate({ "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type SearchOrgServiceAccountsWithPaging200 = SearchOrgServiceAccountsResult
 export const SearchOrgServiceAccountsWithPaging200 = SearchOrgServiceAccountsResult
 export type SearchOrgServiceAccountsWithPaging401 = ErrorResponseBody
@@ -1489,12 +1281,12 @@ export type ListTokens403 = ErrorResponseBody
 export const ListTokens403 = ErrorResponseBody
 export type ListTokens500 = ErrorResponseBody
 export const ListTokens500 = ErrorResponseBody
-export type RetrieveJWKS200 = { readonly "keys"?: ReadonlyArray<JSONWebKey> }
-export const RetrieveJWKS200 = Schema.Struct({ "keys": Schema.optionalKey(Schema.Array(JSONWebKey)) })
+export type RetrieveJWKS200 = { readonly "keys"?: ReadonlyArray<JSONWebKey> } & { readonly [x: string]: Schema.Json }
+export const RetrieveJWKS200 = Schema.StructWithRest(Schema.Struct({ "keys": Schema.optionalKey(Schema.Array(JSONWebKey)) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))])
 export type RetrieveJWKS500 = ErrorResponseBody
 export const RetrieveJWKS500 = ErrorResponseBody
-export type GetSharingOptions200 = { readonly "externalEnabled"?: boolean, readonly "externalSnapshotName"?: string, readonly "externalSnapshotURL"?: string }
-export const GetSharingOptions200 = Schema.Struct({ "externalEnabled": Schema.optionalKey(Schema.Boolean), "externalSnapshotName": Schema.optionalKey(Schema.String), "externalSnapshotURL": Schema.optionalKey(Schema.String) })
+export type GetSharingOptions200 = { readonly "externalEnabled"?: boolean, readonly "externalSnapshotName"?: string, readonly "externalSnapshotURL"?: string } & { readonly [x: string]: Schema.Json }
+export const GetSharingOptions200 = Schema.StructWithRest(Schema.Struct({ "externalEnabled": Schema.optionalKey(Schema.Boolean), "externalSnapshotName": Schema.optionalKey(Schema.String), "externalSnapshotURL": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))])
 export type GetSharingOptions401 = ErrorResponseBody
 export const GetSharingOptions401 = ErrorResponseBody
 export type DeleteDashboardSnapshotByDeleteKey200 = SuccessResponseBody
@@ -1514,7 +1306,7 @@ export const GetDashboardSnapshot404 = ErrorResponseBody
 export type GetDashboardSnapshot500 = ErrorResponseBody
 export const GetDashboardSnapshot500 = ErrorResponseBody
 export type SearchTeamsParams = { readonly "page"?: number, readonly "perpage"?: number, readonly "name"?: string, readonly "query"?: string, readonly "accesscontrol"?: boolean, readonly "sort"?: string }
-export const SearchTeamsParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt())), "name": Schema.optionalKey(Schema.String), "query": Schema.optionalKey(Schema.String), "accesscontrol": Schema.optionalKey(Schema.Boolean.annotate({ "default": false })), "sort": Schema.optionalKey(Schema.String) })
+export const SearchTeamsParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "name": Schema.optionalKey(Schema.String), "query": Schema.optionalKey(Schema.String), "accesscontrol": Schema.optionalKey(Schema.Boolean.annotate({ "default": false })), "sort": Schema.optionalKey(Schema.String) })
 export type SearchTeams200 = SearchTeamQueryResult
 export const SearchTeams200 = SearchTeamQueryResult
 export type SearchTeams401 = ErrorResponseBody
@@ -1536,7 +1328,7 @@ export const GetTeamGroupsApi404 = ErrorResponseBody
 export type GetTeamGroupsApi500 = ErrorResponseBody
 export const GetTeamGroupsApi500 = ErrorResponseBody
 export type SearchTeamGroupsParams = { readonly "page"?: number, readonly "perpage"?: number, readonly "query"?: string, readonly "name"?: string }
-export const SearchTeamGroupsParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())), "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt())), "query": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String) })
+export const SearchTeamGroupsParams = Schema.Struct({ "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "query": Schema.optionalKey(Schema.String), "name": Schema.optionalKey(Schema.String) })
 export type SearchTeamGroups200 = ReadonlyArray<SearchTeamGroupsQueryResult>
 export const SearchTeamGroups200 = Schema.Array(SearchTeamGroupsQueryResult)
 export type SearchTeamGroups400 = ErrorResponseBody
@@ -1628,7 +1420,7 @@ export const GetSignedInUserTeamList403 = ErrorResponseBody
 export type GetSignedInUserTeamList500 = ErrorResponseBody
 export const GetSignedInUserTeamList500 = ErrorResponseBody
 export type SearchUsersParams = { readonly "perpage"?: number, readonly "page"?: number }
-export const SearchUsersParams = Schema.Struct({ "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt())), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt())) })
+export const SearchUsersParams = Schema.Struct({ "perpage": Schema.optionalKey(Schema.Number.annotate({ "default": 1000, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))), "page": Schema.optionalKey(Schema.Number.annotate({ "default": 1, "format": "int64" }).check(Schema.isInt().annotate({ "expected": "an integer" }))) })
 export type SearchUsers200 = ReadonlyArray<UserSearchHitDTO>
 export const SearchUsers200 = Schema.Array(UserSearchHitDTO)
 export type SearchUsers401 = ErrorResponseBody
@@ -1769,18 +1561,18 @@ export type RouteGetTemplate200 = NotificationTemplate
 export const RouteGetTemplate200 = NotificationTemplate
 export type RouteGetTemplate403 = ForbiddenError
 export const RouteGetTemplate403 = ForbiddenError
-export type RouteGetTemplate404 = PublicError
-export const RouteGetTemplate404 = PublicError
-export type ListAllProvidersSettings200 = ReadonlyArray<{ readonly "id"?: string, readonly "provider"?: string, readonly "settings"?: { readonly [x: string]: Schema.Json }, readonly "source"?: string }>
-export const ListAllProvidersSettings200 = Schema.Array(Schema.Struct({ "id": Schema.optionalKey(Schema.String), "provider": Schema.optionalKey(Schema.String), "settings": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json)), "source": Schema.optionalKey(Schema.String) }))
+export type RouteGetTemplate404 = PublicError1
+export const RouteGetTemplate404 = PublicError1
+export type ListAllProvidersSettings200 = ReadonlyArray<{ readonly "id"?: string, readonly "provider"?: string, readonly "settings"?: { readonly [x: string]: Schema.Json }, readonly "source"?: string } & { readonly [x: string]: Schema.Json }>
+export const ListAllProvidersSettings200 = Schema.Array(Schema.StructWithRest(Schema.Struct({ "id": Schema.optionalKey(Schema.String), "provider": Schema.optionalKey(Schema.String), "settings": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))), "source": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))]))
 export type ListAllProvidersSettings400 = ErrorResponseBody
 export const ListAllProvidersSettings400 = ErrorResponseBody
 export type ListAllProvidersSettings401 = ErrorResponseBody
 export const ListAllProvidersSettings401 = ErrorResponseBody
 export type ListAllProvidersSettings403 = ErrorResponseBody
 export const ListAllProvidersSettings403 = ErrorResponseBody
-export type GetProviderSettings200 = { readonly "id"?: string, readonly "provider"?: string, readonly "settings"?: { readonly [x: string]: Schema.Json }, readonly "source"?: string }
-export const GetProviderSettings200 = Schema.Struct({ "id": Schema.optionalKey(Schema.String), "provider": Schema.optionalKey(Schema.String), "settings": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json)), "source": Schema.optionalKey(Schema.String) })
+export type GetProviderSettings200 = { readonly "id"?: string, readonly "provider"?: string, readonly "settings"?: { readonly [x: string]: Schema.Json }, readonly "source"?: string } & { readonly [x: string]: Schema.Json }
+export const GetProviderSettings200 = Schema.StructWithRest(Schema.Struct({ "id": Schema.optionalKey(Schema.String), "provider": Schema.optionalKey(Schema.String), "settings": Schema.optionalKey(Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))), "source": Schema.optionalKey(Schema.String) }), [Schema.Record(Schema.String, Schema.Json.annotate({ "expected": "JSON value" }))])
 export type GetProviderSettings400 = ErrorResponseBody
 export const GetProviderSettings400 = ErrorResponseBody
 export type GetProviderSettings401 = ErrorResponseBody
@@ -1848,6 +1640,38 @@ export const make = (
           )
       : (request) => Effect.flatMap(httpClient.execute(request), withOptionalResponse)
   }
+  const __encodePathParam = encodeURIComponent
+  const __makePathRequest = (
+    method: (url: string) => HttpClientRequest.HttpClientRequest,
+    parameters: ReadonlyArray<string>,
+    getPath: () => string,
+  ) => Effect.suspend(() => {
+    const fail = (description: string, cause?: unknown) => Effect.fail(
+      new HttpClientError.HttpClientError({
+        reason: new HttpClientError.InvalidUrlError({
+          request: method(""),
+          cause,
+          description,
+        }),
+      }),
+    )
+    if (parameters.some((value) => value === "" || /^(?:\.|%2e){1,2}$/i.test(value))) {
+      return fail("Path parameters must be non-empty and cannot be dot segments")
+    }
+    let path: string
+    try {
+      path = getPath()
+    } catch (cause) {
+      return fail("Failed to encode path parameter", cause)
+    }
+    if (path.split("/").some((segment) => /^(?:\.|%2e){1,2}$/i.test(segment))) {
+      return fail("Request paths cannot contain dot segments")
+    }
+    return Effect.succeed(method(path))
+  })
+  const decodeVoidError = <const Tag extends string>(tag: Tag) =>
+    (response: HttpClientResponse.HttpClientResponse) =>
+      Effect.fail(GrafanaError(tag, undefined, response))
   const decodeSuccess =
     <Schema extends Schema.Constraint>(schema: Schema) =>
     (response: HttpClientResponse.HttpClientResponse) =>
@@ -1861,133 +1685,150 @@ export const make = (
       )
   return {
     httpClient,
-    "listRoles": (options) => HttpClientRequest.get(`/access-control/roles`).pipe(
-    HttpClientRequest.setUrlParams({ "delegatable": options?.params?.["delegatable"] as any, "includeHidden": options?.params?.["includeHidden"] as any, "targetOrgId": options?.params?.["targetOrgId"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "listRoles": (options) => HttpClientRequest.get("/access-control/roles").pipe(
+      HttpClientRequest.setUrlParams({ "delegatable": options?.params?.["delegatable"] as any, "includeHidden": options?.params?.["includeHidden"] as any, "targetOrgId": options?.params?.["targetOrgId"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListRoles200),
       "403": decodeError("ListRoles403", ListRoles403),
       "500": decodeError("ListRoles500", ListRoles500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getRole": (roleUID, options) => HttpClientRequest.get(`/access-control/roles/${roleUID}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getRole": (roleUID, options) => __makePathRequest(HttpClientRequest.get, [roleUID], () => "/access-control/roles/" + __encodePathParam(roleUID) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetRole200),
       "403": decodeError("GetRole403", GetRole403),
       "500": decodeError("GetRole500", GetRole500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getRoleAssignments": (roleUID, options) => HttpClientRequest.get(`/access-control/roles/${roleUID}/assignments`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getRoleAssignments": (roleUID, options) => __makePathRequest(HttpClientRequest.get, [roleUID], () => "/access-control/roles/" + __encodePathParam(roleUID) + "/assignments").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetRoleAssignments200),
       "403": decodeError("GetRoleAssignments403", GetRoleAssignments403),
       "404": decodeError("GetRoleAssignments404", GetRoleAssignments404),
       "500": decodeError("GetRoleAssignments500", GetRoleAssignments500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getAccessControlStatus": (options) => HttpClientRequest.get(`/access-control/status`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getAccessControlStatus": (options) => HttpClientRequest.get("/access-control/status").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetAccessControlStatus200),
       "403": decodeError("GetAccessControlStatus403", GetAccessControlStatus403),
       "404": decodeError("GetAccessControlStatus404", GetAccessControlStatus404),
       "500": decodeError("GetAccessControlStatus500", GetAccessControlStatus500),
       orElse: unexpectedStatus
     }))
-  ),
-    "listTeamRoles": (teamId, options) => HttpClientRequest.get(`/access-control/teams/${teamId}/roles`).pipe(
-    HttpClientRequest.setUrlParams({ "targetOrgId": options?.params?.["targetOrgId"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "listTeamRoles": (teamId, options) => __makePathRequest(HttpClientRequest.get, [teamId], () => "/access-control/teams/" + __encodePathParam(teamId) + "/roles").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "targetOrgId": options?.params?.["targetOrgId"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListTeamRoles200),
       "400": decodeError("ListTeamRoles400", ListTeamRoles400),
       "403": decodeError("ListTeamRoles403", ListTeamRoles403),
       "500": decodeError("ListTeamRoles500", ListTeamRoles500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "listUserRoles": (userId, options) => HttpClientRequest.get(`/access-control/users/${userId}/roles`).pipe(
-    HttpClientRequest.setUrlParams({ "includeHidden": options?.params?.["includeHidden"] as any, "targetOrgId": options?.params?.["targetOrgId"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "listUserRoles": (userId, options) => __makePathRequest(HttpClientRequest.get, [userId], () => "/access-control/users/" + __encodePathParam(userId) + "/roles").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "includeHidden": options?.params?.["includeHidden"] as any, "targetOrgId": options?.params?.["targetOrgId"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListUserRoles200),
       "400": decodeError("ListUserRoles400", ListUserRoles400),
       "403": decodeError("ListUserRoles403", ListUserRoles403),
       "500": decodeError("ListUserRoles500", ListUserRoles500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getResourceDescription": (resource, options) => HttpClientRequest.get(`/access-control/${resource}/description`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getResourceDescription": (resource, options) => __makePathRequest(HttpClientRequest.get, [resource], () => "/access-control/" + __encodePathParam(resource) + "/description").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetResourceDescription200),
       "403": decodeError("GetResourceDescription403", GetResourceDescription403),
       "500": decodeError("GetResourceDescription500", GetResourceDescription500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getResourcePermissions": (resource, resourceID, options) => HttpClientRequest.get(`/access-control/${resource}/${resourceID}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getResourcePermissions": (resource, resourceID, options) => __makePathRequest(HttpClientRequest.get, [resource, resourceID], () => "/access-control/" + __encodePathParam(resource) + "/" + __encodePathParam(resourceID) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetResourcePermissions200),
       "403": decodeError("GetResourcePermissions403", GetResourcePermissions403),
       "404": decodeError("GetResourcePermissions404", GetResourcePermissions404),
       "500": decodeError("GetResourcePermissions500", GetResourcePermissions500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getSyncStatus": (options) => HttpClientRequest.get(`/admin/ldap-sync-status`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getSyncStatus": (options) => HttpClientRequest.get("/admin/ldap-sync-status").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSyncStatus200),
       "401": decodeError("GetSyncStatus401", GetSyncStatus401),
       "403": decodeError("GetSyncStatus403", GetSyncStatus403),
       "500": decodeError("GetSyncStatus500", GetSyncStatus500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getLDAPStatus": (options) => HttpClientRequest.get(`/admin/ldap/status`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getLDAPStatus": (options) => HttpClientRequest.get("/admin/ldap/status").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetLDAPStatus200),
       "401": decodeError("GetLDAPStatus401", GetLDAPStatus401),
       "403": decodeError("GetLDAPStatus403", GetLDAPStatus403),
       "500": decodeError("GetLDAPStatus500", GetLDAPStatus500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getUserFromLDAP": (userName, options) => HttpClientRequest.get(`/admin/ldap/${userName}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getUserFromLDAP": (userName, options) => __makePathRequest(HttpClientRequest.get, [userName], () => "/admin/ldap/" + __encodePathParam(userName) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserFromLDAP200),
       "401": decodeError("GetUserFromLDAP401", GetUserFromLDAP401),
       "403": decodeError("GetUserFromLDAP403", GetUserFromLDAP403),
       "500": decodeError("GetUserFromLDAP500", GetUserFromLDAP500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "adminGetSettings": (options) => HttpClientRequest.get(`/admin/settings`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "adminGetSettings": (options) => HttpClientRequest.get("/admin/settings").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(AdminGetSettings200),
       "401": decodeError("AdminGetSettings401", AdminGetSettings401),
       "403": decodeError("AdminGetSettings403", AdminGetSettings403),
       orElse: unexpectedStatus
     }))
-  ),
-    "adminGetStats": (options) => HttpClientRequest.get(`/admin/stats`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "adminGetStats": (options) => HttpClientRequest.get("/admin/stats").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(AdminGetStats200),
       "401": decodeError("AdminGetStats401", AdminGetStats401),
       "403": decodeError("AdminGetStats403", AdminGetStats403),
       "500": decodeError("AdminGetStats500", AdminGetStats500),
       orElse: unexpectedStatus
     }))
-  ),
-    "adminGetUserAuthTokens": (userId, options) => HttpClientRequest.get(`/admin/users/${userId}/auth-tokens`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "adminGetUserAuthTokens": (userId, options) => __makePathRequest(HttpClientRequest.get, [userId], () => "/admin/users/" + __encodePathParam(userId) + "/auth-tokens").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(AdminGetUserAuthTokens200),
       "401": decodeError("AdminGetUserAuthTokens401", AdminGetUserAuthTokens401),
       "403": decodeError("AdminGetUserAuthTokens403", AdminGetUserAuthTokens403),
       "500": decodeError("AdminGetUserAuthTokens500", AdminGetUserAuthTokens500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getUserQuota": (userId, options) => HttpClientRequest.get(`/admin/users/${userId}/quotas`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getUserQuota": (userId, options) => __makePathRequest(HttpClientRequest.get, [userId], () => "/admin/users/" + __encodePathParam(userId) + "/quotas").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserQuota200),
       "401": decodeError("GetUserQuota401", GetUserQuota401),
       "403": decodeError("GetUserQuota403", GetUserQuota403),
@@ -1995,35 +1836,38 @@ export const make = (
       "500": decodeError("GetUserQuota500", GetUserQuota500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getAnnotations": (options) => HttpClientRequest.get(`/annotations`).pipe(
-    HttpClientRequest.setUrlParams({ "from": options?.params?.["from"] as any, "to": options?.params?.["to"] as any, "userId": options?.params?.["userId"] as any, "userUID": options?.params?.["userUID"] as any, "alertId": options?.params?.["alertId"] as any, "alertUID": options?.params?.["alertUID"] as any, "dashboardId": options?.params?.["dashboardId"] as any, "dashboardUID": options?.params?.["dashboardUID"] as any, "panelId": options?.params?.["panelId"] as any, "limit": options?.params?.["limit"] as any, "tags": options?.params?.["tags"] as any, "type": options?.params?.["type"] as any, "matchAny": options?.params?.["matchAny"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getAnnotations": (options) => HttpClientRequest.get("/annotations").pipe(
+      HttpClientRequest.setUrlParams({ "from": options?.params?.["from"] as any, "to": options?.params?.["to"] as any, "userId": options?.params?.["userId"] as any, "userUID": options?.params?.["userUID"] as any, "alertId": options?.params?.["alertId"] as any, "alertUID": options?.params?.["alertUID"] as any, "dashboardId": options?.params?.["dashboardId"] as any, "dashboardUID": options?.params?.["dashboardUID"] as any, "panelId": options?.params?.["panelId"] as any, "limit": options?.params?.["limit"] as any, "tags": options?.params?.["tags"] as any, "type": options?.params?.["type"] as any, "matchAny": options?.params?.["matchAny"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetAnnotations200),
       "401": decodeError("GetAnnotations401", GetAnnotations401),
       "500": decodeError("GetAnnotations500", GetAnnotations500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getAnnotationTags": (options) => HttpClientRequest.get(`/annotations/tags`).pipe(
-    HttpClientRequest.setUrlParams({ "tag": options?.params?.["tag"] as any, "limit": options?.params?.["limit"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getAnnotationTags": (options) => HttpClientRequest.get("/annotations/tags").pipe(
+      HttpClientRequest.setUrlParams({ "tag": options?.params?.["tag"] as any, "limit": options?.params?.["limit"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetAnnotationTags200),
       "401": decodeError("GetAnnotationTags401", GetAnnotationTags401),
       "500": decodeError("GetAnnotationTags500", GetAnnotationTags500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getAnnotationByID": (annotationId, options) => HttpClientRequest.get(`/annotations/${annotationId}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getAnnotationByID": (annotationId, options) => __makePathRequest(HttpClientRequest.get, [annotationId], () => "/annotations/" + __encodePathParam(annotationId) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetAnnotationByID200),
       "401": decodeError("GetAnnotationByID401", GetAnnotationByID401),
       "500": decodeError("GetAnnotationByID500", GetAnnotationByID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "listDevices": (options) => HttpClientRequest.get(`/anonymous/devices`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "listDevices": (options) => HttpClientRequest.get("/anonymous/devices").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListDevices200),
       "401": decodeError("ListDevices401", ListDevices401),
       "403": decodeError("ListDevices403", ListDevices403),
@@ -2031,9 +1875,9 @@ export const make = (
       "500": decodeError("ListDevices500", ListDevices500),
       orElse: unexpectedStatus
     }))
-  ),
-    "SearchDevices": (options) => HttpClientRequest.get(`/anonymous/search`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "SearchDevices": (options) => HttpClientRequest.get("/anonymous/search").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchDevices200),
       "401": decodeError("SearchDevices401", SearchDevices401),
       "403": decodeError("SearchDevices403", SearchDevices403),
@@ -2041,18 +1885,19 @@ export const make = (
       "500": decodeError("SearchDevices500", SearchDevices500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSessionList": (options) => HttpClientRequest.get(`/cloudmigration/migration`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSessionList": (options) => HttpClientRequest.get("/cloudmigration/migration").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSessionList200),
       "401": decodeError("GetSessionList401", GetSessionList401),
       "403": decodeError("GetSessionList403", GetSessionList403),
       "500": decodeError("GetSessionList500", GetSessionList500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSession": (uid, options) => HttpClientRequest.get(`/cloudmigration/migration/${uid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSession": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/cloudmigration/migration/" + __encodePathParam(uid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSession200),
       "400": decodeError("GetSession400", GetSession400),
       "401": decodeError("GetSession401", GetSession401),
@@ -2060,10 +1905,12 @@ export const make = (
       "500": decodeError("GetSession500", GetSession500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getSnapshot": (uid, snapshotUid, options) => HttpClientRequest.get(`/cloudmigration/migration/${uid}/snapshot/${snapshotUid}`).pipe(
-    HttpClientRequest.setUrlParams({ "resultPage": options?.params?.["resultPage"] as any, "resultLimit": options?.params?.["resultLimit"] as any, "resultSortColumn": options?.params?.["resultSortColumn"] as any, "resultSortOrder": options?.params?.["resultSortOrder"] as any, "errorsOnly": options?.params?.["errorsOnly"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getSnapshot": (uid, snapshotUid, options) => __makePathRequest(HttpClientRequest.get, [uid, snapshotUid], () => "/cloudmigration/migration/" + __encodePathParam(uid) + "/snapshot/" + __encodePathParam(snapshotUid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "resultPage": options?.params?.["resultPage"] as any, "resultLimit": options?.params?.["resultLimit"] as any, "resultSortColumn": options?.params?.["resultSortColumn"] as any, "resultSortOrder": options?.params?.["resultSortOrder"] as any, "errorsOnly": options?.params?.["errorsOnly"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSnapshot200),
       "400": decodeError("GetSnapshot400", GetSnapshot400),
       "401": decodeError("GetSnapshot401", GetSnapshot401),
@@ -2071,10 +1918,12 @@ export const make = (
       "500": decodeError("GetSnapshot500", GetSnapshot500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getShapshotList": (uid, options) => HttpClientRequest.get(`/cloudmigration/migration/${uid}/snapshots`).pipe(
-    HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "limit": options?.params?.["limit"] as any, "sort": options?.params?.["sort"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getShapshotList": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/cloudmigration/migration/" + __encodePathParam(uid) + "/snapshots").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "limit": options?.params?.["limit"] as any, "sort": options?.params?.["sort"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetShapshotList200),
       "400": decodeError("GetShapshotList400", GetShapshotList400),
       "401": decodeError("GetShapshotList401", GetShapshotList401),
@@ -2082,15 +1931,16 @@ export const make = (
       "500": decodeError("GetShapshotList500", GetShapshotList500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getResourceDependencies": (options) => HttpClientRequest.get(`/cloudmigration/resources/dependencies`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getResourceDependencies": (options) => HttpClientRequest.get("/cloudmigration/resources/dependencies").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetResourceDependencies200),
       orElse: unexpectedStatus
     }))
-  ),
-    "getCloudMigrationToken": (options) => HttpClientRequest.get(`/cloudmigration/token`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getCloudMigrationToken": (options) => HttpClientRequest.get("/cloudmigration/token").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetCloudMigrationToken200),
       "401": decodeError("GetCloudMigrationToken401", GetCloudMigrationToken401),
       "403": decodeError("GetCloudMigrationToken403", GetCloudMigrationToken403),
@@ -2098,72 +1948,81 @@ export const make = (
       "500": decodeError("GetCloudMigrationToken500", GetCloudMigrationToken500),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteConvertPrometheusCortexGetRules": (options) => HttpClientRequest.get(`/convert/api/prom/rules`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteConvertPrometheusCortexGetRules": (options) => HttpClientRequest.get("/convert/api/prom/rules").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteConvertPrometheusCortexGetNamespace": (NamespaceTitle, options) => HttpClientRequest.get(`/convert/api/prom/rules/${NamespaceTitle}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteConvertPrometheusCortexGetNamespace": (NamespaceTitle, options) => __makePathRequest(HttpClientRequest.get, [NamespaceTitle], () => "/convert/api/prom/rules/" + __encodePathParam(NamespaceTitle) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteConvertPrometheusCortexGetRuleGroup": (NamespaceTitle, Group, options) => HttpClientRequest.get(`/convert/api/prom/rules/${NamespaceTitle}/${Group}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteConvertPrometheusCortexGetRuleGroup": (NamespaceTitle, Group, options) => __makePathRequest(HttpClientRequest.get, [NamespaceTitle, Group], () => "/convert/api/prom/rules/" + __encodePathParam(NamespaceTitle) + "/" + __encodePathParam(Group) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteConvertPrometheusGetRules": (options) => HttpClientRequest.get(`/convert/prometheus/config/v1/rules`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteConvertPrometheusGetRules": (options) => HttpClientRequest.get("/convert/prometheus/config/v1/rules").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteConvertPrometheusGetNamespace": (NamespaceTitle, options) => HttpClientRequest.get(`/convert/prometheus/config/v1/rules/${NamespaceTitle}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteConvertPrometheusGetNamespace": (NamespaceTitle, options) => __makePathRequest(HttpClientRequest.get, [NamespaceTitle], () => "/convert/prometheus/config/v1/rules/" + __encodePathParam(NamespaceTitle) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteConvertPrometheusGetRuleGroup": (NamespaceTitle, Group, options) => HttpClientRequest.get(`/convert/prometheus/config/v1/rules/${NamespaceTitle}/${Group}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteConvertPrometheusGetRuleGroup": (NamespaceTitle, Group, options) => __makePathRequest(HttpClientRequest.get, [NamespaceTitle, Group], () => "/convert/prometheus/config/v1/rules/" + __encodePathParam(NamespaceTitle) + "/" + __encodePathParam(Group) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "searchDashboardSnapshots": (options) => HttpClientRequest.get(`/dashboard/snapshots`).pipe(
-    HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "searchDashboardSnapshots": (options) => HttpClientRequest.get("/dashboard/snapshots").pipe(
+      HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchDashboardSnapshots200),
       "500": decodeError("SearchDashboardSnapshots500", SearchDashboardSnapshots500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getHomeDashboard": (options) => HttpClientRequest.get(`/dashboards/home`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getHomeDashboard": (options) => HttpClientRequest.get("/dashboards/home").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetHomeDashboard200),
       "401": decodeError("GetHomeDashboard401", GetHomeDashboard401),
       "500": decodeError("GetHomeDashboard500", GetHomeDashboard500),
       orElse: unexpectedStatus
     }))
-  ),
-    "listPublicDashboards": (options) => HttpClientRequest.get(`/dashboards/public-dashboards`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "listPublicDashboards": (options) => HttpClientRequest.get("/dashboards/public-dashboards").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListPublicDashboards200),
       "401": decodeError("ListPublicDashboards401", ListPublicDashboards401),
       "403": decodeError("ListPublicDashboards403", ListPublicDashboards403),
       "500": decodeError("ListPublicDashboards500", ListPublicDashboards500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getDashboardTags": (options) => HttpClientRequest.get(`/dashboards/tags`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getDashboardTags": (options) => HttpClientRequest.get("/dashboards/tags").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDashboardTags200),
       "401": decodeError("GetDashboardTags401", GetDashboardTags401),
       "500": decodeError("GetDashboardTags500", GetDashboardTags500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getPublicDashboard": (dashboardUid, options) => HttpClientRequest.get(`/dashboards/uid/${dashboardUid}/public-dashboards`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getPublicDashboard": (dashboardUid, options) => __makePathRequest(HttpClientRequest.get, [dashboardUid], () => "/dashboards/uid/" + __encodePathParam(dashboardUid) + "/public-dashboards").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetPublicDashboard200),
       "400": decodeError("GetPublicDashboard400", GetPublicDashboard400),
       "401": decodeError("GetPublicDashboard401", GetPublicDashboard401),
@@ -2172,9 +2031,11 @@ export const make = (
       "500": decodeError("GetPublicDashboard500", GetPublicDashboard500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDashboardByUID": (uid, options) => HttpClientRequest.get(`/dashboards/uid/${uid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDashboardByUID": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/dashboards/uid/" + __encodePathParam(uid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDashboardByUID200),
       "401": decodeError("GetDashboardByUID401", GetDashboardByUID401),
       "403": decodeError("GetDashboardByUID403", GetDashboardByUID403),
@@ -2183,9 +2044,11 @@ export const make = (
       "500": decodeError("GetDashboardByUID500", GetDashboardByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDashboardPermissionsListByUID": (uid, options) => HttpClientRequest.get(`/dashboards/uid/${uid}/permissions`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDashboardPermissionsListByUID": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/dashboards/uid/" + __encodePathParam(uid) + "/permissions").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDashboardPermissionsListByUID200),
       "401": decodeError("GetDashboardPermissionsListByUID401", GetDashboardPermissionsListByUID401),
       "403": decodeError("GetDashboardPermissionsListByUID403", GetDashboardPermissionsListByUID403),
@@ -2193,10 +2056,12 @@ export const make = (
       "500": decodeError("GetDashboardPermissionsListByUID500", GetDashboardPermissionsListByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDashboardVersionsByUID": (uid, options) => HttpClientRequest.get(`/dashboards/uid/${uid}/versions`).pipe(
-    HttpClientRequest.setUrlParams({ "limit": options?.params?.["limit"] as any, "start": options?.params?.["start"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDashboardVersionsByUID": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/dashboards/uid/" + __encodePathParam(uid) + "/versions").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "limit": options?.params?.["limit"] as any, "start": options?.params?.["start"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDashboardVersionsByUID200),
       "401": decodeError("GetDashboardVersionsByUID401", GetDashboardVersionsByUID401),
       "403": decodeError("GetDashboardVersionsByUID403", GetDashboardVersionsByUID403),
@@ -2204,9 +2069,11 @@ export const make = (
       "500": decodeError("GetDashboardVersionsByUID500", GetDashboardVersionsByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDashboardVersionByUID": (uid, DashboardVersionID, options) => HttpClientRequest.get(`/dashboards/uid/${uid}/versions/${DashboardVersionID}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDashboardVersionByUID": (uid, DashboardVersionID, options) => __makePathRequest(HttpClientRequest.get, [uid, DashboardVersionID], () => "/dashboards/uid/" + __encodePathParam(uid) + "/versions/" + __encodePathParam(DashboardVersionID) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDashboardVersionByUID200),
       "401": decodeError("GetDashboardVersionByUID401", GetDashboardVersionByUID401),
       "403": decodeError("GetDashboardVersionByUID403", GetDashboardVersionByUID403),
@@ -2214,28 +2081,30 @@ export const make = (
       "500": decodeError("GetDashboardVersionByUID500", GetDashboardVersionByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDataSources": (options) => HttpClientRequest.get(`/datasources`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDataSources": (options) => HttpClientRequest.get("/datasources").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDataSources200),
       "401": decodeError("GetDataSources401", GetDataSources401),
       "403": decodeError("GetDataSources403", GetDataSources403),
       "500": decodeError("GetDataSources500", GetDataSources500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getCorrelations": (options) => HttpClientRequest.get(`/datasources/correlations`).pipe(
-    HttpClientRequest.setUrlParams({ "limit": options?.params?.["limit"] as any, "page": options?.params?.["page"] as any, "sourceUID": options?.params?.["sourceUID"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getCorrelations": (options) => HttpClientRequest.get("/datasources/correlations").pipe(
+      HttpClientRequest.setUrlParams({ "limit": options?.params?.["limit"] as any, "page": options?.params?.["page"] as any, "sourceUID": options?.params?.["sourceUID"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetCorrelations200),
       "401": decodeError("GetCorrelations401", GetCorrelations401),
       "404": decodeError("GetCorrelations404", GetCorrelations404),
       "500": decodeError("GetCorrelations500", GetCorrelations500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getDataSourceIdByName": (name, options) => HttpClientRequest.get(`/datasources/id/${name}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getDataSourceIdByName": (name, options) => __makePathRequest(HttpClientRequest.get, [name], () => "/datasources/id/" + __encodePathParam(name) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDataSourceIdByName200),
       "401": decodeError("GetDataSourceIdByName401", GetDataSourceIdByName401),
       "403": decodeError("GetDataSourceIdByName403", GetDataSourceIdByName403),
@@ -2243,18 +2112,22 @@ export const make = (
       "500": decodeError("GetDataSourceIdByName500", GetDataSourceIdByName500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDataSourceByName": (name, options) => HttpClientRequest.get(`/datasources/name/${name}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDataSourceByName": (name, options) => __makePathRequest(HttpClientRequest.get, [name], () => "/datasources/name/" + __encodePathParam(name) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDataSourceByName200),
       "401": decodeError("GetDataSourceByName401", GetDataSourceByName401),
       "403": decodeError("GetDataSourceByName403", GetDataSourceByName403),
       "500": decodeError("GetDataSourceByName500", GetDataSourceByName500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "datasourceProxyGETByUIDcalls": (uid, datasourceProxyRoute, options) => HttpClientRequest.get(`/datasources/proxy/uid/${uid}/${datasourceProxyRoute}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "datasourceProxyGETByUIDcalls": (uid, datasourceProxyRoute, options) => __makePathRequest(HttpClientRequest.get, [uid, datasourceProxyRoute], () => "/datasources/proxy/uid/" + __encodePathParam(uid) + "/" + __encodePathParam(datasourceProxyRoute) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "400": decodeError("DatasourceProxyGETByUIDcalls400", DatasourceProxyGETByUIDcalls400),
       "401": decodeError("DatasourceProxyGETByUIDcalls401", DatasourceProxyGETByUIDcalls401),
       "403": decodeError("DatasourceProxyGETByUIDcalls403", DatasourceProxyGETByUIDcalls403),
@@ -2263,27 +2136,33 @@ export const make = (
       "200": () => Effect.void,
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getCorrelationsBySourceUID": (sourceUID, options) => HttpClientRequest.get(`/datasources/uid/${sourceUID}/correlations`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getCorrelationsBySourceUID": (sourceUID, options) => __makePathRequest(HttpClientRequest.get, [sourceUID], () => "/datasources/uid/" + __encodePathParam(sourceUID) + "/correlations").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetCorrelationsBySourceUID200),
       "401": decodeError("GetCorrelationsBySourceUID401", GetCorrelationsBySourceUID401),
       "404": decodeError("GetCorrelationsBySourceUID404", GetCorrelationsBySourceUID404),
       "500": decodeError("GetCorrelationsBySourceUID500", GetCorrelationsBySourceUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getCorrelation": (sourceUID, correlationUID, options) => HttpClientRequest.get(`/datasources/uid/${sourceUID}/correlations/${correlationUID}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getCorrelation": (sourceUID, correlationUID, options) => __makePathRequest(HttpClientRequest.get, [sourceUID, correlationUID], () => "/datasources/uid/" + __encodePathParam(sourceUID) + "/correlations/" + __encodePathParam(correlationUID) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetCorrelation200),
       "401": decodeError("GetCorrelation401", GetCorrelation401),
       "404": decodeError("GetCorrelation404", GetCorrelation404),
       "500": decodeError("GetCorrelation500", GetCorrelation500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDataSourceByUID": (uid, options) => HttpClientRequest.get(`/datasources/uid/${uid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDataSourceByUID": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/datasources/uid/" + __encodePathParam(uid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDataSourceByUID200),
       "400": decodeError("GetDataSourceByUID400", GetDataSourceByUID400),
       "401": decodeError("GetDataSourceByUID401", GetDataSourceByUID401),
@@ -2292,9 +2171,11 @@ export const make = (
       "500": decodeError("GetDataSourceByUID500", GetDataSourceByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "checkDatasourceHealthWithUID": (uid, options) => HttpClientRequest.get(`/datasources/uid/${uid}/health`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "checkDatasourceHealthWithUID": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/datasources/uid/" + __encodePathParam(uid) + "/health").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(CheckDatasourceHealthWithUID200),
       "400": decodeError("CheckDatasourceHealthWithUID400", CheckDatasourceHealthWithUID400),
       "401": decodeError("CheckDatasourceHealthWithUID401", CheckDatasourceHealthWithUID401),
@@ -2302,9 +2183,11 @@ export const make = (
       "500": decodeError("CheckDatasourceHealthWithUID500", CheckDatasourceHealthWithUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getTeamLBACRulesApi": (uid, options) => HttpClientRequest.get(`/datasources/uid/${uid}/lbac/teams`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getTeamLBACRulesApi": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/datasources/uid/" + __encodePathParam(uid) + "/lbac/teams").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetTeamLBACRulesApi200),
       "400": decodeError("GetTeamLBACRulesApi400", GetTeamLBACRulesApi400),
       "401": decodeError("GetTeamLBACRulesApi401", GetTeamLBACRulesApi401),
@@ -2313,9 +2196,11 @@ export const make = (
       "500": decodeError("GetTeamLBACRulesApi500", GetTeamLBACRulesApi500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "callDatasourceResourceWithUID": (uid, datasourceProxyRoute, options) => HttpClientRequest.get(`/datasources/uid/${uid}/resources/${datasourceProxyRoute}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "callDatasourceResourceWithUID": (uid, datasourceProxyRoute, options) => __makePathRequest(HttpClientRequest.get, [uid, datasourceProxyRoute], () => "/datasources/uid/" + __encodePathParam(uid) + "/resources/" + __encodePathParam(datasourceProxyRoute) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(CallDatasourceResourceWithUID200),
       "400": decodeError("CallDatasourceResourceWithUID400", CallDatasourceResourceWithUID400),
       "401": decodeError("CallDatasourceResourceWithUID401", CallDatasourceResourceWithUID401),
@@ -2324,18 +2209,21 @@ export const make = (
       "500": decodeError("CallDatasourceResourceWithUID500", CallDatasourceResourceWithUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDataSourceCacheConfig": (dataSourceUID, options) => HttpClientRequest.get(`/datasources/${dataSourceUID}/cache`).pipe(
-    HttpClientRequest.setUrlParams({ "dataSourceType": options?.params?.["dataSourceType"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDataSourceCacheConfig": (dataSourceUID, options) => __makePathRequest(HttpClientRequest.get, [dataSourceUID], () => "/datasources/" + __encodePathParam(dataSourceUID) + "/cache").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "dataSourceType": options?.params?.["dataSourceType"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetDataSourceCacheConfig200),
       "500": decodeError("GetDataSourceCacheConfig500", GetDataSourceCacheConfig500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "queryMetricsWithExpressions": (options) => HttpClientRequest.post(`/ds/query`).pipe(
-    HttpClientRequest.bodyJsonUnsafe(options.payload),
-    withResponse(options.config)(HttpClientResponse.matchStatus({
+    "queryMetricsWithExpressions": (options) => HttpClientRequest.post("/ds/query").pipe(
+      HttpClientRequest.bodyJsonUnsafe(options.payload),
+      withResponse(options.config)(HttpClientResponse.matchStatus({
       "200": decodeSuccess(QueryMetricsWithExpressions200),
       "207": decodeSuccess(QueryMetricsWithExpressions207),
       "400": decodeError("QueryMetricsWithExpressions400", QueryMetricsWithExpressions400),
@@ -2344,19 +2232,20 @@ export const make = (
       "500": decodeError("QueryMetricsWithExpressions500", QueryMetricsWithExpressions500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getFolders": (options) => HttpClientRequest.get(`/folders`).pipe(
-    HttpClientRequest.setUrlParams({ "limit": options?.params?.["limit"] as any, "page": options?.params?.["page"] as any, "parentUid": options?.params?.["parentUid"] as any, "permission": options?.params?.["permission"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getFolders": (options) => HttpClientRequest.get("/folders").pipe(
+      HttpClientRequest.setUrlParams({ "limit": options?.params?.["limit"] as any, "page": options?.params?.["page"] as any, "parentUid": options?.params?.["parentUid"] as any, "permission": options?.params?.["permission"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetFolders200),
       "401": decodeError("GetFolders401", GetFolders401),
       "403": decodeError("GetFolders403", GetFolders403),
       "500": decodeError("GetFolders500", GetFolders500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getFolderByUID": (folderUid, options) => HttpClientRequest.get(`/folders/${folderUid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getFolderByUID": (folderUid, options) => __makePathRequest(HttpClientRequest.get, [folderUid], () => "/folders/" + __encodePathParam(folderUid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetFolderByUID200),
       "401": decodeError("GetFolderByUID401", GetFolderByUID401),
       "403": decodeError("GetFolderByUID403", GetFolderByUID403),
@@ -2364,9 +2253,11 @@ export const make = (
       "500": decodeError("GetFolderByUID500", GetFolderByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getFolderDescendantCounts": (folderUid, options) => HttpClientRequest.get(`/folders/${folderUid}/counts`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getFolderDescendantCounts": (folderUid, options) => __makePathRequest(HttpClientRequest.get, [folderUid], () => "/folders/" + __encodePathParam(folderUid) + "/counts").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetFolderDescendantCounts200),
       "401": decodeError("GetFolderDescendantCounts401", GetFolderDescendantCounts401),
       "403": decodeError("GetFolderDescendantCounts403", GetFolderDescendantCounts403),
@@ -2374,9 +2265,11 @@ export const make = (
       "500": decodeError("GetFolderDescendantCounts500", GetFolderDescendantCounts500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getFolderPermissionList": (folderUid, options) => HttpClientRequest.get(`/folders/${folderUid}/permissions`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getFolderPermissionList": (folderUid, options) => __makePathRequest(HttpClientRequest.get, [folderUid], () => "/folders/" + __encodePathParam(folderUid) + "/permissions").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetFolderPermissionList200),
       "401": decodeError("GetFolderPermissionList401", GetFolderPermissionList401),
       "403": decodeError("GetFolderPermissionList403", GetFolderPermissionList403),
@@ -2384,34 +2277,38 @@ export const make = (
       "500": decodeError("GetFolderPermissionList500", GetFolderPermissionList500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getHealth": (options) => HttpClientRequest.get(`/health`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getHealth": (options) => HttpClientRequest.get("/health").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetHealth200),
       "503": decodeError("GetHealth503", GetHealth503),
       orElse: unexpectedStatus
     }))
-  ),
-    "getLibraryElements": (options) => HttpClientRequest.get(`/library-elements`).pipe(
-    HttpClientRequest.setUrlParams({ "searchString": options?.params?.["searchString"] as any, "kind": options?.params?.["kind"] as any, "sortDirection": options?.params?.["sortDirection"] as any, "typeFilter": options?.params?.["typeFilter"] as any, "excludeUid": options?.params?.["excludeUid"] as any, "folderFilter": options?.params?.["folderFilter"] as any, "folderFilterUIDs": options?.params?.["folderFilterUIDs"] as any, "perPage": options?.params?.["perPage"] as any, "page": options?.params?.["page"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getLibraryElements": (options) => HttpClientRequest.get("/library-elements").pipe(
+      HttpClientRequest.setUrlParams({ "searchString": options?.params?.["searchString"] as any, "kind": options?.params?.["kind"] as any, "sortDirection": options?.params?.["sortDirection"] as any, "typeFilter": options?.params?.["typeFilter"] as any, "excludeUid": options?.params?.["excludeUid"] as any, "folderFilter": options?.params?.["folderFilter"] as any, "folderFilterUIDs": options?.params?.["folderFilterUIDs"] as any, "perPage": options?.params?.["perPage"] as any, "page": options?.params?.["page"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetLibraryElements200),
       "401": decodeError("GetLibraryElements401", GetLibraryElements401),
       "500": decodeError("GetLibraryElements500", GetLibraryElements500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getLibraryElementByName": (libraryElementName, options) => HttpClientRequest.get(`/library-elements/name/${libraryElementName}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getLibraryElementByName": (libraryElementName, options) => __makePathRequest(HttpClientRequest.get, [libraryElementName], () => "/library-elements/name/" + __encodePathParam(libraryElementName) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetLibraryElementByName200),
       "401": decodeError("GetLibraryElementByName401", GetLibraryElementByName401),
       "404": decodeError("GetLibraryElementByName404", GetLibraryElementByName404),
       "500": decodeError("GetLibraryElementByName500", GetLibraryElementByName500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getLibraryElementByUID": (libraryElementUid, options) => HttpClientRequest.get(`/library-elements/${libraryElementUid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getLibraryElementByUID": (libraryElementUid, options) => __makePathRequest(HttpClientRequest.get, [libraryElementUid], () => "/library-elements/" + __encodePathParam(libraryElementUid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetLibraryElementByUID200),
       "401": decodeError("GetLibraryElementByUID401", GetLibraryElementByUID401),
       "403": decodeError("GetLibraryElementByUID403", GetLibraryElementByUID403),
@@ -2419,9 +2316,11 @@ export const make = (
       "500": decodeError("GetLibraryElementByUID500", GetLibraryElementByUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getLibraryElementConnections": (libraryElementUid, options) => HttpClientRequest.get(`/library-elements/${libraryElementUid}/connections/`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getLibraryElementConnections": (libraryElementUid, options) => __makePathRequest(HttpClientRequest.get, [libraryElementUid], () => "/library-elements/" + __encodePathParam(libraryElementUid) + "/connections/").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetLibraryElementConnections200),
       "401": decodeError("GetLibraryElementConnections401", GetLibraryElementConnections401),
       "403": decodeError("GetLibraryElementConnections403", GetLibraryElementConnections403),
@@ -2429,75 +2328,76 @@ export const make = (
       "500": decodeError("GetLibraryElementConnections500", GetLibraryElementConnections500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getStatus": (options) => HttpClientRequest.get(`/licensing/check`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getStatus": (options) => HttpClientRequest.get("/licensing/check").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "200": () => Effect.void,
       orElse: unexpectedStatus
     }))
-  ),
-    "getCustomPermissionsReport": (options) => HttpClientRequest.get(`/licensing/custom-permissions`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getCustomPermissionsReport": (options) => HttpClientRequest.get("/licensing/custom-permissions").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "500": decodeError("GetCustomPermissionsReport500", GetCustomPermissionsReport500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getCustomPermissionsCSV": (options) => HttpClientRequest.get(`/licensing/custom-permissions-csv`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getCustomPermissionsCSV": (options) => HttpClientRequest.get("/licensing/custom-permissions-csv").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "500": decodeError("GetCustomPermissionsCSV500", GetCustomPermissionsCSV500),
       orElse: unexpectedStatus
     }))
-  ),
-    "refreshLicenseStats": (options) => HttpClientRequest.get(`/licensing/refresh-stats`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "refreshLicenseStats": (options) => HttpClientRequest.get("/licensing/refresh-stats").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RefreshLicenseStats200),
       "500": decodeError("RefreshLicenseStats500", RefreshLicenseStats500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getLicenseToken": (options) => HttpClientRequest.get(`/licensing/token`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getLicenseToken": (options) => HttpClientRequest.get("/licensing/token").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetLicenseToken200),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSAMLLogout": (options) => HttpClientRequest.get(`/logout/saml`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSAMLLogout": (options) => HttpClientRequest.get("/logout/saml").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "404": decodeError("GetSAMLLogout404", GetSAMLLogout404),
       "500": decodeError("GetSAMLLogout500", GetSAMLLogout500),
       "302": () => Effect.void,
       orElse: unexpectedStatus
     }))
-  ),
-    "getCurrentOrg": (options) => HttpClientRequest.get(`/org`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getCurrentOrg": (options) => HttpClientRequest.get("/org").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetCurrentOrg200),
       "401": decodeError("GetCurrentOrg401", GetCurrentOrg401),
       "403": decodeError("GetCurrentOrg403", GetCurrentOrg403),
       "500": decodeError("GetCurrentOrg500", GetCurrentOrg500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getPendingOrgInvites": (options) => HttpClientRequest.get(`/org/invites`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getPendingOrgInvites": (options) => HttpClientRequest.get("/org/invites").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetPendingOrgInvites200),
       "401": decodeError("GetPendingOrgInvites401", GetPendingOrgInvites401),
       "403": decodeError("GetPendingOrgInvites403", GetPendingOrgInvites403),
       "500": decodeError("GetPendingOrgInvites500", GetPendingOrgInvites500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getOrgPreferences": (options) => HttpClientRequest.get(`/org/preferences`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getOrgPreferences": (options) => HttpClientRequest.get("/org/preferences").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgPreferences200),
       "401": decodeError("GetOrgPreferences401", GetOrgPreferences401),
       "403": decodeError("GetOrgPreferences403", GetOrgPreferences403),
       "500": decodeError("GetOrgPreferences500", GetOrgPreferences500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getCurrentOrgQuota": (options) => HttpClientRequest.get(`/org/quotas`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getCurrentOrgQuota": (options) => HttpClientRequest.get("/org/quotas").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetCurrentOrgQuota200),
       "401": decodeError("GetCurrentOrgQuota401", GetCurrentOrgQuota401),
       "403": decodeError("GetCurrentOrgQuota403", GetCurrentOrgQuota403),
@@ -2505,30 +2405,30 @@ export const make = (
       "500": decodeError("GetCurrentOrgQuota500", GetCurrentOrgQuota500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getOrgUsersForCurrentOrg": (options) => HttpClientRequest.get(`/org/users`).pipe(
-    HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getOrgUsersForCurrentOrg": (options) => HttpClientRequest.get("/org/users").pipe(
+      HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgUsersForCurrentOrg200),
       "401": decodeError("GetOrgUsersForCurrentOrg401", GetOrgUsersForCurrentOrg401),
       "403": decodeError("GetOrgUsersForCurrentOrg403", GetOrgUsersForCurrentOrg403),
       "500": decodeError("GetOrgUsersForCurrentOrg500", GetOrgUsersForCurrentOrg500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getOrgUsersForCurrentOrgLookup": (options) => HttpClientRequest.get(`/org/users/lookup`).pipe(
-    HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getOrgUsersForCurrentOrgLookup": (options) => HttpClientRequest.get("/org/users/lookup").pipe(
+      HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgUsersForCurrentOrgLookup200),
       "401": decodeError("GetOrgUsersForCurrentOrgLookup401", GetOrgUsersForCurrentOrgLookup401),
       "403": decodeError("GetOrgUsersForCurrentOrgLookup403", GetOrgUsersForCurrentOrgLookup403),
       "500": decodeError("GetOrgUsersForCurrentOrgLookup500", GetOrgUsersForCurrentOrgLookup500),
       orElse: unexpectedStatus
     }))
-  ),
-    "searchOrgs": (options) => HttpClientRequest.get(`/orgs`).pipe(
-    HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "perpage": options?.params?.["perpage"] as any, "name": options?.params?.["name"] as any, "query": options?.params?.["query"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "searchOrgs": (options) => HttpClientRequest.get("/orgs").pipe(
+      HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "perpage": options?.params?.["perpage"] as any, "name": options?.params?.["name"] as any, "query": options?.params?.["query"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchOrgs200),
       "401": decodeError("SearchOrgs401", SearchOrgs401),
       "403": decodeError("SearchOrgs403", SearchOrgs403),
@@ -2536,27 +2436,32 @@ export const make = (
       "500": decodeError("SearchOrgs500", SearchOrgs500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getOrgByName": (orgName, options) => HttpClientRequest.get(`/orgs/name/${orgName}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getOrgByName": (orgName, options) => __makePathRequest(HttpClientRequest.get, [orgName], () => "/orgs/name/" + __encodePathParam(orgName) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgByName200),
       "401": decodeError("GetOrgByName401", GetOrgByName401),
       "403": decodeError("GetOrgByName403", GetOrgByName403),
       "500": decodeError("GetOrgByName500", GetOrgByName500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getOrgByID": (orgId, options) => HttpClientRequest.get(`/orgs/${orgId}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getOrgByID": (orgId, options) => __makePathRequest(HttpClientRequest.get, [orgId], () => "/orgs/" + __encodePathParam(orgId) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgByID200),
       "401": decodeError("GetOrgByID401", GetOrgByID401),
       "403": decodeError("GetOrgByID403", GetOrgByID403),
       "500": decodeError("GetOrgByID500", GetOrgByID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getOrgQuota": (orgId, options) => HttpClientRequest.get(`/orgs/${orgId}/quotas`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getOrgQuota": (orgId, options) => __makePathRequest(HttpClientRequest.get, [orgId], () => "/orgs/" + __encodePathParam(orgId) + "/quotas").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgQuota200),
       "401": decodeError("GetOrgQuota401", GetOrgQuota401),
       "403": decodeError("GetOrgQuota403", GetOrgQuota403),
@@ -2564,35 +2469,41 @@ export const make = (
       "500": decodeError("GetOrgQuota500", GetOrgQuota500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getOrgUsers": (orgId, options) => HttpClientRequest.get(`/orgs/${orgId}/users`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getOrgUsers": (orgId, options) => __makePathRequest(HttpClientRequest.get, [orgId], () => "/orgs/" + __encodePathParam(orgId) + "/users").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetOrgUsers200),
       "401": decodeError("GetOrgUsers401", GetOrgUsers401),
       "403": decodeError("GetOrgUsers403", GetOrgUsers403),
       "500": decodeError("GetOrgUsers500", GetOrgUsers500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "searchOrgUsers": (orgId, options) => HttpClientRequest.get(`/orgs/${orgId}/users/search`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "searchOrgUsers": (orgId, options) => __makePathRequest(HttpClientRequest.get, [orgId], () => "/orgs/" + __encodePathParam(orgId) + "/users/search").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchOrgUsers200),
       "401": decodeError("SearchOrgUsers401", SearchOrgUsers401),
       "403": decodeError("SearchOrgUsers403", SearchOrgUsers403),
       "500": decodeError("SearchOrgUsers500", SearchOrgUsers500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "searchPlaylists": (options) => HttpClientRequest.get(`/playlists`).pipe(
-    HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "searchPlaylists": (options) => HttpClientRequest.get("/playlists").pipe(
+      HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "limit": options?.params?.["limit"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchPlaylists200),
       "500": decodeError("SearchPlaylists500", SearchPlaylists500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getPlaylist": (uid, options) => HttpClientRequest.get(`/playlists/${uid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getPlaylist": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/playlists/" + __encodePathParam(uid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetPlaylist200),
       "401": decodeError("GetPlaylist401", GetPlaylist401),
       "403": decodeError("GetPlaylist403", GetPlaylist403),
@@ -2600,9 +2511,11 @@ export const make = (
       "500": decodeError("GetPlaylist500", GetPlaylist500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getPlaylistItems": (uid, options) => HttpClientRequest.get(`/playlists/${uid}/items`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getPlaylistItems": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/playlists/" + __encodePathParam(uid) + "/items").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetPlaylistItems200),
       "401": decodeError("GetPlaylistItems401", GetPlaylistItems401),
       "403": decodeError("GetPlaylistItems403", GetPlaylistItems403),
@@ -2610,9 +2523,11 @@ export const make = (
       "500": decodeError("GetPlaylistItems500", GetPlaylistItems500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "viewPublicDashboard": (accessToken, options) => HttpClientRequest.get(`/public/dashboards/${accessToken}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "viewPublicDashboard": (accessToken, options) => __makePathRequest(HttpClientRequest.get, [accessToken], () => "/public/dashboards/" + __encodePathParam(accessToken) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ViewPublicDashboard200),
       "400": decodeError("ViewPublicDashboard400", ViewPublicDashboard400),
       "401": decodeError("ViewPublicDashboard401", ViewPublicDashboard401),
@@ -2621,9 +2536,11 @@ export const make = (
       "500": decodeError("ViewPublicDashboard500", ViewPublicDashboard500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getPublicAnnotations": (accessToken, options) => HttpClientRequest.get(`/public/dashboards/${accessToken}/annotations`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getPublicAnnotations": (accessToken, options) => __makePathRequest(HttpClientRequest.get, [accessToken], () => "/public/dashboards/" + __encodePathParam(accessToken) + "/annotations").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetPublicAnnotations200),
       "400": decodeError("GetPublicAnnotations400", GetPublicAnnotations400),
       "401": decodeError("GetPublicAnnotations401", GetPublicAnnotations401),
@@ -2632,18 +2549,19 @@ export const make = (
       "500": decodeError("GetPublicAnnotations500", GetPublicAnnotations500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "searchQueries": (options) => HttpClientRequest.get(`/query-history`).pipe(
-    HttpClientRequest.setUrlParams({ "datasourceUid": options?.params?.["datasourceUid"] as any, "searchString": options?.params?.["searchString"] as any, "onlyStarred": options?.params?.["onlyStarred"] as any, "sort": options?.params?.["sort"] as any, "page": options?.params?.["page"] as any, "limit": options?.params?.["limit"] as any, "from": options?.params?.["from"] as any, "to": options?.params?.["to"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "searchQueries": (options) => HttpClientRequest.get("/query-history").pipe(
+      HttpClientRequest.setUrlParams({ "datasourceUid": options?.params?.["datasourceUid"] as any, "searchString": options?.params?.["searchString"] as any, "onlyStarred": options?.params?.["onlyStarred"] as any, "sort": options?.params?.["sort"] as any, "page": options?.params?.["page"] as any, "limit": options?.params?.["limit"] as any, "from": options?.params?.["from"] as any, "to": options?.params?.["to"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchQueries200),
       "401": decodeError("SearchQueries401", SearchQueries401),
       "500": decodeError("SearchQueries500", SearchQueries500),
       orElse: unexpectedStatus
     }))
-  ),
-    "listRecordingRules": (options) => HttpClientRequest.get(`/recording-rules`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "listRecordingRules": (options) => HttpClientRequest.get("/recording-rules").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListRecordingRules200),
       "401": decodeError("ListRecordingRules401", ListRecordingRules401),
       "403": decodeError("ListRecordingRules403", ListRecordingRules403),
@@ -2651,9 +2569,9 @@ export const make = (
       "500": decodeError("ListRecordingRules500", ListRecordingRules500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getRecordingRuleWriteTarget": (options) => HttpClientRequest.get(`/recording-rules/writer`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getRecordingRuleWriteTarget": (options) => HttpClientRequest.get("/recording-rules/writer").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetRecordingRuleWriteTarget200),
       "401": decodeError("GetRecordingRuleWriteTarget401", GetRecordingRuleWriteTarget401),
       "403": decodeError("GetRecordingRuleWriteTarget403", GetRecordingRuleWriteTarget403),
@@ -2661,27 +2579,29 @@ export const make = (
       "500": decodeError("GetRecordingRuleWriteTarget500", GetRecordingRuleWriteTarget500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getReports": (options) => HttpClientRequest.get(`/reports`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getReports": (options) => HttpClientRequest.get("/reports").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetReports200),
       "401": decodeError("GetReports401", GetReports401),
       "403": decodeError("GetReports403", GetReports403),
       "500": decodeError("GetReports500", GetReports500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getReportsByDashboardUID": (uid, options) => HttpClientRequest.get(`/reports/dashboards/${uid}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getReportsByDashboardUID": (uid, options) => __makePathRequest(HttpClientRequest.get, [uid], () => "/reports/dashboards/" + __encodePathParam(uid) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetReportsByDashboardUID200),
       "401": decodeError("GetReportsByDashboardUID401", GetReportsByDashboardUID401),
       "403": decodeError("GetReportsByDashboardUID403", GetReportsByDashboardUID403),
       "500": decodeError("GetReportsByDashboardUID500", GetReportsByDashboardUID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getSettingsImage": (options) => HttpClientRequest.get(`/reports/images/:image`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getSettingsImage": (options) => HttpClientRequest.get("/reports/images/:image").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSettingsImage200),
       "401": decodeError("GetSettingsImage401", GetSettingsImage401),
       "403": decodeError("GetSettingsImage403", GetSettingsImage403),
@@ -2689,10 +2609,10 @@ export const make = (
       "500": decodeError("GetSettingsImage500", GetSettingsImage500),
       orElse: unexpectedStatus
     }))
-  ),
-    "renderReportCSVs": (options) => HttpClientRequest.get(`/reports/render/csvs`).pipe(
-    HttpClientRequest.setUrlParams({ "dashboards": options?.params?.["dashboards"] as any, "title": options?.params?.["title"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "renderReportCSVs": (options) => HttpClientRequest.get("/reports/render/csvs").pipe(
+      HttpClientRequest.setUrlParams({ "dashboards": options?.params?.["dashboards"] as any, "title": options?.params?.["title"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "200": decodeSuccess(RenderReportCSVs200),
       "204": decodeSuccess(RenderReportCSVs204),
       "400": decodeError("RenderReportCSVs400", RenderReportCSVs400),
@@ -2700,28 +2620,29 @@ export const make = (
       "500": decodeError("RenderReportCSVs500", RenderReportCSVs500),
       orElse: unexpectedStatus
     }))
-  ),
-    "renderReportPDFs": (options) => HttpClientRequest.get(`/reports/render/pdfs`).pipe(
-    HttpClientRequest.setUrlParams({ "dashboards": options?.params?.["dashboards"] as any, "orientation": options?.params?.["orientation"] as any, "layout": options?.params?.["layout"] as any, "title": options?.params?.["title"] as any, "scaleFactor": options?.params?.["scaleFactor"] as any, "includeTables": options?.params?.["includeTables"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "renderReportPDFs": (options) => HttpClientRequest.get("/reports/render/pdfs").pipe(
+      HttpClientRequest.setUrlParams({ "dashboards": options?.params?.["dashboards"] as any, "orientation": options?.params?.["orientation"] as any, "layout": options?.params?.["layout"] as any, "title": options?.params?.["title"] as any, "scaleFactor": options?.params?.["scaleFactor"] as any, "includeTables": options?.params?.["includeTables"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RenderReportPDFs200),
       "400": decodeError("RenderReportPDFs400", RenderReportPDFs400),
       "401": decodeError("RenderReportPDFs401", RenderReportPDFs401),
       "500": decodeError("RenderReportPDFs500", RenderReportPDFs500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getReportSettings": (options) => HttpClientRequest.get(`/reports/settings`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getReportSettings": (options) => HttpClientRequest.get("/reports/settings").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetReportSettings200),
       "401": decodeError("GetReportSettings401", GetReportSettings401),
       "403": decodeError("GetReportSettings403", GetReportSettings403),
       "500": decodeError("GetReportSettings500", GetReportSettings500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getReport": (id, options) => HttpClientRequest.get(`/reports/${id}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getReport": (id, options) => __makePathRequest(HttpClientRequest.get, [id], () => "/reports/" + __encodePathParam(id) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetReport200),
       "400": decodeError("GetReport400", GetReport400),
       "401": decodeError("GetReport401", GetReport401),
@@ -2730,51 +2651,53 @@ export const make = (
       "500": decodeError("GetReport500", GetReport500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getMetadata": (options) => HttpClientRequest.get(`/saml/metadata`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getMetadata": (options) => HttpClientRequest.get("/saml/metadata").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetMetadata200),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSLO": (options) => HttpClientRequest.get(`/saml/slo`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSLO": (options) => HttpClientRequest.get("/saml/slo").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "400": decodeError("GetSLO400", GetSLO400),
       "403": decodeError("GetSLO403", GetSLO403),
       "500": decodeError("GetSLO500", GetSLO500),
       "302": () => Effect.void,
       orElse: unexpectedStatus
     }))
-  ),
-    "search": (options) => HttpClientRequest.get(`/search`).pipe(
-    HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "tag": options?.params?.["tag"] as any, "type": options?.params?.["type"] as any, "dashboardIds": options?.params?.["dashboardIds"] as any, "dashboardUIDs": options?.params?.["dashboardUIDs"] as any, "folderIds": options?.params?.["folderIds"] as any, "folderUIDs": options?.params?.["folderUIDs"] as any, "starred": options?.params?.["starred"] as any, "limit": options?.params?.["limit"] as any, "page": options?.params?.["page"] as any, "permission": options?.params?.["permission"] as any, "sort": options?.params?.["sort"] as any, "deleted": options?.params?.["deleted"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "search": (options) => HttpClientRequest.get("/search").pipe(
+      HttpClientRequest.setUrlParams({ "query": options?.params?.["query"] as any, "tag": options?.params?.["tag"] as any, "type": options?.params?.["type"] as any, "dashboardIds": options?.params?.["dashboardIds"] as any, "dashboardUIDs": options?.params?.["dashboardUIDs"] as any, "folderIds": options?.params?.["folderIds"] as any, "folderUIDs": options?.params?.["folderUIDs"] as any, "starred": options?.params?.["starred"] as any, "limit": options?.params?.["limit"] as any, "page": options?.params?.["page"] as any, "permission": options?.params?.["permission"] as any, "sort": options?.params?.["sort"] as any, "deleted": options?.params?.["deleted"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(Search200),
       "401": decodeError("Search401", Search401),
       "422": decodeError("Search422", Search422),
       "500": decodeError("Search500", Search500),
       orElse: unexpectedStatus
     }))
-  ),
-    "listSortOptions": (options) => HttpClientRequest.get(`/search/sorting`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "listSortOptions": (options) => HttpClientRequest.get("/search/sorting").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListSortOptions200),
       "401": decodeError("ListSortOptions401", ListSortOptions401),
       orElse: unexpectedStatus
     }))
-  ),
-    "searchOrgServiceAccountsWithPaging": (options) => HttpClientRequest.get(`/serviceaccounts/search`).pipe(
-    HttpClientRequest.setUrlParams({ "Disabled": options?.params?.["Disabled"] as any, "expiredTokens": options?.params?.["expiredTokens"] as any, "query": options?.params?.["query"] as any, "perpage": options?.params?.["perpage"] as any, "page": options?.params?.["page"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "searchOrgServiceAccountsWithPaging": (options) => HttpClientRequest.get("/serviceaccounts/search").pipe(
+      HttpClientRequest.setUrlParams({ "Disabled": options?.params?.["Disabled"] as any, "expiredTokens": options?.params?.["expiredTokens"] as any, "query": options?.params?.["query"] as any, "perpage": options?.params?.["perpage"] as any, "page": options?.params?.["page"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchOrgServiceAccountsWithPaging200),
       "401": decodeError("SearchOrgServiceAccountsWithPaging401", SearchOrgServiceAccountsWithPaging401),
       "403": decodeError("SearchOrgServiceAccountsWithPaging403", SearchOrgServiceAccountsWithPaging403),
       "500": decodeError("SearchOrgServiceAccountsWithPaging500", SearchOrgServiceAccountsWithPaging500),
       orElse: unexpectedStatus
     }))
-  ),
-    "retrieveServiceAccount": (serviceAccountId, options) => HttpClientRequest.get(`/serviceaccounts/${serviceAccountId}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "retrieveServiceAccount": (serviceAccountId, options) => __makePathRequest(HttpClientRequest.get, [serviceAccountId], () => "/serviceaccounts/" + __encodePathParam(serviceAccountId) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RetrieveServiceAccount200),
       "400": decodeError("RetrieveServiceAccount400", RetrieveServiceAccount400),
       "401": decodeError("RetrieveServiceAccount401", RetrieveServiceAccount401),
@@ -2783,9 +2706,11 @@ export const make = (
       "500": decodeError("RetrieveServiceAccount500", RetrieveServiceAccount500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "listTokens": (serviceAccountId, options) => HttpClientRequest.get(`/serviceaccounts/${serviceAccountId}/tokens`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "listTokens": (serviceAccountId, options) => __makePathRequest(HttpClientRequest.get, [serviceAccountId], () => "/serviceaccounts/" + __encodePathParam(serviceAccountId) + "/tokens").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListTokens200),
       "400": decodeError("ListTokens400", ListTokens400),
       "401": decodeError("ListTokens401", ListTokens401),
@@ -2793,23 +2718,25 @@ export const make = (
       "500": decodeError("ListTokens500", ListTokens500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "retrieveJWKS": (options) => HttpClientRequest.get(`/signing-keys/keys`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "retrieveJWKS": (options) => HttpClientRequest.get("/signing-keys/keys").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RetrieveJWKS200),
       "500": decodeError("RetrieveJWKS500", RetrieveJWKS500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSharingOptions": (options) => HttpClientRequest.get(`/snapshot/shared-options`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSharingOptions": (options) => HttpClientRequest.get("/snapshot/shared-options").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSharingOptions200),
       "401": decodeError("GetSharingOptions401", GetSharingOptions401),
       orElse: unexpectedStatus
     }))
-  ),
-    "deleteDashboardSnapshotByDeleteKey": (deleteKey, options) => HttpClientRequest.get(`/snapshots-delete/${deleteKey}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "deleteDashboardSnapshotByDeleteKey": (deleteKey, options) => __makePathRequest(HttpClientRequest.get, [deleteKey], () => "/snapshots-delete/" + __encodePathParam(deleteKey) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(DeleteDashboardSnapshotByDeleteKey200),
       "401": decodeError("DeleteDashboardSnapshotByDeleteKey401", DeleteDashboardSnapshotByDeleteKey401),
       "403": decodeError("DeleteDashboardSnapshotByDeleteKey403", DeleteDashboardSnapshotByDeleteKey403),
@@ -2817,28 +2744,32 @@ export const make = (
       "500": decodeError("DeleteDashboardSnapshotByDeleteKey500", DeleteDashboardSnapshotByDeleteKey500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getDashboardSnapshot": (key, options) => HttpClientRequest.get(`/snapshots/${key}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getDashboardSnapshot": (key, options) => __makePathRequest(HttpClientRequest.get, [key], () => "/snapshots/" + __encodePathParam(key) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "400": decodeError("GetDashboardSnapshot400", GetDashboardSnapshot400),
       "404": decodeError("GetDashboardSnapshot404", GetDashboardSnapshot404),
       "500": decodeError("GetDashboardSnapshot500", GetDashboardSnapshot500),
       "200": () => Effect.void,
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "searchTeams": (options) => HttpClientRequest.get(`/teams/search`).pipe(
-    HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "perpage": options?.params?.["perpage"] as any, "name": options?.params?.["name"] as any, "query": options?.params?.["query"] as any, "accesscontrol": options?.params?.["accesscontrol"] as any, "sort": options?.params?.["sort"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "searchTeams": (options) => HttpClientRequest.get("/teams/search").pipe(
+      HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "perpage": options?.params?.["perpage"] as any, "name": options?.params?.["name"] as any, "query": options?.params?.["query"] as any, "accesscontrol": options?.params?.["accesscontrol"] as any, "sort": options?.params?.["sort"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchTeams200),
       "401": decodeError("SearchTeams401", SearchTeams401),
       "403": decodeError("SearchTeams403", SearchTeams403),
       "500": decodeError("SearchTeams500", SearchTeams500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getTeamGroupsApi": (teamId, options) => HttpClientRequest.get(`/teams/${teamId}/groups`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getTeamGroupsApi": (teamId, options) => __makePathRequest(HttpClientRequest.get, [teamId], () => "/teams/" + __encodePathParam(teamId) + "/groups").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetTeamGroupsApi200),
       "400": decodeError("GetTeamGroupsApi400", GetTeamGroupsApi400),
       "401": decodeError("GetTeamGroupsApi401", GetTeamGroupsApi401),
@@ -2847,10 +2778,12 @@ export const make = (
       "500": decodeError("GetTeamGroupsApi500", GetTeamGroupsApi500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "searchTeamGroups": (teamId, options) => HttpClientRequest.get(`/teams/${teamId}/groups/search`).pipe(
-    HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "perpage": options?.params?.["perpage"] as any, "query": options?.params?.["query"] as any, "name": options?.params?.["name"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "searchTeamGroups": (teamId, options) => __makePathRequest(HttpClientRequest.get, [teamId], () => "/teams/" + __encodePathParam(teamId) + "/groups/search").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "page": options?.params?.["page"] as any, "perpage": options?.params?.["perpage"] as any, "query": options?.params?.["query"] as any, "name": options?.params?.["name"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchTeamGroups200),
       "400": decodeError("SearchTeamGroups400", SearchTeamGroups400),
       "401": decodeError("SearchTeamGroups401", SearchTeamGroups401),
@@ -2858,10 +2791,12 @@ export const make = (
       "500": decodeError("SearchTeamGroups500", SearchTeamGroups500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getTeamByID": (teamId, options) => HttpClientRequest.get(`/teams/${teamId}`).pipe(
-    HttpClientRequest.setUrlParams({ "accesscontrol": options?.params?.["accesscontrol"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getTeamByID": (teamId, options) => __makePathRequest(HttpClientRequest.get, [teamId], () => "/teams/" + __encodePathParam(teamId) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "accesscontrol": options?.params?.["accesscontrol"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetTeamByID200),
       "401": decodeError("GetTeamByID401", GetTeamByID401),
       "403": decodeError("GetTeamByID403", GetTeamByID403),
@@ -2869,9 +2804,11 @@ export const make = (
       "500": decodeError("GetTeamByID500", GetTeamByID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getTeamMembers": (teamId, options) => HttpClientRequest.get(`/teams/${teamId}/members`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getTeamMembers": (teamId, options) => __makePathRequest(HttpClientRequest.get, [teamId], () => "/teams/" + __encodePathParam(teamId) + "/members").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetTeamMembers200),
       "401": decodeError("GetTeamMembers401", GetTeamMembers401),
       "403": decodeError("GetTeamMembers403", GetTeamMembers403),
@@ -2879,17 +2816,20 @@ export const make = (
       "500": decodeError("GetTeamMembers500", GetTeamMembers500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getTeamPreferences": (teamId, options) => HttpClientRequest.get(`/teams/${teamId}/preferences`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getTeamPreferences": (teamId, options) => __makePathRequest(HttpClientRequest.get, [teamId], () => "/teams/" + __encodePathParam(teamId) + "/preferences").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetTeamPreferences200),
       "401": decodeError("GetTeamPreferences401", GetTeamPreferences401),
       "500": decodeError("GetTeamPreferences500", GetTeamPreferences500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getSignedInUser": (options) => HttpClientRequest.get(`/user`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getSignedInUser": (options) => HttpClientRequest.get("/user").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSignedInUser200),
       "401": decodeError("GetSignedInUser401", GetSignedInUser401),
       "403": decodeError("GetSignedInUser403", GetSignedInUser403),
@@ -2897,41 +2837,41 @@ export const make = (
       "500": decodeError("GetSignedInUser500", GetSignedInUser500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getUserAuthTokens": (options) => HttpClientRequest.get(`/user/auth-tokens`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getUserAuthTokens": (options) => HttpClientRequest.get("/user/auth-tokens").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserAuthTokens200),
       "401": decodeError("GetUserAuthTokens401", GetUserAuthTokens401),
       "403": decodeError("GetUserAuthTokens403", GetUserAuthTokens403),
       "500": decodeError("GetUserAuthTokens500", GetUserAuthTokens500),
       orElse: unexpectedStatus
     }))
-  ),
-    "updateUserEmail": (options) => HttpClientRequest.get(`/user/email/update`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "updateUserEmail": (options) => HttpClientRequest.get("/user/email/update").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "302": decodeSuccess(UpdateUserEmail302),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSignedInUserOrgList": (options) => HttpClientRequest.get(`/user/orgs`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSignedInUserOrgList": (options) => HttpClientRequest.get("/user/orgs").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSignedInUserOrgList200),
       "401": decodeError("GetSignedInUserOrgList401", GetSignedInUserOrgList401),
       "403": decodeError("GetSignedInUserOrgList403", GetSignedInUserOrgList403),
       "500": decodeError("GetSignedInUserOrgList500", GetSignedInUserOrgList500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getUserPreferences": (options) => HttpClientRequest.get(`/user/preferences`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getUserPreferences": (options) => HttpClientRequest.get("/user/preferences").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserPreferences200),
       "401": decodeError("GetUserPreferences401", GetUserPreferences401),
       "500": decodeError("GetUserPreferences500", GetUserPreferences500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getUserQuotas": (options) => HttpClientRequest.get(`/user/quotas`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getUserQuotas": (options) => HttpClientRequest.get("/user/quotas").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserQuotas200),
       "401": decodeError("GetUserQuotas401", GetUserQuotas401),
       "403": decodeError("GetUserQuotas403", GetUserQuotas403),
@@ -2939,29 +2879,29 @@ export const make = (
       "500": decodeError("GetUserQuotas500", GetUserQuotas500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getSignedInUserTeamList": (options) => HttpClientRequest.get(`/user/teams`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getSignedInUserTeamList": (options) => HttpClientRequest.get("/user/teams").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetSignedInUserTeamList200),
       "401": decodeError("GetSignedInUserTeamList401", GetSignedInUserTeamList401),
       "403": decodeError("GetSignedInUserTeamList403", GetSignedInUserTeamList403),
       "500": decodeError("GetSignedInUserTeamList500", GetSignedInUserTeamList500),
       orElse: unexpectedStatus
     }))
-  ),
-    "searchUsers": (options) => HttpClientRequest.get(`/users`).pipe(
-    HttpClientRequest.setUrlParams({ "perpage": options?.params?.["perpage"] as any, "page": options?.params?.["page"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "searchUsers": (options) => HttpClientRequest.get("/users").pipe(
+      HttpClientRequest.setUrlParams({ "perpage": options?.params?.["perpage"] as any, "page": options?.params?.["page"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchUsers200),
       "401": decodeError("SearchUsers401", SearchUsers401),
       "403": decodeError("SearchUsers403", SearchUsers403),
       "500": decodeError("SearchUsers500", SearchUsers500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getUserByLoginOrEmail": (options) => HttpClientRequest.get(`/users/lookup`).pipe(
-    HttpClientRequest.setUrlParams({ "loginOrEmail": options.params["loginOrEmail"] as any }),
-    withResponse(options.config)(HttpClientResponse.matchStatus({
+    ),
+    "getUserByLoginOrEmail": (options) => HttpClientRequest.get("/users/lookup").pipe(
+      HttpClientRequest.setUrlParams({ "loginOrEmail": options.params["loginOrEmail"] as any }),
+      withResponse(options.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserByLoginOrEmail200),
       "401": decodeError("GetUserByLoginOrEmail401", GetUserByLoginOrEmail401),
       "403": decodeError("GetUserByLoginOrEmail403", GetUserByLoginOrEmail403),
@@ -2969,9 +2909,9 @@ export const make = (
       "500": decodeError("GetUserByLoginOrEmail500", GetUserByLoginOrEmail500),
       orElse: unexpectedStatus
     }))
-  ),
-    "searchUsersWithPaging": (options) => HttpClientRequest.get(`/users/search`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "searchUsersWithPaging": (options) => HttpClientRequest.get("/users/search").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(SearchUsersWithPaging200),
       "401": decodeError("SearchUsersWithPaging401", SearchUsersWithPaging401),
       "403": decodeError("SearchUsersWithPaging403", SearchUsersWithPaging403),
@@ -2979,9 +2919,10 @@ export const make = (
       "500": decodeError("SearchUsersWithPaging500", SearchUsersWithPaging500),
       orElse: unexpectedStatus
     }))
-  ),
-    "getUserByID": (userId, options) => HttpClientRequest.get(`/users/${userId}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getUserByID": (userId, options) => __makePathRequest(HttpClientRequest.get, [userId], () => "/users/" + __encodePathParam(userId) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserByID200),
       "401": decodeError("GetUserByID401", GetUserByID401),
       "403": decodeError("GetUserByID403", GetUserByID403),
@@ -2989,9 +2930,11 @@ export const make = (
       "500": decodeError("GetUserByID500", GetUserByID500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getUserOrgList": (userId, options) => HttpClientRequest.get(`/users/${userId}/orgs`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getUserOrgList": (userId, options) => __makePathRequest(HttpClientRequest.get, [userId], () => "/users/" + __encodePathParam(userId) + "/orgs").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserOrgList200),
       "401": decodeError("GetUserOrgList401", GetUserOrgList401),
       "403": decodeError("GetUserOrgList403", GetUserOrgList403),
@@ -2999,9 +2942,11 @@ export const make = (
       "500": decodeError("GetUserOrgList500", GetUserOrgList500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "getUserTeams": (userId, options) => HttpClientRequest.get(`/users/${userId}/teams`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "getUserTeams": (userId, options) => __makePathRequest(HttpClientRequest.get, [userId], () => "/users/" + __encodePathParam(userId) + "/teams").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetUserTeams200),
       "401": decodeError("GetUserTeams401", GetUserTeams401),
       "403": decodeError("GetUserTeams403", GetUserTeams403),
@@ -3009,145 +2954,161 @@ export const make = (
       "500": decodeError("GetUserTeams500", GetUserTeams500),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteGetAlertRules": (options) => HttpClientRequest.get(`/v1/provisioning/alert-rules`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteGetAlertRules": (options) => HttpClientRequest.get("/v1/provisioning/alert-rules").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetAlertRules200),
       "403": decodeError("RouteGetAlertRules403", RouteGetAlertRules403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetAlertRulesExport": (options) => HttpClientRequest.get(`/v1/provisioning/alert-rules/export`).pipe(
-    HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any, "folderUid": options?.params?.["folderUid"] as any, "group": options?.params?.["group"] as any, "ruleUid": options?.params?.["ruleUid"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetAlertRulesExport": (options) => HttpClientRequest.get("/v1/provisioning/alert-rules/export").pipe(
+      HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any, "folderUid": options?.params?.["folderUid"] as any, "group": options?.params?.["group"] as any, "ruleUid": options?.params?.["ruleUid"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetAlertRulesExport200),
       "403": decodeError("RouteGetAlertRulesExport403", RouteGetAlertRulesExport403),
-      "404": () => Effect.void,
+      "404": decodeVoidError("404"),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetAlertRule": (UID, options) => HttpClientRequest.get(`/v1/provisioning/alert-rules/${UID}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetAlertRule": (UID, options) => __makePathRequest(HttpClientRequest.get, [UID], () => "/v1/provisioning/alert-rules/" + __encodePathParam(UID) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetAlertRule200),
       "403": decodeError("RouteGetAlertRule403", RouteGetAlertRule403),
-      "404": () => Effect.void,
+      "404": decodeVoidError("404"),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteGetAlertRuleExport": (UID, options) => HttpClientRequest.get(`/v1/provisioning/alert-rules/${UID}/export`).pipe(
-    HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteGetAlertRuleExport": (UID, options) => __makePathRequest(HttpClientRequest.get, [UID], () => "/v1/provisioning/alert-rules/" + __encodePathParam(UID) + "/export").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetAlertRuleExport200),
       "403": decodeError("RouteGetAlertRuleExport403", RouteGetAlertRuleExport403),
-      "404": () => Effect.void,
+      "404": decodeVoidError("404"),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteGetContactpoints": (options) => HttpClientRequest.get(`/v1/provisioning/contact-points`).pipe(
-    HttpClientRequest.setUrlParams({ "name": options?.params?.["name"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteGetContactpoints": (options) => HttpClientRequest.get("/v1/provisioning/contact-points").pipe(
+      HttpClientRequest.setUrlParams({ "name": options?.params?.["name"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetContactpoints200),
       "403": decodeError("RouteGetContactpoints403", RouteGetContactpoints403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetContactpointsExport": (options) => HttpClientRequest.get(`/v1/provisioning/contact-points/export`).pipe(
-    HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any, "decrypt": options?.params?.["decrypt"] as any, "name": options?.params?.["name"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetContactpointsExport": (options) => HttpClientRequest.get("/v1/provisioning/contact-points/export").pipe(
+      HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any, "decrypt": options?.params?.["decrypt"] as any, "name": options?.params?.["name"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetContactpointsExport200),
       "403": decodeError("RouteGetContactpointsExport403", RouteGetContactpointsExport403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetAlertRuleGroup": (FolderUID, Group, options) => HttpClientRequest.get(`/v1/provisioning/folder/${FolderUID}/rule-groups/${Group}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetAlertRuleGroup": (FolderUID, Group, options) => __makePathRequest(HttpClientRequest.get, [FolderUID, Group], () => "/v1/provisioning/folder/" + __encodePathParam(FolderUID) + "/rule-groups/" + __encodePathParam(Group) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetAlertRuleGroup200),
       "403": decodeError("RouteGetAlertRuleGroup403", RouteGetAlertRuleGroup403),
-      "404": () => Effect.void,
+      "404": decodeVoidError("404"),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteGetAlertRuleGroupExport": (FolderUID, Group, options) => HttpClientRequest.get(`/v1/provisioning/folder/${FolderUID}/rule-groups/${Group}/export`).pipe(
-    HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteGetAlertRuleGroupExport": (FolderUID, Group, options) => __makePathRequest(HttpClientRequest.get, [FolderUID, Group], () => "/v1/provisioning/folder/" + __encodePathParam(FolderUID) + "/rule-groups/" + __encodePathParam(Group) + "/export").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetAlertRuleGroupExport200),
       "403": decodeError("RouteGetAlertRuleGroupExport403", RouteGetAlertRuleGroupExport403),
-      "404": () => Effect.void,
+      "404": decodeVoidError("404"),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteGetMuteTimings": (options) => HttpClientRequest.get(`/v1/provisioning/mute-timings`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteGetMuteTimings": (options) => HttpClientRequest.get("/v1/provisioning/mute-timings").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetMuteTimings200),
       "403": decodeError("RouteGetMuteTimings403", RouteGetMuteTimings403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteExportMuteTimings": (options) => HttpClientRequest.get(`/v1/provisioning/mute-timings/export`).pipe(
-    HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteExportMuteTimings": (options) => HttpClientRequest.get("/v1/provisioning/mute-timings/export").pipe(
+      HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteExportMuteTimings200),
       "403": decodeError("RouteExportMuteTimings403", RouteExportMuteTimings403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetMuteTiming": (name, options) => HttpClientRequest.get(`/v1/provisioning/mute-timings/${name}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetMuteTiming": (name, options) => __makePathRequest(HttpClientRequest.get, [name], () => "/v1/provisioning/mute-timings/" + __encodePathParam(name) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetMuteTiming200),
       "403": decodeError("RouteGetMuteTiming403", RouteGetMuteTiming403),
-      "404": () => Effect.void,
+      "404": decodeVoidError("404"),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteExportMuteTiming": (name, options) => HttpClientRequest.get(`/v1/provisioning/mute-timings/${name}/export`).pipe(
-    HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteExportMuteTiming": (name, options) => __makePathRequest(HttpClientRequest.get, [name], () => "/v1/provisioning/mute-timings/" + __encodePathParam(name) + "/export").pipe(
+    Effect.flatMap((request) => request.pipe(
+      HttpClientRequest.setUrlParams({ "download": options?.params?.["download"] as any, "format": options?.params?.["format"] as any }),
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteExportMuteTiming200),
       "403": decodeError("RouteExportMuteTiming403", RouteExportMuteTiming403),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "RouteGetPolicyTree": (options) => HttpClientRequest.get(`/v1/provisioning/policies`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "RouteGetPolicyTree": (options) => HttpClientRequest.get("/v1/provisioning/policies").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetPolicyTree200),
       "403": decodeError("RouteGetPolicyTree403", RouteGetPolicyTree403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetPolicyTreeExport": (options) => HttpClientRequest.get(`/v1/provisioning/policies/export`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetPolicyTreeExport": (options) => HttpClientRequest.get("/v1/provisioning/policies/export").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetPolicyTreeExport200),
       "403": decodeError("RouteGetPolicyTreeExport403", RouteGetPolicyTreeExport403),
       "404": decodeError("RouteGetPolicyTreeExport404", RouteGetPolicyTreeExport404),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetTemplates": (options) => HttpClientRequest.get(`/v1/provisioning/templates`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetTemplates": (options) => HttpClientRequest.get("/v1/provisioning/templates").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetTemplates200),
       "403": decodeError("RouteGetTemplates403", RouteGetTemplates403),
       orElse: unexpectedStatus
     }))
-  ),
-    "RouteGetTemplate": (name, options) => HttpClientRequest.get(`/v1/provisioning/templates/${name}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "RouteGetTemplate": (name, options) => __makePathRequest(HttpClientRequest.get, [name], () => "/v1/provisioning/templates/" + __encodePathParam(name) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(RouteGetTemplate200),
       "403": decodeError("RouteGetTemplate403", RouteGetTemplate403),
       "404": decodeError("RouteGetTemplate404", RouteGetTemplate404),
       orElse: unexpectedStatus
     }))
+    ))
   ),
-    "listAllProvidersSettings": (options) => HttpClientRequest.get(`/v1/sso-settings`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    "listAllProvidersSettings": (options) => HttpClientRequest.get("/v1/sso-settings").pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(ListAllProvidersSettings200),
       "400": decodeError("ListAllProvidersSettings400", ListAllProvidersSettings400),
       "401": decodeError("ListAllProvidersSettings401", ListAllProvidersSettings401),
       "403": decodeError("ListAllProvidersSettings403", ListAllProvidersSettings403),
       orElse: unexpectedStatus
     }))
-  ),
-    "getProviderSettings": (key, options) => HttpClientRequest.get(`/v1/sso-settings/${key}`).pipe(
-    withResponse(options?.config)(HttpClientResponse.matchStatus({
+    ),
+    "getProviderSettings": (key, options) => __makePathRequest(HttpClientRequest.get, [key], () => "/v1/sso-settings/" + __encodePathParam(key) + "").pipe(
+    Effect.flatMap((request) => request.pipe(
+      withResponse(options?.config)(HttpClientResponse.matchStatus({
       "2xx": decodeSuccess(GetProviderSettings200),
       "400": decodeError("GetProviderSettings400", GetProviderSettings400),
       "401": decodeError("GetProviderSettings401", GetProviderSettings401),
@@ -3155,6 +3116,7 @@ export const make = (
       "404": decodeError("GetProviderSettings404", GetProviderSettings404),
       orElse: unexpectedStatus
     }))
+    ))
   )
   }
 }
@@ -3733,15 +3695,15 @@ readonly "RouteGetAlertRules": <Config extends OperationConfig>(options: { reado
   /**
 * Export all alert rules in provisioning file format.
 */
-readonly "RouteGetAlertRulesExport": <Config extends OperationConfig>(options: { readonly params?: typeof RouteGetAlertRulesExportParams.Encoded | undefined; readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRulesExport200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRulesExport403", typeof RouteGetAlertRulesExport403.Type>>
+readonly "RouteGetAlertRulesExport": <Config extends OperationConfig>(options: { readonly params?: typeof RouteGetAlertRulesExportParams.Encoded | undefined; readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRulesExport200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRulesExport403", typeof RouteGetAlertRulesExport403.Type> | GrafanaError<"404", undefined>>
   /**
 * Get a specific alert rule by UID.
 */
-readonly "RouteGetAlertRule": <Config extends OperationConfig>(UID: string, options: { readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRule200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRule403", typeof RouteGetAlertRule403.Type>>
+readonly "RouteGetAlertRule": <Config extends OperationConfig>(UID: string, options: { readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRule200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRule403", typeof RouteGetAlertRule403.Type> | GrafanaError<"404", undefined>>
   /**
 * Export an alert rule in provisioning file format.
 */
-readonly "RouteGetAlertRuleExport": <Config extends OperationConfig>(UID: string, options: { readonly params?: typeof RouteGetAlertRuleExportParams.Encoded | undefined; readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRuleExport200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRuleExport403", typeof RouteGetAlertRuleExport403.Type>>
+readonly "RouteGetAlertRuleExport": <Config extends OperationConfig>(UID: string, options: { readonly params?: typeof RouteGetAlertRuleExportParams.Encoded | undefined; readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRuleExport200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRuleExport403", typeof RouteGetAlertRuleExport403.Type> | GrafanaError<"404", undefined>>
   /**
 * Get all the contact points.
 */
@@ -3753,11 +3715,11 @@ readonly "RouteGetContactpointsExport": <Config extends OperationConfig>(options
   /**
 * Get a rule group.
 */
-readonly "RouteGetAlertRuleGroup": <Config extends OperationConfig>(FolderUID: string, Group: string, options: { readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRuleGroup200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRuleGroup403", typeof RouteGetAlertRuleGroup403.Type>>
+readonly "RouteGetAlertRuleGroup": <Config extends OperationConfig>(FolderUID: string, Group: string, options: { readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRuleGroup200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRuleGroup403", typeof RouteGetAlertRuleGroup403.Type> | GrafanaError<"404", undefined>>
   /**
 * Export an alert rule group in provisioning file format.
 */
-readonly "RouteGetAlertRuleGroupExport": <Config extends OperationConfig>(FolderUID: string, Group: string, options: { readonly params?: typeof RouteGetAlertRuleGroupExportParams.Encoded | undefined; readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRuleGroupExport200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRuleGroupExport403", typeof RouteGetAlertRuleGroupExport403.Type>>
+readonly "RouteGetAlertRuleGroupExport": <Config extends OperationConfig>(FolderUID: string, Group: string, options: { readonly params?: typeof RouteGetAlertRuleGroupExportParams.Encoded | undefined; readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetAlertRuleGroupExport200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetAlertRuleGroupExport403", typeof RouteGetAlertRuleGroupExport403.Type> | GrafanaError<"404", undefined>>
   /**
 * Get all the mute timings.
 */
@@ -3769,7 +3731,7 @@ readonly "RouteExportMuteTimings": <Config extends OperationConfig>(options: { r
   /**
 * Get a mute timing.
 */
-readonly "RouteGetMuteTiming": <Config extends OperationConfig>(name: string, options: { readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetMuteTiming200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetMuteTiming403", typeof RouteGetMuteTiming403.Type>>
+readonly "RouteGetMuteTiming": <Config extends OperationConfig>(name: string, options: { readonly config?: Config | undefined } | undefined) => Effect.Effect<WithOptionalResponse<typeof RouteGetMuteTiming200.Type, Config>, HttpClientError.HttpClientError | SchemaError | GrafanaError<"RouteGetMuteTiming403", typeof RouteGetMuteTiming403.Type> | GrafanaError<"404", undefined>>
   /**
 * Export a mute timing in provisioning format.
 */

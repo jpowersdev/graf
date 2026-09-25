@@ -29,3 +29,10 @@ it("recognizes help requests", () => {
   expect(isHelpRequest({ _tag: "ShowHelp" })).toBe(true)
   expect(isHelpRequest(new Error("x"))).toBe(false)
 })
+
+it("names a missing environment variable whatever Effect's wording", () => {
+  const key = "GRAF_TEST_UNSET_VARIABLE"
+  delete process.env[key]
+  const error = { _tag: "ConfigError", message: `SchemaError(Expected string\n  at ["${key}"])` }
+  expect(formatError(error)).toBe(`error: ${key} is not set (graf needs GRAFANA_URL and GRAFANA_SERVICE_ACCOUNT_TOKEN)`)
+})

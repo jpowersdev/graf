@@ -82,7 +82,7 @@ export const flattenFrames = (response: typeof DsQueryResponse.Type): {
 const run = Command.make(
   "run",
   {
-    file: Flag.string("file").pipe(Flag.withDescription("JSON body for Grafana's /api/ds/query: { from, to, queries: [...] }")),
+    file: Flag.String("file").pipe(Flag.withDescription("JSON body for Grafana's /api/ds/query: { from, to, queries: [...] }")),
     output: Output.outputFlag,
   },
   (input) =>

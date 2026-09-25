@@ -171,11 +171,11 @@ export const renderAgentContext = (data: AgentContextData, full: boolean): strin
 const context = Command.make(
   "context",
   {
-    from: Flag.string("from").pipe(
+    from: Flag.String("from").pipe(
       Flag.optional,
       Flag.withDescription("Discovery window start (default \"1 day\")"),
     ),
-    full: Flag.boolean("full").pipe(Flag.withDescription("Exhaustive lists instead of the condensed overview")),
+    full: Flag.Boolean("full").pipe(Flag.withDefault(false), Flag.withDescription("Exhaustive lists instead of the condensed overview")),
   },
   (input) =>
     Effect.gen(function* () {

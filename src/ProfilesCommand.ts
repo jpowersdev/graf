@@ -35,7 +35,7 @@ const labels = Command.make(
 const values = Command.make(
   "values",
   {
-    label: Argument.string("label").pipe(Argument.withDescription("Profile label, e.g. service_name")),
+    label: Argument.String("label").pipe(Argument.withDescription("Profile label, e.g. service_name")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,
@@ -68,16 +68,16 @@ const percent = (part: number, whole: number): string | undefined => whole > 0 ?
 const top = Command.make(
   "top",
   {
-    type: Flag.string("type").pipe(
+    type: Flag.String("type").pipe(
       Flag.withDefault("cpu"),
       Flag.withDescription("Profile type: a full id from `profiles types`, or its sample type (cpu, alloc_space, ...) or name"),
     ),
-    service: Flag.string("service").pipe(Flag.optional, Flag.withDescription("Service name (the service_name label)")),
-    label: Flag.string("label").pipe(Flag.atMost(10), Flag.withDescription("Label matcher, repeatable: name=value, name!=value, name=~regex")),
-    selector: Flag.string("selector").pipe(Flag.optional, Flag.withDescription("A complete label selector, e.g. '{service_name=\"api\"}'")),
-    orderBy: Flag.string("order-by").pipe(Flag.withDefault("self"), Flag.withDescription("self (time in the function itself) | total (including callees)")),
-    limit: Flag.integer("limit").pipe(Flag.withDefault(20), Flag.withDescription("Functions to show")),
-    maxNodes: Flag.integer("max-nodes").pipe(Flag.withDefault(8192), Flag.withDescription("Flamegraph nodes to fetch; more is more exact")),
+    service: Flag.String("service").pipe(Flag.optional, Flag.withDescription("Service name (the service_name label)")),
+    label: Flag.String("label").pipe(Flag.atMost(10), Flag.withDescription("Label matcher, repeatable: name=value, name!=value, name=~regex")),
+    selector: Flag.String("selector").pipe(Flag.optional, Flag.withDescription("A complete label selector, e.g. '{service_name=\"api\"}'")),
+    orderBy: Flag.String("order-by").pipe(Flag.withDefault("self"), Flag.withDescription("self (time in the function itself) | total (including callees)")),
+    limit: Flag.Int("limit").pipe(Flag.withDefault(20), Flag.withDescription("Functions to show")),
+    maxNodes: Flag.Int("max-nodes").pipe(Flag.withDefault(8192), Flag.withDescription("Flamegraph nodes to fetch; more is more exact")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,

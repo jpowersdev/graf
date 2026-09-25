@@ -8,34 +8,34 @@ import * as TraceQL from "./TraceQL.js"
 import { joinInstant, type MetricsResponse, type Row, seriesLabels, subtree, Traces } from "./Traces.js"
 
 const filterFlags = {
-  service: Flag.string("service").pipe(
+  service: Flag.String("service").pipe(
     Flag.optional,
     Flag.withDescription("Service name (resource.service.name)"),
   ),
-  operation: Flag.string("operation").pipe(
+  operation: Flag.String("operation").pipe(
     Flag.optional,
     Flag.withDescription("Span name, e.g. \"POST /checkout\""),
   ),
-  error: Flag.boolean("error").pipe(
+  error: Flag.Boolean("error").pipe(Flag.withDefault(false), 
     Flag.withDescription("Only spans with status = error"),
   ),
-  minDuration: Flag.string("min-duration").pipe(
+  minDuration: Flag.String("min-duration").pipe(
     Flag.optional,
     Flag.withDescription("Only spans at least this long, e.g. 500ms, 2s"),
   ),
-  maxDuration: Flag.string("max-duration").pipe(
+  maxDuration: Flag.String("max-duration").pipe(
     Flag.optional,
     Flag.withDescription("Only spans at most this long"),
   ),
-  attr: Flag.string("attr").pipe(
+  attr: Flag.String("attr").pipe(
     Flag.atMost(20),
     Flag.withDescription("Attribute condition, repeatable: span.http.status_code>=500, resource.deployment.environment=prod, key=~regex"),
   ),
-  filter: Flag.string("filter").pipe(
+  filter: Flag.String("filter").pipe(
     Flag.optional,
     Flag.withDescription("Raw TraceQL condition ANDed into the span selector"),
   ),
-  query: Flag.string("query").pipe(
+  query: Flag.String("query").pipe(
     Flag.optional,
     Flag.withDescription("A complete TraceQL query (a span selector like '{ ... }' for errors/latency/operations)"),
   ),
@@ -88,20 +88,20 @@ const search = Command.make(
   "search",
   {
     ...filterFlags,
-    spans: Flag.boolean("spans").pipe(
+    spans: Flag.Boolean("spans").pipe(Flag.withDefault(false), 
       Flag.withDescription("One row per matching span (with service, name, status) instead of per trace"),
     ),
-    orderBy: Flag.string("order-by").pipe(
+    orderBy: Flag.String("order-by").pipe(
       Flag.optional,
       Flag.withDescription("duration | start: sort the traces Tempo returned (it does not sort server-side)"),
     ),
-    spansPerTrace: Flag.integer("spans-per-trace").pipe(
+    spansPerTrace: Flag.Int("spans-per-trace").pipe(
       Flag.withDefault(3),
       Flag.withDescription("Matching spans returned per trace"),
     ),
     from: Flags.from,
     to: Flags.to,
-    limit: Flag.integer("limit").pipe(
+    limit: Flag.Int("limit").pipe(
       Flag.optional,
       Flag.withDescription("Maximum number of traces (default: GRAFANA_DEFAULT_LIMIT or 100)"),
     ),
@@ -155,8 +155,8 @@ const search = Command.make(
 const get = Command.make(
   "get",
   {
-    traceId: Argument.string("trace-id").pipe(Argument.withDescription("Trace ID (hex; leading zeros optional)")),
-    span: Flag.string("span").pipe(
+    traceId: Argument.String("trace-id").pipe(Argument.withDescription("Trace ID (hex; leading zeros optional)")),
+    span: Flag.String("span").pipe(
       Flag.optional,
       Flag.withDescription("Only this span and its descendants, plus the span's attributes and events"),
     ),
@@ -214,12 +214,12 @@ const get = Command.make(
     }).pipe(Effect.provide(Traces.Live)),
 ).pipe(Command.withDescription("Show a trace as a span waterfall (--span to focus on one span)"))
 
-const groupByFlag = Flag.string("group-by").pipe(
+const groupByFlag = Flag.String("group-by").pipe(
   Flag.atMost(5),
   Flag.withDescription("Attribute(s) to group by, repeatable or comma-separated (default: resource.service.name)"),
 )
 
-const limitFlag = Flag.integer("limit").pipe(
+const limitFlag = Flag.Int("limit").pipe(
   Flag.optional,
   Flag.withDescription("Keep only the top N groups"),
 )
@@ -268,14 +268,14 @@ const latency = Command.make(
   "latency",
   {
     ...filterFlags,
-    quantiles: Flag.string("quantiles").pipe(
+    quantiles: Flag.String("quantiles").pipe(
       Flag.withDefault("p50,p95,p99"),
       Flag.withDescription("Quantiles to compute, e.g. p50,p99 or 0.9"),
     ),
     groupBy: groupByFlag,
     limit: limitFlag,
-    timeSeries: Flag.boolean("time-series").pipe(Flag.withDescription("Values per --step instead of over the whole window")),
-    step: Flag.string("step").pipe(Flag.optional, Flag.withDescription("Bucket size with --time-series (default: ~300 buckets)")),
+    timeSeries: Flag.Boolean("time-series").pipe(Flag.withDefault(false), Flag.withDescription("Values per --step instead of over the whole window")),
+    step: Flag.String("step").pipe(Flag.optional, Flag.withDescription("Bucket size with --time-series (default: ~300 buckets)")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,
@@ -332,12 +332,12 @@ const timeSeriesRows = (response: MetricsResponse, groupBy: ReadonlyArray<string
 const operations = Command.make(
   "operations",
   {
-    service: Flag.string("service").pipe(Flag.withDescription("Service name (resource.service.name)")),
-    kind: Flag.string("kind").pipe(
+    service: Flag.String("service").pipe(Flag.withDescription("Service name (resource.service.name)")),
+    kind: Flag.String("kind").pipe(
       Flag.optional,
       Flag.withDescription("Only spans of this kind: server | client | internal | producer | consumer"),
     ),
-    orderBy: Flag.string("order-by").pipe(
+    orderBy: Flag.String("order-by").pipe(
       Flag.withDefault("p99Ms"),
       Flag.withDescription("Column to sort by (descending): spans | errors | p50Ms | p99Ms"),
     ),
@@ -391,10 +391,10 @@ const operations = Command.make(
 const values = Command.make(
   "values",
   {
-    attribute: Argument.string("attribute").pipe(
+    attribute: Argument.String("attribute").pipe(
       Argument.withDescription("Scoped attribute or intrinsic, e.g. resource.service.name, span.http.route, name"),
     ),
-    query: Flag.string("query").pipe(
+    query: Flag.String("query").pipe(
       Flag.optional,
       Flag.withDescription("Only values from spans matching this TraceQL span selector"),
     ),
@@ -419,22 +419,22 @@ const aggregate = Command.make(
   "aggregate",
   {
     ...filterFlags,
-    aggregation: Flag.string("aggregation").pipe(
+    aggregation: Flag.String("aggregation").pipe(
       Flag.withDefault("count"),
       Flag.withDescription(`${TraceQL.traceAggregations.join(" | ")}`),
     ),
-    aggregateOn: Flag.string("aggregate-on").pipe(
+    aggregateOn: Flag.String("aggregate-on").pipe(
       Flag.optional,
       Flag.withDescription("Numeric attribute for avg/sum/min/max/pNN (default: span duration, shown in ms)"),
     ),
-    groupBy: Flag.string("group-by").pipe(
+    groupBy: Flag.String("group-by").pipe(
       Flag.atMost(5),
       Flag.withDescription("Attribute(s) to group by, repeatable or comma-separated (default: no grouping)"),
     ),
-    order: Flag.string("order").pipe(Flag.withDefault("desc"), Flag.withDescription("asc | desc, by value")),
+    order: Flag.String("order").pipe(Flag.withDefault("desc"), Flag.withDescription("asc | desc, by value")),
     limit: limitFlag,
-    timeSeries: Flag.boolean("time-series").pipe(Flag.withDescription("Values per --step instead of over the whole window")),
-    step: Flag.string("step").pipe(Flag.optional, Flag.withDescription("Bucket size with --time-series (default: ~300 buckets)")),
+    timeSeries: Flag.Boolean("time-series").pipe(Flag.withDefault(false), Flag.withDescription("Values per --step instead of over the whole window")),
+    step: Flag.String("step").pipe(Flag.optional, Flag.withDescription("Bucket size with --time-series (default: ~300 buckets)")),
     from: Flags.from,
     to: Flags.to,
     output: Output.outputFlag,

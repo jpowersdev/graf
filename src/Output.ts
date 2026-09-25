@@ -8,7 +8,7 @@ export class InvalidOutputFormat extends Data.TaggedError("InvalidOutputFormat")
   readonly message: string
 }> {}
 
-export const outputFlag = Flag.string("output").pipe(
+export const outputFlag = Flag.String("output").pipe(
   Flag.withDescription("Output format: json | table | tsv | ndjson | values"),
   Flag.withDefault("json"),
 )

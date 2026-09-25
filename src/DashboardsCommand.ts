@@ -9,9 +9,9 @@ import { printRows } from "./Rows.js"
 const search = Command.make(
   "search",
   {
-    query: Argument.string("query").pipe(Argument.optional, Argument.withDescription("Title substring")),
-    tag: Flag.string("tag").pipe(Flag.atMost(10), Flag.withDescription("Only dashboards with this tag, repeatable")),
-    limit: Flag.integer("limit").pipe(Flag.withDefault(100), Flag.withDescription("Maximum results")),
+    query: Argument.String("query").pipe(Argument.optional, Argument.withDescription("Title substring")),
+    tag: Flag.String("tag").pipe(Flag.atMost(10), Flag.withDescription("Only dashboards with this tag, repeatable")),
+    limit: Flag.Int("limit").pipe(Flag.withDefault(100), Flag.withDescription("Maximum results")),
     output: Output.outputFlag,
   },
   (input) =>
@@ -47,8 +47,8 @@ const search = Command.make(
 const get = Command.make(
   "get",
   {
-    uid: Argument.string("uid").pipe(Argument.withDescription("Dashboard UID (from `graf dashboards search`)")),
-    search: Flag.string("search").pipe(Flag.optional, Flag.withDescription("Only panels whose title or query contains this text")),
+    uid: Argument.String("uid").pipe(Argument.withDescription("Dashboard UID (from `graf dashboards search`)")),
+    search: Flag.String("search").pipe(Flag.optional, Flag.withDescription("Only panels whose title or query contains this text")),
     output: Output.outputFlag,
   },
   (input) =>
