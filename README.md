@@ -6,16 +6,15 @@ graf talks only to Grafana's API. It picks a datasource for each signal (metrics
 
 ## Install
 
-Not on npm yet. Install from GitHub (needs access to the repo). Pack first, then install the tarball:
-npm can't build a git dependency during a global install, but packing builds it normally.
+Not on npm yet. Install or update from GitHub (needs access to the repo, and [bun](https://bun.sh)):
 
 ```bash
-cd "$(mktemp -d)" && npm pack git+ssh://git@github.com/jpowersdev/grafana-cli.git && npm i -g ./jpowersdev-grafana-*.tgz
+git clone git@github.com:jpowersdev/grafana-cli.git && cd grafana-cli
+scripts/install.sh            # latest main from GitHub (run again to update)
+scripts/install.sh --local    # this checkout, including uncommitted changes
 ```
 
-This installs the `graf` binary. Or from a checkout: `npm ci && npm run build && npm link`.
-
-Once published: `npm i -g @jpowersdev/grafana`.
+The script packs the repo (npm can't build a git dependency during a global install), keeps the tarball at `~/.local/share/graf/graf.tgz` (bun records where a package came from), and installs `graf` with `bun add -g`.
 
 ## Configure
 
