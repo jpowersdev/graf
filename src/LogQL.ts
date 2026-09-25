@@ -1,4 +1,5 @@
 import { Data, Effect } from "effect"
+import { normalizeTraceId } from "./TraceQL.js"
 
 // LogQL builders for the Loki logs adapter. Flags describe *what* to find; this module
 // decides how to say it in LogQL, so a different logs backend only needs its own builder.
@@ -83,7 +84,7 @@ export const buildLogQuery = (input: LogFilterInput): Effect.Effect<string, Inva
 
     const stages: Array<string> = []
     for (const text of input.contains ?? []) stages.push(`|= ${quote(text)}`)
-    if (input.traceId !== undefined) stages.push(`| trace_id=${quote(input.traceId)}`)
+    if (input.traceId !== undefined) stages.push(`| trace_id=${quote(normalizeTraceId(input.traceId))}`)
     const levels = splitList(input.levels).map((level) => level.toLowerCase())
     if (levels.length === 1) stages.push(`| ${levelLabel}=${quote(levels[0]!)}`)
     if (levels.length > 1) stages.push(`| ${levelLabel}=~${quote(levels.map(escapeRegex).join("|"))}`)

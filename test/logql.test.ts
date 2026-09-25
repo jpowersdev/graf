@@ -16,7 +16,7 @@ it.effect("buildLogQuery composes selector and pipeline from flags", () =>
       }),
     ).toBe(
       `{service_name="api", deployment_environment="prod", k8s_namespace_name=~"web-.*"} |= "timeout" |= "say \\"hi\\"" `
-        + `| trace_id="abc123" | detected_level=~"error|warn" | json | status >= 500`,
+        + `| trace_id="00000000000000000000000000abc123" | detected_level=~"error|warn" | json | status >= 500`,
     )
     expect(yield* buildLogQuery({ service: "api", levels: ["error"], filter: "|= \"x\"" })).toBe(
       `{service_name="api"} | detected_level="error" |= "x"`,

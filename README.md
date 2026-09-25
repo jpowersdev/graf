@@ -1,6 +1,6 @@
 # graf
 
-A command-line client for querying observability data through [Grafana](https://grafana.com) — metrics and logs today; traces and profiles next.
+A command-line client for querying observability data through [Grafana](https://grafana.com) — metrics, logs, and traces today; profiles next.
 
 graf talks only to Grafana's API. It picks a datasource for each signal (metrics, logs, traces, profiles) by type, and reaches each backend through Grafana's datasource proxy, so the backend behind a signal can change without changing how you use graf. It is read-only.
 
@@ -50,11 +50,19 @@ graf logs context --service <service> --at <time-from-search> --around 20 --outp
 graf logs aggregate --service <service> --group-by detected_level
 graf logs timeseries --service <service> --level error --step "5 minutes" --output table
 graf logs aggregate --service <service> --parser json --aggregation p99 --aggregate-on duration_ms --time-series
+
+graf traces values resource.service.name
+graf traces search --service <service> --operation "POST /checkout" --error --min-duration 500ms --output table
+graf traces search --service <service> --error --spans --output table     # one row per matching span
+graf traces get <trace-id> --output table                                 # span waterfall
+graf traces errors --from "1 hour" --output table                          # error counts and rate per service
+graf traces latency --service <service> --group-by name --output table     # p50/p95/p99 per operation
+graf traces operations --service <service> --kind server --output table    # count, errors, p50, p99 per operation
 ```
 
 - **`--from` / `--to`** take a duration back from now (`"30 minutes"`, `"2 days"`), `now`, an ISO-8601 timestamp, or Unix milliseconds. `--to` defaults to now.
 - **`--output`** is one of `json` (default), `table`, `tsv`, `ndjson`, `values`. Warnings and notes (such as an auto-chosen `--step`) go to **stderr**, so stdout stays parseable.
-- Queries use the backend's own language (PromQL for metrics, LogQL for logs). Log commands build LogQL from `--service`, `--label`, `--contains`, `--level`, `--trace-id` and `--filter` (raw pipeline stages), and print it to stderr as `# logql: ...`; `--query` takes a complete LogQL query instead.
+- Queries use the backend's own language (PromQL for metrics, LogQL for logs, TraceQL for traces). Trace commands build TraceQL from `--service`, `--operation`, `--error`, `--min-duration`, `--attr` and `--filter`, and print it as `# traceql: ...`. Log commands build LogQL from `--service`, `--label`, `--contains`, `--level`, `--trace-id` and `--filter` (raw pipeline stages), and print it to stderr as `# logql: ...`; `--query` takes a complete LogQL query instead.
 - Logs always need a stream selector (`--service` or `--label`): many Loki setups reject queries that match every stream.
 
 ## Development
