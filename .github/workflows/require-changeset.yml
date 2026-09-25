@@ -1,0 +1,53 @@
+name: Require changeset
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  require-changeset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Require a non-empty changeset for shipped changes
+        run: |
+          # The changesets "Version package" PR removes changesets by design — exempt it.
+          # (Exit 0 rather than skip the job, so the required check still reports success.)
+          if [ '${{ github.head_ref }}' = 'changeset-release/main' ]; then
+            echo "Changesets version PR — no changeset required."
+            exit 0
+          fi
+          base='${{ github.event.pull_request.base.sha }}'
+          head='${{ github.event.pull_request.head.sha }}'
+          changed="$(git diff --name-only "$base...$head")"
+          echo "Changed files:"; echo "$changed"
+
+          # Files that can affect the published package require a release-declaring changeset.
+          # Exempt docs (*.md), CI/workflows (.github/**), and changeset internals (.changeset/**) —
+          # none of them ship, so they don't need (and shouldn't invent) a version bump.
+          needs="$(printf '%s\n' "$changed" | grep -vE '(\.md$|^\.github/|^\.changeset/)' || true)"
+
+          # Among the added/changed changesets, is at least one NON-empty — i.e. it declares a
+          # major/minor/patch bump? An empty changeset games the gate and also wedges the release
+          # ("All changesets are empty; not creating PR"), so it does not count.
+          real=""
+          for f in $(printf '%s\n' "$changed" | grep -E '^\.changeset/.+\.md$'); do
+            [ "$f" = ".changeset/README.md" ] && continue
+            [ -f "$f" ] || continue
+            fm="$(awk 'NR==1&&/^---/{infm=1;next} infm&&/^---/{exit} infm{print}' "$f")"
+            if printf '%s\n' "$fm" | grep -qE ':[[:space:]]*(major|minor|patch)[[:space:]]*$'; then
+              real=1
+            fi
+          done
+
+          if [ -n "$needs" ] && [ -z "$real" ]; then
+            echo "::error::This PR changes shipped files but has no non-empty changeset. Run 'npx changeset' and pick a version bump (empty changesets are not accepted)."
+            printf 'Files requiring a changeset:\n%s\n' "$needs"
+            exit 1
+          fi
+          echo "Changeset check passed."

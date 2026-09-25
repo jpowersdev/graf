@@ -1,0 +1,43 @@
+{
+  "name": "@jpowersdev/grafana",
+  "version": "0.0.0",
+  "description": "graf: command-line client for querying observability data through Grafana (metrics, logs, traces).",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpowersdev/grafana-cli.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "graf": "dist/main.js"
+  },
+  "scripts": {
+    "generate": "bash scripts/generate.sh",
+    "generated:check": "bash scripts/generate.sh --check",
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "validate": "npm run generated:check && npm run build && npm test",
+    "changeset": "changeset",
+    "version": "changeset version && npm install --package-lock-only",
+    "release": "npm run validate && npm publish --access public"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "@effect/openapi-generator": "^4.0.0-beta.94",
+    "@effect/vitest": "^4.0.0-beta.94",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "@effect/platform-node": "^4.0.0-beta.94",
+    "effect": "^4.0.0-beta.94"
+  }
+}

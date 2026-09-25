@@ -1,0 +1,10 @@
+[
+  {
+    "op": "remove",
+    "path": "/components/schemas/CorrelationConfigUpdateDTO/properties/transformations/example"
+  },
+  {
+    "op": "remove",
+    "path": "/components/schemas/FrameMeta/properties/uniqueRowIdFields/example"
+  }
+]
