@@ -6,7 +6,7 @@
 
 const BODY = `## What this is
 
-\`graf\` is a read-only CLI that queries observability data **through Grafana**: metrics, logs and
+\`graf\` is a read-only CLI that queries observability data **through Grafana**: metrics, logs,
 traces, profiles and alert rules. It talks only to Grafana's API and reaches each backend through Grafana's datasource
 proxy, so commands are organized by signal, not by backend.
 
