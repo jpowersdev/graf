@@ -6,9 +6,13 @@ graf talks only to Grafana's API. It picks a datasource for each signal (metrics
 
 ## Install
 
+Not on npm yet. Install from GitHub (needs access to the repo; npm builds it on install):
+
 ```bash
-npm i -g @jpowersdev/grafana    # installs the `graf` binary
+npm i -g git+ssh://git@github.com/jpowersdev/grafana-cli.git    # installs the `graf` binary
 ```
+
+Once published: `npm i -g @jpowersdev/grafana`.
 
 ## Configure
 
