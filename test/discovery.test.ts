@@ -60,7 +60,7 @@ it("renderAgentContext degrades per section", () => {
   expect(text).toContain("_unavailable: 403: Permission denied_")
   expect(text).toContain("- resource (1): `resource.service.name`\n- span (1): `span.http.route`")
   expect(text).toContain("- `up` × 1: `up`")
-  expect(text).toContain("types: _unavailable")
+  expect(text).toContain("_unavailable: No profiles datasource found_")
   expect(text).toContain("2 rules: 1 firing, 1 inactive; 1 unhealthy (1 nodata)\n- firing: `r1` API errors [critical] (3 instances)")
   expect(text).toContain("2 dashboards; by folder: General 1, Prod 1")
   expect(text).toContain("tags: `api (2)`, `web (1)`")
