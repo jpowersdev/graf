@@ -7,6 +7,7 @@ import * as LogsOutput from "./LogsOutput.js"
 import type { QueryResponse } from "./Metrics.js"
 import * as MetricsOutput from "./MetricsOutput.js"
 import * as Output from "./Output.js"
+import { InvalidLogQuery } from "./LogQL.js"
 import { printRows } from "./Rows.js"
 import { Traces } from "./Traces.js"
 
@@ -161,7 +162,7 @@ const context = Command.make(
 const aggregateFlags = {
   aggregation: Flag.string("aggregation").pipe(
     Flag.withDefault("count"),
-    Flag.withDescription("count | rate | bytes | sum | avg | min | max | p50 | p75 | p90 | p95 | p99"),
+    Flag.withDescription("count | count_distinct | rate | bytes | sum | avg | min | max | p50 | p75 | p90 | p95 | p99"),
   ),
   aggregateOn: Flag.string("aggregate-on").pipe(
     Flag.optional,
@@ -180,12 +181,17 @@ const aggregateFlags = {
 const printAggregate = (
   result: { readonly query: string; readonly response: QueryResponse; readonly autoStepSeconds?: number | undefined },
   output: string,
-  limit?: number,
+  sorting?: { readonly limit?: number | undefined; readonly order: "asc" | "desc"; readonly orderBy: string },
 ) =>
   Effect.gen(function* () {
     yield* LogsOutput.printQuery(result.query)
     yield* MetricsOutput.print(
-      { response: LogsOutput.topGroups(result.response, limit), autoStepSeconds: result.autoStepSeconds },
+      {
+        response: sorting === undefined
+          ? result.response
+          : LogsOutput.topGroups(result.response, sorting.limit, sorting.order, sorting.orderBy),
+        autoStepSeconds: result.autoStepSeconds,
+      },
       output,
     )
   })
@@ -202,9 +208,14 @@ const aggregate = Command.make(
       Flag.optional,
       Flag.withDescription("Bucket size with --time-series, e.g. \"5 minutes\" (default: ~300 buckets)"),
     ),
+    order: Flag.string("order").pipe(Flag.withDefault("desc"), Flag.withDescription("asc | desc (scalar mode)")),
+    orderBy: Flag.string("order-by").pipe(
+      Flag.withDefault("value"),
+      Flag.withDescription("value, or one of the --group-by labels (scalar mode)"),
+    ),
     limit: Flag.integer("limit").pipe(
       Flag.optional,
-      Flag.withDescription("Keep only the largest N groups (scalar mode)"),
+      Flag.withDescription("Keep only the first N groups after sorting (scalar mode)"),
     ),
     from: Flags.from,
     to: Flags.to,
@@ -225,7 +236,18 @@ const aggregate = Command.make(
         from: Option.getOrUndefined(input.from) ?? config.defaultFrom,
         to: Option.getOrUndefined(input.to),
       })
-      yield* printAggregate(result, input.output, Option.getOrUndefined(input.limit))
+      if (input.order !== "asc" && input.order !== "desc") {
+        return yield* new InvalidLogQuery({ message: `--order must be asc or desc; got ${input.order}` })
+      }
+      const groupKeys = input.groupBy.flatMap((key) => key.split(",")).map((key) => key.trim())
+      if (input.orderBy !== "value" && !groupKeys.includes(input.orderBy)) {
+        return yield* new InvalidLogQuery({ message: `--order-by must be value or one of the --group-by labels; got ${input.orderBy}` })
+      }
+      yield* printAggregate(result, input.output, {
+        limit: Option.getOrUndefined(input.limit),
+        order: input.order,
+        orderBy: input.orderBy,
+      })
     }).pipe(Effect.provide(Logs.Live)),
 ).pipe(Command.withDescription("Aggregate logs into one value per group, or a time series with --time-series"))
 
@@ -261,6 +283,10 @@ const timeseries = Command.make(
     }).pipe(Effect.provide(Logs.Live)),
 ).pipe(Command.withDescription("Log counts (or another --aggregation) over time; same as aggregate --time-series"))
 
+// Measured on Loki: label values for "1 hour" returned 56 pods where 4 had lines in that hour.
+export const indexNote =
+  "# from Loki's index, which can include values from outside the window; for exact counts use `logs aggregate --group-by`"
+
 const values = Command.make(
   "values",
   {
@@ -285,6 +311,7 @@ const values = Command.make(
       })
       yield* printRows([input.label], found.map((value) => [value]), input.output, found)
       if (found.length === 0) yield* Console.error("# 0 values")
+      else yield* Console.error(indexNote)
     }).pipe(Effect.provide(Logs.Live)),
 ).pipe(Command.withDescription("List the values of a stream label (e.g. all services with logs)"))
 

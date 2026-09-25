@@ -71,3 +71,13 @@ it.effect("buildMetricQuery validates its inputs", () =>
       "--parser",
     )
   }))
+
+it.effect("count_distinct counts the series of a count grouped by the field", () =>
+  Effect.gen(function* () {
+    expect(yield* buildMetricQuery({ logQuery: `{a="b"}`, aggregation: "count_distinct", aggregateOn: "k8s_pod_name", groupBy: ["service_name"], rangeSeconds: 60 }))
+      .toBe(`count by (service_name) (sum by (service_name, k8s_pod_name) (count_over_time({a="b"} [60s])))`)
+    expect(yield* buildMetricQuery({ logQuery: `{a="b"}`, aggregation: "count_distinct", aggregateOn: "user", parser: "json", rangeSeconds: 60 }))
+      .toBe(`count (sum by (user) (count_over_time({a="b"} | json [60s])))`)
+    expect((yield* Effect.flip(buildMetricQuery({ logQuery: `{a="b"}`, aggregation: "count_distinct", rangeSeconds: 60 }))).message)
+      .toContain("needs --aggregate-on")
+  }))

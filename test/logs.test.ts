@@ -66,3 +66,19 @@ it("traceScope turns a trace into a service selector and a padded window", async
   expect(traceScope({ start: "2026-01-01T00:00:00.000Z", durationMs: 0, services: ["api"] })?.label).toBe("service_name=api")
   expect(traceScope({ durationMs: 0, services: [] })).toBeUndefined()
 })
+
+it("topGroups sorts ascending or by a label", () => {
+  const response = {
+    status: "success",
+    data: {
+      resultType: "vector" as const,
+      result: [
+        { metric: { level: "info" }, value: [1, "5"] as const },
+        { metric: { level: "error" }, value: [1, "9"] as const },
+      ],
+    },
+  }
+  const levels = (r: ReturnType<typeof topGroups>) => r.data.resultType === "vector" ? r.data.result.map((s) => s.metric.level) : []
+  expect(levels(topGroups(response, undefined, "asc"))).toEqual(["info", "error"])
+  expect(levels(topGroups(response, undefined, "asc", "level"))).toEqual(["error", "info"])
+})

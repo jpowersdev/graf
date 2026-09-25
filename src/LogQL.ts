@@ -103,6 +103,7 @@ export const buildLogQuery = (input: LogFilterInput): Effect.Effect<string, Inva
 
 export const aggregations = [
   "count",
+  "count_distinct",
   "rate",
   "bytes",
   "sum",
@@ -162,6 +163,14 @@ export const buildMetricQuery = (input: MetricQueryInput): Effect.Effect<string,
 
     if (input.aggregateOn === undefined) {
       return yield* new InvalidLogQuery({ message: `--aggregation ${aggregation} needs --aggregate-on <field>` })
+    }
+    if (aggregation === "count_distinct") {
+      if (!labelName.test(input.aggregateOn)) {
+        return yield* new InvalidLogQuery({ message: `count_distinct needs a label or field name; got ${quote(input.aggregateOn)}` })
+      }
+      // LogQL has no distinct count: group by the field, then count the resulting series.
+      const inner = [...groupBy, input.aggregateOn].join(", ")
+      return `count${by} (sum by (${inner}) (count_over_time(${input.logQuery}${parser} ${range})))`
     }
     // Unwrapped range aggregations group inline; without `by`, Loki returns one series per stream.
     const unwrapped = `${input.logQuery}${parser} | unwrap ${input.aggregateOn} | __error__="" ${range}`

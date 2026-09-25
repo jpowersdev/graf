@@ -3,6 +3,7 @@ import { Argument, Command, Flag } from "effect/unstable/cli"
 import { attempt } from "./Discovery.js"
 import * as Flags from "./Flags.js"
 import { Logs } from "./Logs.js"
+import { indexNote } from "./LogsCommand.js"
 import { buildLogQuery, serviceLabel } from "./LogQL.js"
 import { Metrics, nameMatcher } from "./Metrics.js"
 import * as Output from "./Output.js"
@@ -168,6 +169,7 @@ export const valuesCommand = Command.make(
       const limited = Option.match(input.limit, { onNone: () => filtered, onSome: (limit) => filtered.slice(0, limit) })
       yield* printRows([input.name], limited.map((value) => [value]), input.output, limited)
       if (limited.length === 0) yield* Console.error(`# 0 values (list keys with \`graf fields --signal ${signal}\`)`)
+      else if (signal === "logs") yield* Console.error(indexNote)
       else if (limited.length < filtered.length) yield* Console.error(`# ${limited.length} of ${filtered.length} values`)
     }).pipe(Effect.provide(discoveryLive)),
 ).pipe(Command.withDescription("List the distinct values of a log label, trace attribute, or metric label"))

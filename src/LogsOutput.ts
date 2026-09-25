@@ -46,9 +46,20 @@ export const print = (result: LogsResult, output: string): Effect.Effect<void, O
     }
   })
 
-// Scalar aggregations read best largest-first; --limit keeps the top groups.
-export const topGroups = (response: QueryResponse, limit: number | undefined): QueryResponse => {
+// Scalar aggregations read best largest-first; --order/--order-by change that, and --limit keeps
+// the first N after sorting.
+export const topGroups = (
+  response: QueryResponse,
+  limit: number | undefined,
+  order: "asc" | "desc" = "desc",
+  orderBy = "value",
+): QueryResponse => {
   if (response.data.resultType !== "vector") return response
-  const sorted = [...response.data.result].sort((a, b) => Number(b.value[1]) - Number(a.value[1]))
+  const sign = order === "asc" ? 1 : -1
+  const sorted = [...response.data.result].sort((a, b) =>
+    orderBy === "value"
+      ? sign * (Number(a.value[1]) - Number(b.value[1]))
+      : sign * (a.metric[orderBy] ?? "").localeCompare(b.metric[orderBy] ?? "")
+  )
   return { ...response, data: { ...response.data, result: limit === undefined ? sorted : sorted.slice(0, limit) } }
 }
