@@ -113,6 +113,10 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - \`graf metrics list [--search TEXT]\` · \`graf metrics describe NAME\` (labels and sample values)
 - \`graf metrics query '<promql>' [--step DUR | --instant]\`
 
+**Raw queries**
+- \`graf query run --file BODY.json\` — a raw Grafana \`/api/ds/query\` body (\`{ from, to, queries: [...] }\`); tables put
+  each series in its own column. Only metrics/logs/traces/profiles datasources and expressions are allowed.
+
 ## Triage recipes
 
 \`\`\`

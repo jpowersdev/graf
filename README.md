@@ -74,6 +74,9 @@ graf profiles top --service <service> --type alloc_space --order-by total --outp
 graf dashboards search latency --output table
 graf dashboards get <dashboard-uid> --output table
 
+# raw /api/ds/query body (signal datasources and expressions only)
+graf query run --file body.json --output table
+
 # alerts (Grafana-managed rules)
 graf alerts list --state firing --output table
 graf alerts get <rule-uid> --output table
