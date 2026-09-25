@@ -15,17 +15,10 @@ export const levelLabel = "detected_level"
 // The OTel severity text as the app emitted it; casing and spelling vary by logger.
 export const severityTextLabel = "severity_text"
 
-// Spellings loggers use for the same level.
+// Level spellings seen in real logs besides case variants: "warning" for WARN.
 const levelAliases: Record<string, ReadonlyArray<string>> = {
-  trace: ["trace"],
-  debug: ["debug"],
-  info: ["info", "information"],
   warn: ["warn", "warning"],
   warning: ["warn", "warning"],
-  error: ["error", "err"],
-  err: ["error", "err"],
-  fatal: ["fatal", "critical", "crit"],
-  critical: ["fatal", "critical", "crit"],
 }
 
 // A severity number wrongly defaulted upstream leaves detected_level at "info" while
