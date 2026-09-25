@@ -1,4 +1,4 @@
-import { Console, Effect, Option } from "effect"
+import { Console, Effect, Layer, Option } from "effect"
 import { Argument, Command, Flag } from "effect/unstable/cli"
 import { GrafanaConfig } from "./Config.js"
 import * as Flags from "./Flags.js"
@@ -8,6 +8,7 @@ import type { QueryResponse } from "./Metrics.js"
 import * as MetricsOutput from "./MetricsOutput.js"
 import * as Output from "./Output.js"
 import { printRows } from "./Rows.js"
+import { Traces } from "./Traces.js"
 
 const filterFlags = {
   service: Flag.string("service").pipe(
@@ -60,6 +61,21 @@ const filterInput = (input: FilterFlags) => ({
   query: Option.getOrUndefined(input.query),
 })
 
+// Without a selector, --trace-id takes its services and time window from the trace itself.
+export const traceScope = (
+  waterfall: { readonly start?: string | undefined; readonly durationMs: number; readonly services: ReadonlyArray<string> },
+  padMs = 60_000,
+) => {
+  if (waterfall.start === undefined || waterfall.services.length === 0) return undefined
+  const start = Date.parse(waterfall.start)
+  const escaped = waterfall.services.map((service) => service.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+  return {
+    label: escaped.length === 1 ? `service_name=${waterfall.services[0]}` : `service_name=~${escaped.join("|")}`,
+    from: new Date(start - padMs).toISOString(),
+    to: new Date(start + waterfall.durationMs + padMs).toISOString(),
+  }
+}
+
 const search = Command.make(
   "search",
   {
@@ -76,15 +92,31 @@ const search = Command.make(
     Effect.gen(function* () {
       const config = yield* GrafanaConfig
       const logs = yield* Logs
+      const filters = filterInput(input)
+      let labels = filters.labels
+      let from = Option.getOrUndefined(input.from)
+      let to = Option.getOrUndefined(input.to)
+      if (filters.traceId !== undefined && filters.service === undefined && labels.length === 0 && filters.query === undefined) {
+        const scope = traceScope(yield* (yield* Traces).get(filters.traceId))
+        if (scope === undefined) {
+          yield* Console.error(`# trace ${filters.traceId} not found in traces; pass --service to search logs anyway`)
+          return
+        }
+        yield* Console.error(`# trace ${filters.traceId}: ${scope.label}, ${scope.from} → ${scope.to}`)
+        labels = [scope.label]
+        from = from ?? scope.from
+        to = to ?? scope.to
+      }
       const result = yield* logs.search({
-        ...filterInput(input),
-        from: Option.getOrUndefined(input.from) ?? config.defaultFrom,
-        to: Option.getOrUndefined(input.to),
+        ...filters,
+        labels,
+        from: from ?? config.defaultFrom,
+        to,
         limit: Option.getOrUndefined(input.limit) ?? config.defaultLimit,
       })
       yield* LogsOutput.print(result, input.output)
-    }).pipe(Effect.provide(Logs.Live)),
-).pipe(Command.withDescription("Search log lines, newest first"))
+    }).pipe(Effect.provide(Layer.mergeAll(Logs.Live, Traces.Live))),
+).pipe(Command.withDescription("Search log lines, newest first (--trace-id alone finds the trace's services and window)"))
 
 const context = Command.make(
   "context",

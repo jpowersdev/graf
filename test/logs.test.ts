@@ -55,3 +55,14 @@ it("topGroups sorts vector results largest-first and applies the limit", () => {
   const top = topGroups(response, 2)
   expect(top.data.resultType === "vector" && top.data.result.map((series) => series.metric.level)).toEqual(["error", "warn"])
 })
+
+it("traceScope turns a trace into a service selector and a padded window", async () => {
+  const { traceScope } = await import("../src/LogsCommand.ts")
+  expect(traceScope({ start: "2026-01-01T00:00:00.000Z", durationMs: 1_500, services: ["api", "web.v2"] })).toEqual({
+    label: "service_name=~api|web\\.v2",
+    from: "2025-12-31T23:59:00.000Z",
+    to: "2026-01-01T00:01:01.500Z",
+  })
+  expect(traceScope({ start: "2026-01-01T00:00:00.000Z", durationMs: 0, services: ["api"] })?.label).toBe("service_name=api")
+  expect(traceScope({ durationMs: 0, services: [] })).toBeUndefined()
+})
