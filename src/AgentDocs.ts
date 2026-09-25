@@ -7,7 +7,7 @@
 const BODY = `## What this is
 
 \`graf\` is a read-only CLI that queries observability data **through Grafana**: metrics, logs and
-traces. It talks only to Grafana's API and reaches each backend through Grafana's datasource
+traces, profiles and alert rules. It talks only to Grafana's API and reaches each backend through Grafana's datasource
 proxy, so commands are organized by signal, not by backend.
 
 Output goes to **stdout** as JSON by default. **Notes go to stderr**: the query graf built
@@ -87,6 +87,11 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - \`graf traces latency [filters] [--quantiles p50,p95,p99] [--group-by ATTR ...] [--time-series]\` — in ms.
 - \`graf traces operations --service S [--kind server] [--order-by p99Ms|spans|errors]\` — per-operation health.
 - \`graf traces values ATTR\`
+
+**Profiles** (continuous profiling)
+- \`graf profiles types\` · \`graf profiles labels\` · \`graf profiles values service_name\`
+- \`graf profiles top [--service S] [--label k=v] [--type cpu|wall|alloc_space|...] [--order-by self|total] [--limit N]\`
+  — hottest functions with self/total share; nanosecond profiles are shown in ms.
 
 **Alerts** (Grafana-managed rules; read-only)
 - \`graf alerts list [--state firing|pending|inactive|nodata|error] [--search]\` — rules, firing first, with instance counts.

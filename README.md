@@ -1,6 +1,6 @@
 # graf
 
-A command-line client for querying observability data through [Grafana](https://grafana.com) — metrics, logs, traces and alerts today; profiles next.
+A command-line client for querying observability data through [Grafana](https://grafana.com) — metrics, logs, traces, profiles and alerts.
 
 graf talks only to Grafana's API. It picks a datasource for each signal (metrics, logs, traces, profiles) by type, and reaches each backend through Grafana's datasource proxy, so the backend behind a signal can change without changing how you use graf. It is read-only.
 
@@ -64,6 +64,11 @@ graf traces get <trace-id> --output table                                 # span
 graf traces errors --from "1 hour" --output table                          # error counts and rate per service
 graf traces latency --service <service> --group-by name --output table     # p50/p95/p99 per operation
 graf traces operations --service <service> --kind server --output table    # count, errors, p50, p99 per operation
+
+# profiles
+graf profiles values service_name
+graf profiles top --service <service> --type cpu --from "30 minutes" --output table
+graf profiles top --service <service> --type alloc_space --order-by total --output table
 
 # alerts (Grafana-managed rules)
 graf alerts list --state firing --output table

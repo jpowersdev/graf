@@ -6,6 +6,7 @@ import { command as datasourcesCommand } from "./DatasourcesCommand.js"
 import { fieldsCommand, servicesCommand, valuesCommand } from "./DiscoveryCommand.js"
 import { command as logsCommand } from "./LogsCommand.js"
 import { command as metricsCommand } from "./MetricsCommand.js"
+import { command as profilesCommand } from "./ProfilesCommand.js"
 import { command as tracesCommand } from "./TracesCommand.js"
 
 export const command = Command.make("graf").pipe(
@@ -20,6 +21,7 @@ export const command = Command.make("graf").pipe(
     valuesCommand,
     logsCommand,
     metricsCommand,
+    profilesCommand,
     tracesCommand,
   ]),
 )
