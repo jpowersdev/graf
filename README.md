@@ -110,3 +110,5 @@ npm install
 npm run generate   # regenerate src/Generated.ts from Grafana's OpenAPI spec (pinned version, read-only operations)
 npm run validate   # generated-client check, build, tests
 ```
+
+`npm run build` type-checks with `tsc`, then bundles `src/main.ts` into a single `dist/main.js` with esbuild. The package has no runtime dependencies: Effect is a prerelease whose packages depend on each other through caret ranges, so resolving it at install time can pull in incompatible releases.
