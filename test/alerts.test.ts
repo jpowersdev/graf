@@ -66,22 +66,22 @@ it("epochToIso normalizes seconds, ms, µs and ns", () => {
   for (const value of [1767225600, 1767225600000, 1767225600000000, 1767225600000000000]) expect(epochToIso(value)).toBe(iso)
 })
 
-it("historyTransitions reads the state-history frame, newest first", () => {
+it("historyTransitions reads the state-history frame, newest first, without duplicates", () => {
   const transitions = historyTransitions({
     schema: { fields: [{ name: "time" }, { name: "text" }, { name: "prev" }, { name: "next" }, { name: "data" }] },
     data: {
       values: [
-        [1767225600000000, 1767225660000000],
-        ["Errors {service=api}", "Errors {service=web}"],
-        ["Normal", "Alerting"],
-        ["Alerting", "Normal (MissingSeries)"],
-        ['{"values":{"A":3,"B":1}}', "not json"],
+        [1767225600000000, 1767225660000000, 1767225600000000],
+        ["Errors {service=api} - A=3.000000, B=1.000000", "Errors {service=web, note=a=b c}", "Errors {service=api} - A=3.000000, B=1.000000"],
+        ["Normal", "Alerting", "Normal"],
+        ["Alerting", "Normal (MissingSeries)", "Alerting"],
+        ['{"values":{"A":3,"B":1}}', "not json", '{"values":{"A":3,"B":1}}'],
       ],
     },
   })
   expect(transitions).toEqual([
-    { time: "2026-01-01T00:01:00.000Z", from: "Alerting", to: "Normal (MissingSeries)", labels: "service=web", values: undefined },
-    { time: "2026-01-01T00:00:00.000Z", from: "Normal", to: "Alerting", labels: "service=api", values: { A: 3, B: 1 } },
+    { time: "2026-01-01T00:01:00.000Z", from: "Alerting", to: "Normal (MissingSeries)", labels: { service: "web", note: "a=b c" }, values: undefined },
+    { time: "2026-01-01T00:00:00.000Z", from: "Normal", to: "Alerting", labels: { service: "api" }, values: { A: 3, B: 1 } },
   ])
 })
 

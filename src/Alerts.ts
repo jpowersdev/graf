@@ -215,8 +215,18 @@ export interface Transition {
   readonly time: string
   readonly from?: string | undefined
   readonly to?: string | undefined
-  readonly labels?: string | undefined
+  readonly labels: Readonly<Record<string, string>>
   readonly values?: Readonly<Record<string, unknown>> | undefined
+}
+
+// `text` is "<rule name> {k=v, k=v} - A=1, C=1"; values can contain spaces but not ", ".
+export const parseHistoryLabels = (text: string): Record<string, string> => {
+  const match = /\{(.*)\}(?:\s+-\s+.*)?$/s.exec(text)
+  if (match === null) return {}
+  return Object.fromEntries(match[1]!.split(", ").flatMap((pair) => {
+    const index = pair.indexOf("=")
+    return index <= 0 ? [] : [[pair.slice(0, index), pair.slice(index + 1)]]
+  }))
 }
 
 // Frame time columns arrive as epoch s/ms/µs/ns depending on the source; normalize by magnitude.
@@ -234,7 +244,7 @@ export const historyTransitions = (frame: Frame): ReadonlyArray<Transition> => {
   const prev = column("prev")
   const next = column("next")
   const data = column("data")
-  return times.map((time, index) => {
+  const transitions = times.map((time, index): Transition => {
     let values: Record<string, unknown> | undefined
     const raw = data[index]
     if (typeof raw === "string") {
@@ -244,8 +254,7 @@ export const historyTransitions = (frame: Frame): ReadonlyArray<Transition> => {
         values = undefined
       }
     }
-    // `text` is "<rule name> {label=value, ...}"; keep the label part.
-    const labels = typeof text[index] === "string" ? /\{(.*)\}\s*$/.exec(text[index] as string)?.[1] : undefined
+    const labels = typeof text[index] === "string" ? parseHistoryLabels(text[index] as string) : {}
     return {
       time: epochToIso(Number(time)),
       from: str(prev[index]),
@@ -253,6 +262,14 @@ export const historyTransitions = (frame: Frame): ReadonlyArray<Transition> => {
       labels,
       values,
     }
+  })
+  // State history can hold the same transition twice (e.g. written by two Grafana replicas).
+  const seen = new Set<string>()
+  return transitions.filter((t) => {
+    const key = JSON.stringify([t.time, t.from, t.to, t.labels])
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
   }).sort((a, b) => b.time.localeCompare(a.time))
 }
 

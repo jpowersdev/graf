@@ -91,13 +91,19 @@ const get = Command.make(
     }).pipe(Effect.provide(Alerts.Live)),
 ).pipe(Command.withDescription("A rule's definition, queries and current instances"))
 
-const printHistory = (transitions: ReadonlyArray<Transition>, output: string) =>
-  printRows(
+// Labels shared by every transition are rule metadata; show only what tells rows apart.
+const printHistory = (transitions: ReadonlyArray<Transition>, output: string) => {
+  const keys = new Set(transitions.flatMap((t) => Object.keys(t.labels)))
+  const constant = new Set(transitions.length <= 1 ? [] : [...keys].filter((key) =>
+    transitions.every((t) => t.labels[key] === transitions[0]!.labels[key])
+  ))
+  return printRows(
     ["time", "from", "to", "labels", "values"],
-    transitions.map((t) => [t.time, t.from, t.to, t.labels, t.values === undefined ? undefined : JSON.stringify(t.values)]),
+    transitions.map((t) => [t.time, t.from, t.to, labelText(t.labels, constant) || undefined, t.values === undefined ? undefined : JSON.stringify(t.values)]),
     output,
     transitions,
   )
+}
 
 const history = Command.make(
   "history",

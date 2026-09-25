@@ -136,7 +136,7 @@ graf logs aggregate --service <svc> --group-by detected_level --from "6 hours" -
 graf logs timeseries --service <svc> --level error --step "5 minutes" --from "6 hours" --output table
 
 # Request rate per service from span metrics
-graf metrics query 'sum by (service_name) (rate(traces_spanmetrics_calls_total[5m]))' --output table
+graf metrics query 'sum by (service) (rate(traces_spanmetrics_calls_total[5m]))' --output table
 \`\`\`
 `
 

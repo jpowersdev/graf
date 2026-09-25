@@ -46,7 +46,7 @@ graf values --signal traces resource.deployment.environment
 
 graf metrics list --search spanmetrics --output table
 graf metrics describe traces_spanmetrics_calls_total --output table
-graf metrics query 'sum by (service_name) (rate(traces_spanmetrics_calls_total[5m]))' --from "3 hours" --output table
+graf metrics query 'sum by (service) (rate(traces_spanmetrics_calls_total[5m]))' --from "3 hours" --output table
 graf metrics query 'count(up)' --instant
 
 graf logs values service_name

@@ -87,7 +87,7 @@ const query = Command.make(
   {
     query: Argument.string("query").pipe(
       Argument.withDescription(
-        "PromQL expression, e.g. 'sum by (service_name) (rate(traces_spanmetrics_calls_total[5m]))'. "
+        "PromQL expression, e.g. 'sum by (service) (rate(traces_spanmetrics_calls_total[5m]))'. "
           + "Find metric names with `metrics list --search` and labels with `metrics describe`.",
       ),
     ),

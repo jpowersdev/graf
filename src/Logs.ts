@@ -220,7 +220,17 @@ export class Logs extends Context.Service<Logs, {
               `${base}/label/${encodeURIComponent(label)}/values`,
               [["start", nanos(start)], ["end", nanos(end)], ["query", input.selector]],
             )
-            return response.data ?? []
+            const values = response.data ?? []
+            // Structured metadata (e.g. detected_level, trace_id) isn't an indexed label, so the
+            // label API knows nothing about it; group a count by it instead.
+            if (values.length > 0 || input.selector === undefined || !/^[A-Za-z_][A-Za-z0-9_]*$/.test(label)) return values
+            const query = `sum by (${label}) (count_over_time(${input.selector} [${LogQL.logqlDuration((end - start) / 1_000)}]))`
+            const grouped = yield* client.getJson(LokiResponse, `${base}/query`, [["query", query], ["time", nanos(end)]])
+            if (grouped.data.resultType !== "vector") return []
+            return [...new Set(grouped.data.result.flatMap((series) => {
+              const value = series.metric[label]
+              return value === undefined || value === "" ? [] : [value]
+            }))].sort()
           }),
 
         labels: (input) =>

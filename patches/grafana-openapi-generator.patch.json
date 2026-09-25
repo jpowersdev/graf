@@ -6,5 +6,22 @@
   {
     "op": "remove",
     "path": "/components/schemas/FrameMeta/properties/uniqueRowIdFields/example"
+  },
+  {
+    "op": "replace",
+    "path": "/components/schemas/UserProfileDTO/properties/authLabels",
+    "value": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
   }
 ]
