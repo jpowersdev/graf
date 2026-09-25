@@ -38,6 +38,12 @@ A signal's datasource is discovered when exactly one datasource of a supported t
 ```bash
 graf datasources list --output table
 
+# discover
+graf services list --search api --output table
+graf fields --signal logs --service <service> --output table
+graf fields --signal traces --scope span --search http
+graf values --signal traces resource.deployment.environment
+
 graf metrics list --search spanmetrics --output table
 graf metrics describe traces_spanmetrics_calls_total --output table
 graf metrics query 'sum by (service_name) (rate(traces_spanmetrics_calls_total[5m]))' --from "3 hours" --output table
@@ -64,6 +70,11 @@ graf traces operations --service <service> --kind server --output table    # cou
 - **`--output`** is one of `json` (default), `table`, `tsv`, `ndjson`, `values`. Warnings and notes (such as an auto-chosen `--step`) go to **stderr**, so stdout stays parseable.
 - Queries use the backend's own language (PromQL for metrics, LogQL for logs, TraceQL for traces). Trace commands build TraceQL from `--service`, `--operation`, `--error`, `--min-duration`, `--attr` and `--filter`, and print it as `# traceql: ...`. Log commands build LogQL from `--service`, `--label`, `--contains`, `--level`, `--trace-id` and `--filter` (raw pipeline stages), and print it to stderr as `# logql: ...`; `--query` takes a complete LogQL query instead.
 - Logs always need a stream selector (`--service` or `--label`): many Loki setups reject queries that match every stream.
+
+## For coding agents
+
+- **`graf agent instructions`** prints a version-stamped usage guide (commands, query languages, time syntax, triage recipes). Re-dump it after upgrades: `graf agent instructions > AGENTS-graf.md`.
+- **`graf agent context`** prints a live Markdown overview of the target Grafana: datasource per signal, services with logs and traces, log stream labels, trace attributes by scope, and metric names by prefix. Add `--full` for exhaustive lists.
 
 ## Development
 

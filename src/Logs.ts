@@ -103,11 +103,32 @@ const asMetricResponse = (query: string, response: LokiResponse): Effect.Effect<
     ? Effect.fail(new UnexpectedLokiResult({ message: `Expected a metric result for ${query}, got log streams` }))
     : Effect.succeed({ status: response.status, data: response.data, warnings: response.warnings })
 
+export const DetectedFieldsResponse = Schema.Struct({
+  fields: Schema.optionalKey(Schema.NullOr(Schema.Array(Schema.Struct({
+    label: Schema.String,
+    type: Schema.optionalKey(Schema.String),
+    cardinality: Schema.optionalKey(Schema.Number),
+    parsers: Schema.optionalKey(Schema.NullOr(Schema.Array(Schema.String))),
+  })))),
+})
+
+// A field Loki found in lines (via a parser) or in structured metadata (no parser).
+export interface DetectedField {
+  readonly name: string
+  readonly type?: string | undefined
+  readonly cardinality?: number | undefined
+  readonly parsers: ReadonlyArray<string>
+}
+
+const StringList = Schema.Struct({ data: Schema.optionalKey(Schema.NullOr(Schema.Array(Schema.String))) })
+
 export class Logs extends Context.Service<Logs, {
   readonly search: (input: LogsSearchInput) => Effect.Effect<LogsResult, unknown>
   readonly context: (input: LogsContextInput) => Effect.Effect<LogsResult, unknown>
   readonly aggregate: (input: LogsAggregateInput) => Effect.Effect<LogsAggregateResult, unknown>
   readonly labelValues: (label: string, input: { readonly from: string; readonly to?: string | undefined; readonly selector?: string | undefined }) => Effect.Effect<ReadonlyArray<string>, unknown>
+  readonly labels: (input: { readonly from: string; readonly to?: string | undefined; readonly selector?: string | undefined }) => Effect.Effect<ReadonlyArray<string>, unknown>
+  readonly detectedFields: (query: string, input: { readonly from: string; readonly to?: string | undefined }) => Effect.Effect<ReadonlyArray<DetectedField>, unknown>
 }>()(
   "Logs",
   {
@@ -195,11 +216,40 @@ export class Logs extends Context.Service<Logs, {
             const base = yield* proxy
             const { start, end } = yield* resolveRange(input.from, input.to)
             const response = yield* client.getJson(
-              Schema.Struct({ data: Schema.optionalKey(Schema.Array(Schema.String)) }),
+              StringList,
               `${base}/label/${encodeURIComponent(label)}/values`,
               [["start", nanos(start)], ["end", nanos(end)], ["query", input.selector]],
             )
             return response.data ?? []
+          }),
+
+        labels: (input) =>
+          Effect.gen(function* () {
+            const base = yield* proxy
+            const { start, end } = yield* resolveRange(input.from, input.to)
+            const response = yield* client.getJson(StringList, `${base}/labels`, [
+              ["start", nanos(start)],
+              ["end", nanos(end)],
+              ["query", input.selector],
+            ])
+            return response.data ?? []
+          }),
+
+        detectedFields: (query, input) =>
+          Effect.gen(function* () {
+            const base = yield* proxy
+            const { start, end } = yield* resolveRange(input.from, input.to)
+            const response = yield* client.getJson(DetectedFieldsResponse, `${base}/detected_fields`, [
+              ["query", query],
+              ["start", nanos(start)],
+              ["end", nanos(end)],
+            ])
+            return (response.fields ?? []).map((field) => ({
+              name: field.label,
+              type: field.type,
+              cardinality: field.cardinality,
+              parsers: field.parsers ?? [],
+            }))
           }),
       }
     }),

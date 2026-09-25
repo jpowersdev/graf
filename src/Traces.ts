@@ -322,11 +322,19 @@ export const TagValuesResponse = Schema.Struct({
   })))),
 })
 
+export const TagsResponse = Schema.Struct({
+  scopes: Schema.optionalKey(Schema.NullOr(Schema.Array(Schema.Struct({
+    name: Schema.String,
+    tags: Schema.optionalKey(Schema.NullOr(Schema.Array(Schema.String))),
+  })))),
+})
+
 export class Traces extends Context.Service<Traces, {
   readonly search: (input: TraceQL.SpanFilterInput & { readonly from: string; readonly to?: string | undefined; readonly limit: number; readonly spansPerTrace: number; readonly spans: boolean }) => Effect.Effect<TracesSearchResult, unknown>
   readonly get: (traceId: string) => Effect.Effect<Waterfall, unknown>
   readonly instant: (query: string, range: { readonly from: string; readonly to?: string | undefined }) => Effect.Effect<MetricsResponse, unknown>
   readonly range: (query: string, range: { readonly from: string; readonly to?: string | undefined; readonly step?: string | undefined }) => Effect.Effect<TimeSeriesResult, unknown>
+  readonly attributeNames: (scope: string | undefined, range: { readonly from: string; readonly to?: string | undefined }) => Effect.Effect<ReadonlyArray<{ readonly scope: string; readonly name: string }>, unknown>
   readonly attributeValues: (attribute: string, range: { readonly from: string; readonly to?: string | undefined; readonly query?: string | undefined }) => Effect.Effect<ReadonlyArray<string>, unknown>
 }>()(
   "Traces",
@@ -386,6 +394,24 @@ export class Traces extends Context.Service<Traces, {
               ["step", `${step ?? autoStep}s`],
             ])
             return { query, response, autoStepSeconds: autoStep }
+          }),
+
+        attributeNames: (scope, range) =>
+          Effect.gen(function* () {
+            const base = yield* proxy
+            const { start, end } = yield* resolveRange(range.from, range.to)
+            const response = yield* client.getJson(TagsResponse, `${base}/v2/search/tags`, [
+              ["scope", scope],
+              ["start", seconds(start)],
+              ["end", Math.ceil(end / 1_000)],
+            ])
+            return (response.scopes ?? []).flatMap((entry) =>
+              (entry.tags ?? []).map((tag) => ({
+                scope: entry.name,
+                // Intrinsics (name, status, duration, ...) are used unscoped in TraceQL.
+                name: entry.name === "intrinsic" ? tag : `${entry.name}.${tag}`,
+              }))
+            ).sort((a, b) => a.name.localeCompare(b.name))
           }),
 
         attributeValues: (attribute, range) =>

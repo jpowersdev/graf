@@ -123,6 +123,8 @@ export class Metrics extends Context.Service<Metrics, {
   readonly list: (input: Range & { readonly search?: string | undefined; readonly limit?: number | undefined }) => Effect.Effect<ReadonlyArray<MetricSummary>, unknown>
   readonly describe: (name: string, input: Range) => Effect.Effect<MetricDescription, unknown>
   readonly query: (input: MetricsQueryInput) => Effect.Effect<MetricsQueryResult, unknown>
+  readonly labelNames: (input: Range & { readonly match?: string | undefined }) => Effect.Effect<ReadonlyArray<string>, unknown>
+  readonly labelValues: (label: string, input: Range & { readonly match?: string | undefined }) => Effect.Effect<ReadonlyArray<string>, unknown>
 }>()(
   "Metrics",
   {
@@ -200,6 +202,30 @@ export class Metrics extends Context.Service<Metrics, {
               ["step", step ?? autoStep],
             ])
             return { response, autoStepSeconds: autoStep }
+          }),
+
+        labelNames: (input) =>
+          Effect.gen(function* () {
+            const base = yield* proxy
+            const { start, end } = yield* resolveRange(input.from, input.to)
+            const response = yield* client.getJson(StringListResponse, `${base}/api/v1/labels`, [
+              ["match[]", input.match],
+              ["start", seconds(start)],
+              ["end", seconds(end)],
+            ])
+            return response.data
+          }),
+
+        labelValues: (label, input) =>
+          Effect.gen(function* () {
+            const base = yield* proxy
+            const { start, end } = yield* resolveRange(input.from, input.to)
+            const response = yield* client.getJson(StringListResponse, `${base}/api/v1/label/${encodeURIComponent(label)}/values`, [
+              ["match[]", input.match],
+              ["start", seconds(start)],
+              ["end", seconds(end)],
+            ])
+            return response.data
           }),
       }
     }),
