@@ -43,9 +43,15 @@ export const attributeName = (key: string): string => {
   return `.${quote(key)}`
 }
 
-const literal = (value: string): string => {
+// Enum intrinsics compare against bare keywords; everything else against typed literals.
+const enumKeywords: Record<string, RegExp> = {
+  kind: /^(unspecified|internal|server|client|producer|consumer)$/,
+  status: /^(error|ok|unset)$/,
+}
+
+const literal = (key: string, value: string): string => {
+  if (enumKeywords[key]?.test(value) === true) return value
   if (/^-?\d+(\.\d+)?$/.test(value) || value === "true" || value === "false" || value === "nil") return value
-  if (/^(error|ok|unset)$/.test(value)) return value
   return quote(value)
 }
 
@@ -55,7 +61,8 @@ export const parseAttrCondition = (input: string): Effect.Effect<string, Invalid
     return Effect.fail(new InvalidTraceQuery({ message: `Expected --attr like key=value, key!=value, key>=500 or key=~regex; got ${input}` }))
   }
   const [, key, op, value] = match
-  return Effect.succeed(`${attributeName(key!)} ${op} ${op === "=~" || op === "!~" ? quote(value!) : literal(value!)}`)
+  const name = attributeName(key!)
+  return Effect.succeed(`${name} ${op} ${op === "=~" || op === "!~" ? quote(value!) : literal(name, value!)}`)
 }
 
 export const buildSpanConditions = (input: SpanFilterInput): Effect.Effect<ReadonlyArray<string>, InvalidTraceQuery> =>

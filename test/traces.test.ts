@@ -106,3 +106,12 @@ it("joinInstant lines up several metric queries by group, picking quantiles by `
     { name: "GET /y", p99: 4 },
   ])
 })
+
+it("subtree returns a span and its descendants only", async () => {
+  const { subtree } = await import("../src/Traces.ts")
+  const span = (spanId: string, depth: number) => ({ spanId, depth, name: spanId, offsetMs: 0, durationMs: 0, attributes: {}, events: [] })
+  const spans = [span("a", 0), span("b", 1), span("c", 2), span("d", 1), span("e", 0)]
+  expect(subtree(spans, "B").map((s) => s.spanId)).toEqual(["b", "c"])
+  expect(subtree(spans, "d").map((s) => s.spanId)).toEqual(["d"])
+  expect(subtree(spans, "zz")).toEqual([])
+})

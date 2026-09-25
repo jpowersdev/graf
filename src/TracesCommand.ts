@@ -5,7 +5,7 @@ import * as Flags from "./Flags.js"
 import * as Output from "./Output.js"
 import { printRows, type RowCell } from "./Rows.js"
 import * as TraceQL from "./TraceQL.js"
-import { joinInstant, type MetricsResponse, type Row, seriesLabels, Traces } from "./Traces.js"
+import { joinInstant, type MetricsResponse, type Row, seriesLabels, subtree, Traces } from "./Traces.js"
 
 const filterFlags = {
   service: Flag.string("service").pipe(
@@ -91,6 +91,10 @@ const search = Command.make(
     spans: Flag.boolean("spans").pipe(
       Flag.withDescription("One row per matching span (with service, name, status) instead of per trace"),
     ),
+    orderBy: Flag.string("order-by").pipe(
+      Flag.optional,
+      Flag.withDescription("duration | start: sort the traces Tempo returned (it does not sort server-side)"),
+    ),
     spansPerTrace: Flag.integer("spans-per-trace").pipe(
       Flag.withDefault(3),
       Flag.withDescription("Matching spans returned per trace"),
@@ -117,18 +121,29 @@ const search = Command.make(
       })
       yield* printQuery(result.query)
       const format = yield* Output.parseOutputFormat(input.output)
+      const orderBy = Option.getOrUndefined(input.orderBy)
+      if (orderBy !== undefined && orderBy !== "duration" && orderBy !== "start") {
+        return yield* new TraceQL.InvalidTraceQuery({ message: `--order-by must be duration or start; got ${orderBy}` })
+      }
+      const sortRows = <A extends { readonly start: string; readonly durationMs?: number | undefined }>(rows: ReadonlyArray<A>) =>
+        orderBy === undefined ? rows : [...rows].sort((a, b) =>
+          orderBy === "duration" ? (b.durationMs ?? 0) - (a.durationMs ?? 0) : b.start.localeCompare(a.start)
+        )
       if (input.spans) {
         yield* printTable(
           ["traceId", "spanId", "start", "service", "name", "durationMs", "status", "statusMessage"],
-          result.spans.map((span) => ({ ...span, durationMs: round(span.durationMs) })),
+          sortRows(result.spans).map((span) => ({ ...span, durationMs: round(span.durationMs) })),
           format,
         )
       } else {
         yield* printTable(
           ["traceId", "start", "rootService", "rootName", "durationMs", "matchedSpans"],
-          result.traces.map((trace) => ({ ...trace })),
+          sortRows(result.traces).map((trace) => ({ ...trace })),
           format,
         )
+      }
+      if (orderBy === "duration" && result.traces.length > 0) {
+        yield* Console.error(`# sorted within the ${result.traces.length} traces Tempo returned, not across all matches; add --min-duration to find slow ones`)
       }
       if (result.traces.length === 0) yield* Console.error("# 0 traces")
       else if (result.partial) {
@@ -141,34 +156,63 @@ const get = Command.make(
   "get",
   {
     traceId: Argument.string("trace-id").pipe(Argument.withDescription("Trace ID (hex; leading zeros optional)")),
+    span: Flag.string("span").pipe(
+      Flag.optional,
+      Flag.withDescription("Only this span and its descendants, plus the span's attributes and events"),
+    ),
     output: Output.outputFlag,
   },
   (input) =>
     Effect.gen(function* () {
       const traces = yield* Traces
       const waterfall = yield* traces.get(input.traceId)
+      const spanId = Option.getOrUndefined(input.span)
+      const spans = spanId === undefined ? waterfall.spans : subtree(waterfall.spans, spanId)
+      if (spanId !== undefined && spans.length === 0) {
+        return yield* new TraceQL.InvalidTraceQuery({ message: `Span ${spanId} is not in trace ${waterfall.traceId}` })
+      }
+      const focus = spanId === undefined ? undefined : spans[0]
       const format = yield* Output.parseOutputFormat(input.output)
       if (format === "json") {
-        yield* Console.log(JSON.stringify(waterfall, null, 2))
+        yield* Console.log(JSON.stringify({ ...waterfall, spans }, null, 2))
         return
       }
       yield* Console.error(
         `# trace ${waterfall.traceId}: ${waterfall.spans.length} spans, ${round(waterfall.durationMs)}ms, services: ${waterfall.services.join(", ")}`,
       )
+      const baseDepth = focus?.depth ?? 0
       yield* printTable(
         ["offsetMs", "durationMs", "service", "name", "kind", "status", "statusMessage", "spanId"],
-        waterfall.spans.map((span) => ({
+        spans.map((span) => ({
           ...span,
           offsetMs: round(span.offsetMs),
           durationMs: round(span.durationMs),
-          name: format === "table" ? `${"  ".repeat(span.depth)}${span.name}` : span.name,
+          name: format === "table" ? `${"  ".repeat(span.depth - baseDepth)}${span.name}` : span.name,
           status: span.status === "unset" ? undefined : span.status,
         })),
         format,
       )
+      if (focus !== undefined) {
+        yield* Console.error(`\nattributes of ${focus.name} (${focus.spanId}):`)
+        yield* printRows(
+          ["key", "value"],
+          Object.entries(focus.attributes).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => [key, value]),
+          format,
+          focus.attributes,
+        )
+        if (focus.events.length > 0) {
+          yield* Console.error(`\nevents (${focus.events.length}):`)
+          yield* printRows(
+            ["offsetMs", "name", "attributes"],
+            focus.events.map((event) => [round(event.offsetMs), event.name, JSON.stringify(event.attributes)]),
+            format,
+            focus.events,
+          )
+        }
+      }
       if (waterfall.spans.length === 0) yield* Console.error("# trace not found or empty")
     }).pipe(Effect.provide(Traces.Live)),
-).pipe(Command.withDescription("Show a trace as a span waterfall"))
+).pipe(Command.withDescription("Show a trace as a span waterfall (--span to focus on one span)"))
 
 const groupByFlag = Flag.string("group-by").pipe(
   Flag.atMost(5),

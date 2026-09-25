@@ -42,6 +42,8 @@ it.effect("attribute conditions pick literal types", () =>
     expect(yield* parseAttrCondition("span.http.status_code=500")).toBe("span.http.status_code = 500")
     expect(yield* parseAttrCondition("span.cache.hit=true")).toBe("span.cache.hit = true")
     expect(yield* parseAttrCondition("status=error")).toBe("status = error")
+    expect(yield* parseAttrCondition("kind=server")).toBe("kind = server")
+    expect(yield* parseAttrCondition("span.result=ok")).toBe(`.span.result = "ok"`.replace(".span", "span"))
     expect(yield* parseAttrCondition("span.user.id!=42abc")).toBe(`span.user.id != "42abc"`)
     expect((yield* Effect.flip(parseAttrCondition("nope")))._tag).toBe("InvalidTraceQuery")
   }))

@@ -434,3 +434,14 @@ export class Traces extends Context.Service<Traces, {
     Layer.provide(ApiClient.Live),
   )
 }
+
+// A span and everything under it. Waterfall spans are depth-first, so descendants follow the
+// span until the depth returns to its level.
+export const subtree = (spans: ReadonlyArray<WaterfallSpan>, spanId: string): ReadonlyArray<WaterfallSpan> => {
+  const start = spans.findIndex((span) => span.spanId === spanId.toLowerCase())
+  if (start < 0) return []
+  const depth = spans[start]!.depth
+  let end = start + 1
+  while (end < spans.length && spans[end]!.depth > depth) end++
+  return spans.slice(start, end)
+}
