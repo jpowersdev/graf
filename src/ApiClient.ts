@@ -43,6 +43,12 @@ export interface GrafanaClient {
     path: string,
     params?: UrlParams,
   ) => Effect.Effect<S["Type"], UpstreamError | unknown, S["DecodingServices"]>
+  // POST a JSON body for endpoints that query rather than mutate (e.g. /api/ds/query).
+  readonly postJson: <S extends Schema.Top>(
+    schema: S,
+    path: string,
+    body: unknown,
+  ) => Effect.Effect<S["Type"], UpstreamError | unknown, S["DecodingServices"]>
 }
 
 export class ApiClient extends Context.Service<ApiClient, GrafanaClient>()(
@@ -70,13 +76,8 @@ export class ApiClient extends Context.Service<ApiClient, GrafanaClient>()(
         )
       const root = authed(baseUrl)
 
-      const getJson: GrafanaClient["getJson"] = (schema, path, params = []) =>
+      const decode = <S extends Schema.Top>(schema: S, path: string, response: HttpClientResponse.HttpClientResponse) =>
         Effect.gen(function* () {
-          let request = HttpClientRequest.get(path)
-          for (const [key, value] of params) {
-            if (value !== undefined) request = HttpClientRequest.appendUrlParam(request, key, String(value))
-          }
-          const response = yield* root.execute(request)
           if (response.status < 200 || response.status >= 300) {
             const body = yield* Effect.orElseSucceed(response.text, () => "")
             return yield* new UpstreamError({ status: response.status, path, message: upstreamMessage(body) })
@@ -84,9 +85,25 @@ export class ApiClient extends Context.Service<ApiClient, GrafanaClient>()(
           return yield* HttpClientResponse.schemaBodyJson(schema)(response)
         })
 
+      const getJson: GrafanaClient["getJson"] = (schema, path, params = []) =>
+        Effect.gen(function* () {
+          let request = HttpClientRequest.get(path)
+          for (const [key, value] of params) {
+            if (value !== undefined) request = HttpClientRequest.appendUrlParam(request, key, String(value))
+          }
+          return yield* decode(schema, path, yield* root.execute(request))
+        })
+
+      const postJson: GrafanaClient["postJson"] = (schema, path, body) =>
+        Effect.gen(function* () {
+          const request = HttpClientRequest.bodyJsonUnsafe(HttpClientRequest.post(path), body)
+          return yield* decode(schema, path, yield* root.execute(request))
+        })
+
       return {
         api: Generated.make(authed(`${baseUrl}/api`)),
         getJson,
+        postJson,
       }
     }),
   },

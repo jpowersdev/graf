@@ -88,6 +88,14 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 - \`graf traces operations --service S [--kind server] [--order-by p99Ms|spans|errors]\` — per-operation health.
 - \`graf traces values ATTR\`
 
+**Alerts** (Grafana-managed rules; read-only)
+- \`graf alerts list [--state firing|pending|inactive|nodata|error] [--search]\` — rules, firing first, with instance counts.
+- \`graf alerts get UID\` — definition (condition, \`for\`, no-data/error handling), queries, current instances, link.
+- \`graf alerts history UID [--state Alerting] [--limit N]\` — state transitions with the values that caused them.
+- \`graf alerts triage UID\` — get + which labels differ across firing instances + recent history, in one read.
+- \`graf alerts evaluate UID [--at TIME]\` — run the rule's own queries and expressions; the condition refId > 0
+  means firing. Only for rules over metrics/logs/traces datasources.
+
 **Metrics**
 - \`graf metrics list [--search TEXT]\` · \`graf metrics describe NAME\` (labels and sample values)
 - \`graf metrics query '<promql>' [--step DUR | --instant]\`
@@ -95,6 +103,11 @@ also accepts the full language with \`--query\` (which excludes the filter flags
 ## Triage recipes
 
 \`\`\`
+# What's firing, and why
+graf alerts list --state firing --output table
+graf alerts triage <uid> --output table
+graf alerts evaluate <uid> --output table
+
 # Which services are erroring, and on what?
 graf traces errors --from "1 hour" --output table
 graf traces operations --service <svc> --kind server --output table
