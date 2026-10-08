@@ -12,8 +12,6 @@ Requires Node.js 24 or later.
 npm install -g @jpowersdev/graf    # or: bun add -g @jpowersdev/graf
 ```
 
-To install a checkout instead, including uncommitted changes, run `scripts/install.sh --local` (needs [bun](https://bun.sh)).
-
 ## Configure
 
 ```bash
