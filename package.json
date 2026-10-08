@@ -1,5 +1,5 @@
 {
-  "name": "@jpowersdev/grafana",
+  "name": "@jpowersdev/graf",
   "version": "0.0.0",
   "description": "graf: command-line client for querying observability data through Grafana (metrics, logs, traces).",
   "type": "module",

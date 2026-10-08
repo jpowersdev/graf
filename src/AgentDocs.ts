@@ -156,6 +156,6 @@ graf metrics query 'sum by (service) (rate(traces_spanmetrics_calls_total[5m]))'
 export const agentInstructions = (version?: string): string => {
   const heading = version === undefined
     ? "# graf — agent instructions"
-    : `# graf — agent instructions (@jpowersdev/grafana v${version})`
+    : `# graf — agent instructions (@jpowersdev/graf v${version})`
   return `${heading}\n\n${BODY}`
 }
