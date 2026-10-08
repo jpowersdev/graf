@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jpowersdev/grafana-cli.git"
+    "url": "git+https://github.com/jpowersdev/graf.git"
   },
   "publishConfig": {
     "access": "public"
