@@ -1,9 +1,12 @@
 {
   "name": "@jpowersdev/graf",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "graf: command-line client for querying observability data through Grafana (metrics, logs, traces).",
   "type": "module",
   "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpowersdev/grafana-cli.git"
