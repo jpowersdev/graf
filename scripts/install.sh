@@ -15,9 +15,10 @@ trap 'rm -rf "$TMP"' EXIT
 
 (cd "$TMP" && npm pack --silent "$SOURCE" >/dev/null)
 mkdir -p "$STORE"
-mv "$TMP"/jpowersdev-grafana-*.tgz "$STORE/graf.tgz"
+mv "$TMP"/jpowersdev-graf-*.tgz "$STORE/graf.tgz"
 
 # Remove first: bun won't reinstall a package from the same tarball path in place.
-bun remove -g @jpowersdev/grafana >/dev/null 2>&1 || true
+bun remove -g @jpowersdev/graf >/dev/null 2>&1 || true
+bun remove -g @jpowersdev/grafana >/dev/null 2>&1 || true # pre-rename package name
 bun add -g "$STORE/graf.tgz" >/dev/null
 echo "installed $(command -v graf): $(graf --version)"
