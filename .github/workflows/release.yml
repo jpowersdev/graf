@@ -29,8 +29,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # npm >= 11.5.1 for OIDC. Not 12: its `npm info --json` returns an array, which changesets
+      # misreads as "never published" and tries to republish the current version.
       - name: Ensure OIDC-capable npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@11
       # Validate in its own step: changesets/action runs `publish` without a shell, so a compound
       # `npm run build && …` command sends `&& …` to tsc as arguments instead of chaining.
       - name: Validate
